@@ -3,13 +3,13 @@ package com.vkochenkov.filmscatalog
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.vkochenkov.filmscatalog.model.Film
 
-class FilmsListActivity : AppCompatActivity(), View.OnClickListener{
+class FilmsListActivity : AppCompatActivity(), View.OnClickListener {
 
     companion object {
         const val FILM = "FILM"
@@ -29,20 +29,22 @@ class FilmsListActivity : AppCompatActivity(), View.OnClickListener{
     }
 
     override fun onClick(view: View?) {
-        when(view?.id) {
-            R.id.btn_details_1 -> openFilmActivity(filmsArr[0])
-            R.id.btn_details_2 -> openFilmActivity(filmsArr[1])
-            R.id.btn_details_3 -> openFilmActivity(filmsArr[2])
+        var elementNumber = 0
+        when (view?.id) {
+            R.id.btn_details_1 -> {
+                elementNumber = 0;
+                choseFilm(filmsArr[elementNumber], titlesArr[elementNumber])
+            }
+            R.id.btn_details_2 -> {
+                elementNumber = 1;
+                choseFilm(filmsArr[elementNumber], titlesArr[elementNumber])
+            }
+            R.id.btn_details_3 -> {
+                elementNumber = 2;
+                choseFilm(filmsArr[elementNumber], titlesArr[elementNumber])
+            }
             R.id.btn_share -> shareFriends()
         }
-    }
-
-    private fun shareFriends() {
-        val intent = Intent(Intent.ACTION_SEND).apply {
-            type = "text/plain"
-            putExtra(Intent.EXTRA_TEXT, getString(R.string.share_text))
-        }
-        startActivity(Intent.createChooser(intent, null))
     }
 
     private fun setOnClickListeners() {
@@ -71,10 +73,35 @@ class FilmsListActivity : AppCompatActivity(), View.OnClickListener{
         }
     }
 
+    private fun choseFilm(film: Film, titleId: Int) {
+        changeTitleColorForSelectedFilm(titleId)
+        openFilmActivity(film)
+    }
+
     private fun openFilmActivity(film: Film) {
         val intent = Intent(this, FilmInfoActivity::class.java).apply {
             putExtra(FILM, film)
         }
         startActivity(intent)
+    }
+
+    private fun changeTitleColorForSelectedFilm(id: Int) {
+        val accentColor = ContextCompat.getColor(this, R.color.colorAccent)
+        val defaultColor = ContextCompat.getColor(this, R.color.colorBlack)
+        for (element in titlesArr) {
+            if (element == id) {
+                findViewById<TextView>(element).setTextColor(accentColor)
+            } else {
+                findViewById<TextView>(element).setTextColor(defaultColor)
+            }
+        }
+    }
+
+    private fun shareFriends() {
+        val intent = Intent(Intent.ACTION_SEND).apply {
+            type = "text/plain"
+            putExtra(Intent.EXTRA_TEXT, getString(R.string.share_text))
+        }
+        startActivity(Intent.createChooser(intent, null))
     }
 }
