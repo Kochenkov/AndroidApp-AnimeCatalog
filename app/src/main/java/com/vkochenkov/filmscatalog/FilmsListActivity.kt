@@ -13,12 +13,14 @@ class FilmsListActivity : AppCompatActivity(), View.OnClickListener {
 
     companion object {
         const val FILM = "FILM"
+        const val CHOSEN_FILM_TITLE= "CHOSEN_FILM_TITLE"
     }
 
     lateinit var imagesArr: Array<Int>
     lateinit var titlesArr: Array<Int>
     lateinit var buttonsArr: Array<Int>
     lateinit var filmsArr: Array<Film>
+    var chosenFilmTitle: Int? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,6 +49,17 @@ class FilmsListActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        chosenFilmTitle?.let { outState.putInt(CHOSEN_FILM_TITLE, it) }
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+        chosenFilmTitle = savedInstanceState.getInt(CHOSEN_FILM_TITLE)
+        changeTitleColorForSelectedFilm()
+    }
+
     private fun setOnClickListeners() {
         for (element in buttonsArr) {
             findViewById<View>(element).setOnClickListener(this)
@@ -64,17 +77,18 @@ class FilmsListActivity : AppCompatActivity(), View.OnClickListener {
         imagesArr = arrayOf(R.id.imv_film_1, R.id.imv_film_2, R.id.imv_film_3)
         buttonsArr = arrayOf(R.id.btn_details_1, R.id.btn_details_2, R.id.btn_details_3, R.id.btn_share)
 
-        for (i in 0..2) {
+        for (i in filmsArr.indices) {
             val textView = findViewById<TextView>(titlesArr[i])
-            textView.text = getString(filmsArr[i].titleRes)
-
             val imageView = findViewById<ImageView>(imagesArr[i])
+
+            textView.text = getString(filmsArr[i].titleRes)
             imageView.setImageResource(filmsArr[i].imageRes)
         }
     }
 
     private fun choseFilm(film: Film, titleId: Int) {
-        changeTitleColorForSelectedFilm(titleId)
+        chosenFilmTitle = titleId
+        changeTitleColorForSelectedFilm()
         openFilmActivity(film)
     }
 
@@ -85,11 +99,11 @@ class FilmsListActivity : AppCompatActivity(), View.OnClickListener {
         startActivity(intent)
     }
 
-    private fun changeTitleColorForSelectedFilm(id: Int) {
+    private fun changeTitleColorForSelectedFilm() {
         val accentColor = ContextCompat.getColor(this, R.color.colorAccent)
         val defaultColor = ContextCompat.getColor(this, R.color.colorBlack)
         for (element in titlesArr) {
-            if (element == id) {
+            if (element == chosenFilmTitle) {
                 findViewById<TextView>(element).setTextColor(accentColor)
             } else {
                 findViewById<TextView>(element).setTextColor(defaultColor)
