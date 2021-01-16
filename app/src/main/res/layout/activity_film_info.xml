@@ -16,9 +16,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:navigationIcon="?attr/homeAsUpIndicator"
         app:title="@string/default_film_title"
-        app:titleTextColor="@color/colorBlack"
-
-        />
+        app:titleTextColor="@color/colorBlack" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -40,7 +38,7 @@
                 android:src="@drawable/im_default_film"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"/>
 
             <TextView
                 android:id="@+id/tv_description_film"
@@ -52,7 +50,7 @@
                 android:textSize="@dimen/normal_text_size"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/image_view" />
+                app:layout_constraintTop_toBottomOf="@id/image_view"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 
