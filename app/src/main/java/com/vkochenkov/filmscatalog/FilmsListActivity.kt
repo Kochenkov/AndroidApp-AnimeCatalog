@@ -33,12 +33,21 @@ class FilmsListActivity : AppCompatActivity(), View.OnClickListener{
             R.id.btn_details_1 -> openFilmActivity(filmsArr[0])
             R.id.btn_details_2 -> openFilmActivity(filmsArr[1])
             R.id.btn_details_3 -> openFilmActivity(filmsArr[2])
+            R.id.btn_share -> shareFriends()
         }
     }
 
+    private fun shareFriends() {
+        val intent = Intent(Intent.ACTION_SEND).apply {
+            type = "text/plain"
+            putExtra(Intent.EXTRA_TEXT, getString(R.string.share_text))
+        }
+        startActivity(Intent.createChooser(intent, null))
+    }
+
     private fun setOnClickListeners() {
-        for (i in 0..2) {
-            findViewById<Button>(buttonsArr[i]).setOnClickListener(this)
+        for (element in buttonsArr) {
+            findViewById<View>(element).setOnClickListener(this)
         }
     }
 
@@ -51,7 +60,7 @@ class FilmsListActivity : AppCompatActivity(), View.OnClickListener{
 
         titlesArr = arrayOf(R.id.tv_title_film_1, R.id.tv_title_film_2, R.id.tv_title_film_3)
         imagesArr = arrayOf(R.id.imv_film_1, R.id.imv_film_2, R.id.imv_film_3)
-        buttonsArr = arrayOf(R.id.btn_details_1, R.id.btn_details_2, R.id.btn_details_3)
+        buttonsArr = arrayOf(R.id.btn_details_1, R.id.btn_details_2, R.id.btn_details_3, R.id.btn_share)
 
         for (i in 0..2) {
             val textView = findViewById<TextView>(titlesArr[i])

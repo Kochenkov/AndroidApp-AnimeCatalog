@@ -5,4 +5,5 @@
     <dimen name="little_text_size">12sp</dimen>
     <dimen name="element_padding">2dp</dimen>
     <dimen name="normal_text_size">16sp</dimen>
+    <dimen name="share_btn_padding">4dp</dimen>
 </resources>
