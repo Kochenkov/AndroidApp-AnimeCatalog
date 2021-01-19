@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="main_margin">16dp</dimen>
+    <dimen name="large_text_size">18sp</dimen>
+    <dimen name="little_text_size">12sp</dimen>
+    <dimen name="element_padding">2dp</dimen>
+    <dimen name="normal_text_size">16sp</dimen>
+    <dimen name="share_btn_padding">4dp</dimen>
+</resources>
