@@ -1,11 +1,11 @@
-package com.vkochenkov.filmscatalog
+package com.vkochenkov.filmscatalog.activities
 
 import android.os.Bundle
-import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import com.vkochenkov.filmscatalog.R
 import com.vkochenkov.filmscatalog.model.Film
 
 class FilmInfoActivity : AppCompatActivity() {

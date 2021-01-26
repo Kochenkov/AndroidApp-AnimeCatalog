@@ -1,13 +1,13 @@
-package com.vkochenkov.filmscatalog
+package com.vkochenkov.filmscatalog.activities
 
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.vkochenkov.filmscatalog.for_recycler.FilmsAdapter
+import com.vkochenkov.filmscatalog.R
 import com.vkochenkov.filmscatalog.model.Film
 
 class FilmsListActivity : AppCompatActivity(), View.OnClickListener {

@@ -1,8 +1,9 @@
-package com.vkochenkov.filmscatalog
+package com.vkochenkov.filmscatalog.for_recycler
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.vkochenkov.filmscatalog.R
 import com.vkochenkov.filmscatalog.model.Film
 
 class FilmsAdapter(private val itemsList: Array<Film>): RecyclerView.Adapter<FilmViewHolder>() {
