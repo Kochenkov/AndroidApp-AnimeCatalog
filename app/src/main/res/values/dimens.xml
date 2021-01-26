@@ -6,4 +6,5 @@
     <dimen name="element_padding">2dp</dimen>
     <dimen name="normal_text_size">16sp</dimen>
     <dimen name="share_btn_padding">4dp</dimen>
+    <dimen name="half_main_margin">8dp</dimen>
 </resources>
