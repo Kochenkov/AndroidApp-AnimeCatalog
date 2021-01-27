@@ -8,4 +8,6 @@ data class Film(
     val titleRes: Int,
     val descriptionRes: Int,
     val imageRes: Int
-): Parcelable
+): Parcelable {
+    var selected = false
+}
