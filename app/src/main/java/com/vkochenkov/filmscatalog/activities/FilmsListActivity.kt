@@ -6,15 +6,15 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.vkochenkov.filmscatalog.for_recycler.FilmsAdapter
 import com.vkochenkov.filmscatalog.R
+import com.vkochenkov.filmscatalog.for_recycler.FilmsAdapter
 import com.vkochenkov.filmscatalog.model.Film
 
 class FilmsListActivity : AppCompatActivity(), View.OnClickListener {
 
     companion object {
         const val FILM = "FILM"
-        const val CHOSEN_FILM_TITLE= "CHOSEN_FILM_TITLE"
+        const val CHOSEN_FILM_TITLE = "CHOSEN_FILM_TITLE"
     }
 
     private lateinit var filmsArr: Array<Film>
@@ -24,8 +24,8 @@ class FilmsListActivity : AppCompatActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_films_list)
 
-        createData()
         initFields()
+        initFilmsArray()
         initRecycler()
         setOnClickListeners()
     }
@@ -36,8 +36,9 @@ class FilmsListActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun initRecycler() {
         filmsRecycler.layoutManager = LinearLayoutManager(this)
-        filmsRecycler.adapter = FilmsAdapter(filmsArr)
-
+        filmsRecycler.adapter = FilmsAdapter(filmsArr) { film ->
+            openFilmActivity(film)
+        }
     }
 
     override fun onClick(view: View?) {
@@ -46,7 +47,7 @@ class FilmsListActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
-//    override fun onSaveInstanceState(outState: Bundle) {
+    //    override fun onSaveInstanceState(outState: Bundle) {
 //        super.onSaveInstanceState(outState)
 //        chosenFilmTitle?.let { outState.putInt(CHOSEN_FILM_TITLE, it) }
 //    }
@@ -61,15 +62,19 @@ class FilmsListActivity : AppCompatActivity(), View.OnClickListener {
         findViewById<View>(R.id.btn_share).setOnClickListener(this)
     }
 
-    private fun createData() {
+    private fun initFilmsArray() {
         filmsArr = arrayOf(
             Film(R.string.film_title_1, R.string.film_description_1, R.drawable.im_film_1),
             Film(R.string.film_title_2, R.string.film_description_2, R.drawable.im_film_2),
+            Film(R.string.film_title_3, R.string.film_description_3, R.drawable.im_film_3),
+            Film(R.string.film_title_3, R.string.film_description_3, R.drawable.im_film_3),
+            Film(R.string.film_title_3, R.string.film_description_3, R.drawable.im_film_3),
             Film(R.string.film_title_3, R.string.film_description_3, R.drawable.im_film_3)
+            //todo
         )
     }
 
-//    private fun choseFilm(film: Film, titleId: Int) {
+//    private fun clickOnFilmDetails(film: Film, titleId: Int) {
 //        chosenFilmTitle = titleId
 //        changeTitleColorForSelectedFilm()
 //        openFilmActivity(film)
