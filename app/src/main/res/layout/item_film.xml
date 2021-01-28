@@ -40,14 +40,22 @@
     <Button
         android:id="@+id/item_film_details_btn"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/main_margin"
-        android:layout_marginEnd="@dimen/main_margin"
+        android:layout_height="40dp"
         android:text="@string/btn_detail_text"
         android:textColor="@color/colorBlack"
         android:textSize="@dimen/little_text_size"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/item_film_like_btn"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/item_film_image" />
+
+    <ImageView
+        android:id="@+id/item_film_like_btn"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:padding="6dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:src="@drawable/ic_heart_empty" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

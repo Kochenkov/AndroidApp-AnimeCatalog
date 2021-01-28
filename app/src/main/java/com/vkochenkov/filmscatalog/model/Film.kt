@@ -10,4 +10,5 @@ data class Film(
     val imageRes: Int
 ): Parcelable {
     var selected = false
+    var liked = false
 }

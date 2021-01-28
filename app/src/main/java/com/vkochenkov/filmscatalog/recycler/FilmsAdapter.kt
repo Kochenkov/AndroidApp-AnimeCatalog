@@ -21,6 +21,15 @@ class FilmsAdapter(private val itemsList: Array<Film>, val clickListener: (film:
     override fun onBindViewHolder(holder: FilmViewHolder, position: Int) {
         val filmItem = itemsList[position]
         holder.bind(filmItem)
+        setOnClickListenerForDetailsBtn(holder, filmItem)
+        setOnClickListenerForLikeBtn(holder, filmItem, position)
+    }
+
+    override fun getItemCount(): Int {
+        return itemsList.size
+    }
+
+    private fun setOnClickListenerForDetailsBtn(holder: FilmViewHolder, filmItem: Film) {
         holder.filmDetailsBtn.setOnClickListener {
             previousSelectedFilm = currentSelectedFilm
             previousSelectedFilm?.selected = false
@@ -37,7 +46,10 @@ class FilmsAdapter(private val itemsList: Array<Film>, val clickListener: (film:
         }
     }
 
-    override fun getItemCount(): Int {
-        return itemsList.size
+    private fun setOnClickListenerForLikeBtn(holder: FilmViewHolder, filmItem: Film, position: Int) {
+        holder.filmLikeBtn.setOnClickListener {
+            filmItem.liked = !filmItem.liked
+            notifyItemChanged(position)
+        }
     }
 }
