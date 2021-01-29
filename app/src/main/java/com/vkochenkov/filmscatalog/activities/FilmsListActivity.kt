@@ -1,9 +1,11 @@
 package com.vkochenkov.filmscatalog.activities
 
 import android.content.Intent
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.vkochenkov.filmscatalog.R
@@ -40,7 +42,11 @@ class FilmsListActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun initRecycler() {
-        filmsRecycler.layoutManager = LinearLayoutManager(this)
+        if (this.resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
+            filmsRecycler.layoutManager = LinearLayoutManager(this)
+        } else {
+            filmsRecycler.layoutManager = GridLayoutManager(this, 2)
+        }
         filmsRecycler.adapter = FilmsAdapter(filmsArr) { film ->
             openSelectedFilmActivity(film)
         }

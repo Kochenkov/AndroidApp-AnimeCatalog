@@ -24,23 +24,24 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        tools:listitem="@layout/item_favourite_film"
         android:id="@+id/favourite_films_list"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginStart="@dimen/recycler_margin"
+        android:layout_marginEnd="@dimen/recycler_margin"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar_films_list"
-        />
+        tools:listitem="@layout/item_favourite_film" />
 
     <TextView
         android:id="@+id/empty_favourites_list_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/empty_favourites_list_text"
-        android:visibility="gone"
         android:textSize="@dimen/extra_large_text_size"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/favourite_films_list"
         app:layout_constraintStart_toStartOf="parent"

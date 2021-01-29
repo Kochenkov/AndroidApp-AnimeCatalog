@@ -1,10 +1,12 @@
 package com.vkochenkov.filmscatalog.activities
 
 import android.content.Intent
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.vkochenkov.filmscatalog.R
@@ -40,7 +42,11 @@ class FavouriteFilmsListActivity : AppCompatActivity() {
     }
 
     private fun initRecycler() {
-        favouriteFilmsRecycler.layoutManager = LinearLayoutManager(this)
+        if (this.resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
+            favouriteFilmsRecycler.layoutManager = LinearLayoutManager(this)
+        } else {
+            favouriteFilmsRecycler.layoutManager = GridLayoutManager(this, 2)
+        }
         favouriteFilmsRecycler.adapter =
             FavouriteFilmsAdapter(favouriteFilmsList, emptyListTextView) { film ->
                 openSelectedFilmActivity(film)

@@ -8,4 +8,6 @@
     <dimen name="normal_text_size">16sp</dimen>
     <dimen name="share_btn_padding">4dp</dimen>
     <dimen name="half_main_margin">8dp</dimen>
+    <dimen name="recycler_margin">12dp</dimen>
+    <dimen name="little_margin">4dp</dimen>
 </resources>

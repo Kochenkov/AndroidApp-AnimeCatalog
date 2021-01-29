@@ -4,10 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginStart="@dimen/main_margin"
-    android:layout_marginEnd="@dimen/main_margin"
+    android:layout_margin="@dimen/little_margin"
     android:layout_marginTop="@dimen/half_main_margin"
-    android:layout_marginBottom="8dp"
     android:background="@color/colorPrimary"
     android:padding="@dimen/element_padding">
 
