@@ -27,4 +27,5 @@
     <string name="default_film_title">Default film\'s name</string>
     <string name="btn_detail_text">Детали</string>
     <string name="share_text">Приглашаю тебя в приложение \"Каталог фильмов\", скоро оно будет доступно в Google play</string>
+    <string name="empty_favourites_list_text">Список избранного пуст</string>
 </resources>

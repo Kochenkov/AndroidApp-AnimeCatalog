@@ -3,15 +3,12 @@ package com.vkochenkov.filmscatalog.recycler
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.vkochenkov.filmscatalog.data.DataStorage
 import com.vkochenkov.filmscatalog.R
+import com.vkochenkov.filmscatalog.data.DataStorage
 import com.vkochenkov.filmscatalog.model.Film
 
-class FilmsAdapter(private val itemsList: Array<Film>, val clickListener: (film: Film) -> Unit) :
+class FilmsAdapter(private val itemsList: List<Film>, val clickListener: (film: Film) -> Unit) :
     RecyclerView.Adapter<FilmViewHolder>() {
-
-    var currentSelectedFilm: Film? = DataStorage.currentSelectedFilm
-    var previousSelectedFilm: Film? = DataStorage.previousSelectedFilm
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FilmViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_film, parent, false)
@@ -31,14 +28,10 @@ class FilmsAdapter(private val itemsList: Array<Film>, val clickListener: (film:
 
     private fun setOnClickListenerForDetailsBtn(holder: FilmViewHolder, filmItem: Film) {
         holder.filmDetailsBtn.setOnClickListener {
-            previousSelectedFilm = currentSelectedFilm
-            previousSelectedFilm?.selected = false
-
+            DataStorage.previousSelectedFilm = DataStorage.currentSelectedFilm
+            DataStorage.previousSelectedFilm?.selected = false
             filmItem.selected = true
-            currentSelectedFilm = filmItem
-
-            DataStorage.currentSelectedFilm = currentSelectedFilm
-            DataStorage.previousSelectedFilm = previousSelectedFilm
+            DataStorage.currentSelectedFilm = filmItem
 
             notifyDataSetChanged()
 
@@ -46,9 +39,19 @@ class FilmsAdapter(private val itemsList: Array<Film>, val clickListener: (film:
         }
     }
 
-    private fun setOnClickListenerForLikeBtn(holder: FilmViewHolder, filmItem: Film, position: Int) {
+    private fun setOnClickListenerForLikeBtn(
+        holder: FilmViewHolder,
+        filmItem: Film,
+        position: Int
+    ) {
         holder.filmLikeBtn.setOnClickListener {
-            filmItem.liked = !filmItem.liked
+            if (filmItem.liked) {
+                filmItem.liked = false
+                DataStorage.favouriteFilmsList.remove(filmItem)
+            } else {
+                filmItem.liked = true
+                DataStorage.favouriteFilmsList.add(filmItem)
+            }
             notifyItemChanged(position)
         }
     }
