@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Film\'s catalog</string>
+    <string name="app_name">Каталог фильмов</string>
     <!-- Film 1-->
     <string name="film_title_1">Берсерк. Золотой век: Фильм III. Сошествие</string>
     <string name="film_description_1">Ни возвращение Гатса в отряд Соколов, ни освобождение Гриффитса не приносят облегчения: истерзанный пытками Гриффитс - теперь лишь тень прежнего себя, а члены отряда, когда-то переживавшие вместе труднейшие времена, теперь готовы пойти разными дорогами. Однако дух иногда сломить гораздо труднее, чем плоть: мечты и стремления великого некогда человека приобретают, преломляясь сквозь возможности самых сильных мира сего, черные крылья ужаса и боли. Грядет Затмение, и вместе с ним приближается самая главная битва.</string>
@@ -25,8 +25,8 @@
     <string name="film_description_6">Старшекласснику Лайту Ягами в руки попадает тетрадь синигами Рюка. Каждый человек, чьё имя записать в эту тетрадку, умрёт, поэтому Лайт решает бороться со злом на земле.</string>
 
     <string name="default_film_title">Default film\'s name</string>
-    <string name="btn_detail_text">Details</string>
-    <string name="share_text">I invite you to the \"Film catalog\" application, it will soon be available on Google play</string>
-    <string name="empty_favourites_list_text">Favourites list is empty</string>
-    <string name="favourites_title_text">Favourites</string>
+    <string name="btn_detail_text">Детали</string>
+    <string name="share_text">Приглашаю тебя в приложение \"Каталог фильмов\", скоро оно будет доступно в Google play</string>
+    <string name="empty_favourites_list_text">Список избранного пуст</string>
+    <string name="favourites_title_text">Избранное</string>
 </resources>

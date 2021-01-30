@@ -16,10 +16,12 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.appcompat.widget.Toolbar
+            android:id="@+id/favourites_toolbar"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             app:layout_constraintTop_toTopOf="parent"
-            app:title="Избранное" />
+            app:title="@string/favourites_title_text"
+            app:navigationIcon="?attr/homeAsUpIndicator"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

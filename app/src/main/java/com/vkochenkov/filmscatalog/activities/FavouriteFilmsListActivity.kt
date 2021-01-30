@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -18,6 +19,7 @@ class FavouriteFilmsListActivity : AppCompatActivity() {
 
     lateinit var favouriteFilmsRecycler: RecyclerView
     lateinit var emptyListTextView: TextView
+    lateinit var favouritesToolbar: Toolbar
 
     var favouriteFilmsList = DataStorage.favouriteFilmsList
 
@@ -27,6 +29,7 @@ class FavouriteFilmsListActivity : AppCompatActivity() {
 
         initFields()
         initRecycler()
+        setToolbar()
     }
 
     private fun openSelectedFilmActivity(film: Film) {
@@ -36,9 +39,17 @@ class FavouriteFilmsListActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
+    private fun setToolbar() {
+        setSupportActionBar(favouritesToolbar)
+        favouritesToolbar.setNavigationOnClickListener {
+            onBackPressed()
+        }
+    }
+
     private fun initFields() {
         favouriteFilmsRecycler = findViewById(R.id.favourite_films_list)
         emptyListTextView = findViewById(R.id.empty_favourites_list_text)
+        favouritesToolbar = findViewById(R.id.favourites_toolbar)
     }
 
     private fun initRecycler() {
