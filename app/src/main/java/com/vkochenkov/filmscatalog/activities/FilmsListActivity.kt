@@ -20,9 +20,9 @@ class FilmsListActivity : AppCompatActivity(), View.OnClickListener {
         const val FILM = "FILM"
     }
 
-    var filmsArr = DataStorage.filmsArr
+    private var filmsArr = DataStorage.filmsArr
 
-    lateinit var filmsRecycler: RecyclerView
+    private lateinit var filmsRecycler: RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -18,11 +18,11 @@ import com.vkochenkov.filmscatalog.recycler.FavouriteFilmsAdapter
 
 class FavouriteFilmsListActivity : AppCompatActivity() {
 
-    lateinit var favouriteFilmsRecycler: RecyclerView
-    lateinit var emptyListTextView: TextView
-    lateinit var favouritesToolbar: Toolbar
+    private lateinit var favouriteFilmsRecycler: RecyclerView
+    private lateinit var emptyListTextView: TextView
+    private lateinit var favouritesToolbar: Toolbar
 
-    var favouriteFilmsList = DataStorage.favouriteFilmsList
+    private var favouriteFilmsList = DataStorage.favouriteFilmsList
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

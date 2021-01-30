@@ -11,7 +11,7 @@ import com.vkochenkov.filmscatalog.model.Film
 
 class FavouriteFilmsAdapter(
     private val itemsList: List<Film>, private val emptyListTextView: TextView,
-    val clickListener: (film: Film) -> Unit
+    private val clickListener: (film: Film) -> Unit
 ) :
     RecyclerView.Adapter<FavouriteFilmViewHolder>() {
 

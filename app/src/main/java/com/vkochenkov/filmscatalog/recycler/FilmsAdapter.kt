@@ -7,7 +7,10 @@ import com.vkochenkov.filmscatalog.R
 import com.vkochenkov.filmscatalog.data.DataStorage
 import com.vkochenkov.filmscatalog.model.Film
 
-class FilmsAdapter(private val itemsList: List<Film>, val clickListener: (film: Film) -> Unit) :
+class FilmsAdapter(
+    private val itemsList: List<Film>,
+    private val clickListener: (film: Film) -> Unit
+) :
     RecyclerView.Adapter<FilmViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FilmViewHolder {

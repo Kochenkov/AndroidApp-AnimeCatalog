@@ -11,10 +11,10 @@ import com.vkochenkov.filmscatalog.model.Film
 
 class FilmInfoActivity : AppCompatActivity() {
 
-    lateinit var imageView: ImageView
-    lateinit var toolbar: Toolbar
-    lateinit var descriptorView: TextView
-    lateinit var film: Film
+    private lateinit var imageView: ImageView
+    private lateinit var toolbar: Toolbar
+    private lateinit var descriptorView: TextView
+    private lateinit var film: Film
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
