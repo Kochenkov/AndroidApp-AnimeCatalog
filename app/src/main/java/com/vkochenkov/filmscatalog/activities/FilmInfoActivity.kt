@@ -6,13 +6,10 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import com.vkochenkov.filmscatalog.R
+import com.vkochenkov.filmscatalog.activities.FilmsListActivity.Companion.FILM
 import com.vkochenkov.filmscatalog.model.Film
 
 class FilmInfoActivity : AppCompatActivity() {
-
-    companion object {
-        const val FILM = "FILM"
-    }
 
     lateinit var imageView: ImageView
     lateinit var toolbar: Toolbar

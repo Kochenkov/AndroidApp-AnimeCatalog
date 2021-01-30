@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.vkochenkov.filmscatalog.R
+import com.vkochenkov.filmscatalog.activities.FilmsListActivity.Companion.FILM
 import com.vkochenkov.filmscatalog.data.DataStorage
 import com.vkochenkov.filmscatalog.model.Film
 import com.vkochenkov.filmscatalog.recycler.FavouriteFilmsAdapter
@@ -34,7 +35,7 @@ class FavouriteFilmsListActivity : AppCompatActivity() {
 
     private fun openSelectedFilmActivity(film: Film) {
         val intent = Intent(this, FilmInfoActivity::class.java).apply {
-            putExtra(FilmsListActivity.FILM, film)
+            putExtra(FILM, film)
         }
         startActivity(intent)
     }
