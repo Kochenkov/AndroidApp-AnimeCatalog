@@ -29,4 +29,7 @@
     <string name="share_text">Приглашаю тебя в приложение \"Каталог фильмов\", скоро оно будет доступно в Google play</string>
     <string name="empty_favourites_list_text">Список избранного пуст</string>
     <string name="favourites_title_text">Избранное</string>
+    <string name="dialog_yes_exit_text">Да, выйти</string>
+    <string name="dialog_no_exit_text">Нет</string>
+    <string name="dialog_title_text">Вы уверены, что хотите выйти?</string>
 </resources>

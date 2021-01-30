@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.vkochenkov.filmscatalog.R
 import com.vkochenkov.filmscatalog.data.DataStorage
+import com.vkochenkov.filmscatalog.dialogs.ExitDialog
 import com.vkochenkov.filmscatalog.model.Film
 import com.vkochenkov.filmscatalog.recycler.FilmsAdapter
 
@@ -37,6 +38,22 @@ class FilmsListActivity : AppCompatActivity(), View.OnClickListener {
         filmsRecycler.adapter?.notifyDataSetChanged()
     }
 
+    override fun onClick(view: View?) {
+        when (view?.id) {
+            R.id.btn_share -> shareFriends()
+            R.id.btn_favourites -> openFavouritesFilmsListActivity()
+        }
+    }
+
+    override fun onBackPressed() {
+        showExitDialog()
+    }
+
+    private fun showExitDialog() {
+        val exitDialog = ExitDialog(this, this)
+        exitDialog.show()
+    }
+
     private fun initFields() {
         filmsRecycler = findViewById(R.id.films_list)
     }
@@ -49,13 +66,6 @@ class FilmsListActivity : AppCompatActivity(), View.OnClickListener {
         }
         filmsRecycler.adapter = FilmsAdapter(filmsArr) { film ->
             openSelectedFilmActivity(film)
-        }
-    }
-
-    override fun onClick(view: View?) {
-        when (view?.id) {
-            R.id.btn_share -> shareFriends()
-            R.id.btn_favourites -> openFavouritesFilmsListActivity()
         }
     }
 

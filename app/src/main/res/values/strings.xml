@@ -29,4 +29,7 @@
     <string name="share_text">I invite you to the \"Film catalog\" application, it will soon be available on Google play</string>
     <string name="empty_favourites_list_text">Favourites list is empty</string>
     <string name="favourites_title_text">Favourites</string>
+    <string name="dialog_yes_exit_text">Yes, exit</string>
+    <string name="dialog_no_exit_text">No</string>
+    <string name="dialog_title_text">Are you sure you want to get out?</string>
 </resources>
