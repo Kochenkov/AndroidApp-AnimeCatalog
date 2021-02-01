@@ -55,8 +55,8 @@ class FavouriteFilmsAdapter(
         holder.filmDeleteBtn.setOnClickListener {
             filmItem.liked = false
             DataStorage.favouriteFilmsList.removeAt(position)
-            //todo не красиво, но если удаляю первый элемент, то получаю краш
-            notifyDataSetChanged()
+            notifyItemRemoved(position)
+            notifyItemChanged(position)
             showStubIfListEmpty()
         }
     }
