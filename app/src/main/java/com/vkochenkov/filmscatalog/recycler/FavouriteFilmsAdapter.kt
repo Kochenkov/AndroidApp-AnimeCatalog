@@ -26,8 +26,6 @@ class FavouriteFilmsAdapter(
         holder.bind(filmItem)
         setOnClickListenerForDetailsBtn(holder, filmItem)
         setOnClickListenerForDeleteBtn(holder, filmItem, position)
-
-
     }
 
     override fun getItemCount(): Int {
