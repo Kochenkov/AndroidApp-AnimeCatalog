@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.FilmsListActivity">
+    tools:context=".activities.FavouriteFilmsListActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/toolbar_films_list"
@@ -16,40 +16,17 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.appcompat.widget.Toolbar
+            android:id="@+id/favourites_toolbar"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             app:layout_constraintTop_toTopOf="parent"
-            app:title="@string/app_name" />
-
-        <ImageView
-            android:id="@+id/btn_share"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginEnd="@dimen/main_margin"
-            android:clickable="true"
-            android:focusable="true"
-            android:padding="@dimen/share_btn_padding"
-            android:src="@drawable/ic_share"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageView
-            android:id="@+id/btn_favourites"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:clickable="true"
-            android:focusable="true"
-            android:padding="@dimen/share_btn_padding"
-            android:src="@drawable/ic_heart_fill"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/btn_share"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:title="@string/favourites_title_text"
+            app:navigationIcon="?attr/homeAsUpIndicator"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/films_list"
+        android:id="@+id/favourite_films_list"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="@dimen/recycler_margin"
@@ -58,9 +35,18 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar_films_list"
-        tools:listitem="@layout/item_film" />
+        tools:listitem="@layout/item_favourite_film" />
+
+    <TextView
+        android:id="@+id/empty_favourites_list_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/empty_favourites_list_text"
+        android:textSize="@dimen/extra_large_text_size"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/favourite_films_list"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_films_list" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-
