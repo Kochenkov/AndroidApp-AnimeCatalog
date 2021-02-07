@@ -24,6 +24,10 @@ class FilmInfoFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+        (activity as AppCompatActivity).findViewById<View>(R.id.bottom_nav_view).visibility =
+            View.GONE
+
         val view = inflater.inflate(R.layout.fragment_film_info, container, false)
 
         initFields(view)

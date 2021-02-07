@@ -38,8 +38,10 @@ class FilmsListFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         filmsRecycler.adapter?.notifyDataSetChanged()
-        (activity as AppCompatActivity).findViewById<View>(R.id.bottom_nav_view).visibility = View.VISIBLE
+        (activity as AppCompatActivity).findViewById<View>(R.id.bottom_nav_view).visibility =
+            View.VISIBLE
     }
+
 
     private fun initFields(view: View) {
         filmsRecycler = view.findViewById(R.id.films_list)
@@ -63,12 +65,9 @@ class FilmsListFragment : Fragment() {
         val filmInfoFragment = FilmInfoFragment()
         filmInfoFragment.arguments = bundle
 
-        (activity as AppCompatActivity).findViewById<View>(R.id.bottom_nav_view).visibility =
-            View.GONE
-
         (activity as AppCompatActivity).supportFragmentManager.beginTransaction()
             .replace(R.id.fragments_container, filmInfoFragment)
-            .addToBackStack(null)
+            .addToBackStack("FilmInfoFragment")
             .commit()
     }
 

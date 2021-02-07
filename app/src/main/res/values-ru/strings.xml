@@ -32,4 +32,10 @@
     <string name="dialog_yes_exit_text">Да, выйти</string>
     <string name="dialog_no_exit_text">Нет</string>
     <string name="dialog_title_text">Вы уверены, что хотите выйти?</string>
+    <string name="info_title_text">О приложении</string>
+    <string name="some_info_text">Тут будет какая-нибудь информация о приложении</string>
+    <string name="btn_share_text">" Поделиться приложением"</string>
+    <string name="bottom_menu_home_text">Домой</string>
+    <string name="bottom_menu_favourites_text">Избранное</string>
+
 </resources>

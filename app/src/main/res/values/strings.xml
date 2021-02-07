@@ -32,4 +32,10 @@
     <string name="dialog_yes_exit_text">Yes, exit</string>
     <string name="dialog_no_exit_text">No</string>
     <string name="dialog_title_text">Are you sure you want to get out?</string>
+    <string name="info_title_text">App Info</string>
+    <string name="some_info_text">This will be some info about this app</string>
+    <string name="btn_share_text">Share App</string>
+    <string name="bottom_menu_home_text">Home</string>
+    <string name="bottom_menu_favourites_text">Favourites</string>
+    <string name="bottom_menu_info_text">Info</string>
 </resources>

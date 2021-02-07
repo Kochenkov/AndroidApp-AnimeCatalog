@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -22,7 +21,6 @@ class FavouriteFilmsListFragment : Fragment() {
 
     private lateinit var favouriteFilmsRecycler: RecyclerView
     private lateinit var emptyListTextView: TextView
-    private lateinit var favouritesToolbar: Toolbar
 
     private var favouriteFilmsList = DataStorage.favouriteFilmsList
 
@@ -40,7 +38,8 @@ class FavouriteFilmsListFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        (activity as AppCompatActivity).findViewById<View>(R.id.bottom_nav_view).visibility = View.VISIBLE
+        (activity as AppCompatActivity).findViewById<View>(R.id.bottom_nav_view).visibility =
+            View.VISIBLE
     }
 
     private fun openSelectedFilmFragment(film: Film) {
@@ -50,18 +49,15 @@ class FavouriteFilmsListFragment : Fragment() {
         val filmInfoFragment = FilmInfoFragment()
         filmInfoFragment.arguments = bundle
 
-        (activity as AppCompatActivity).findViewById<View>(R.id.bottom_nav_view).visibility = View.GONE
-
         (activity as AppCompatActivity).supportFragmentManager.beginTransaction()
             .replace(R.id.fragments_container, filmInfoFragment)
-            .addToBackStack(null)
+            .addToBackStack("FilmInfoFragment")
             .commit()
     }
 
     private fun initFields(view: View) {
         favouriteFilmsRecycler = view.findViewById(R.id.favourite_films_list)
         emptyListTextView = view.findViewById(R.id.empty_favourites_list_text)
-        favouritesToolbar = view.findViewById(R.id.favourites_toolbar)
     }
 
     private fun initRecycler(view: View) {
