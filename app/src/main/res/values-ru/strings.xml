@@ -37,5 +37,6 @@
     <string name="btn_share_text">" Поделиться приложением"</string>
     <string name="bottom_menu_home_text">Домой</string>
     <string name="bottom_menu_favourites_text">Избранное</string>
+    <string name="bottom_menu_info_text">Инфо</string>
 
 </resources>
