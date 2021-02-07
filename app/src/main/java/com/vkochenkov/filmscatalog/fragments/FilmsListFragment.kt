@@ -17,8 +17,7 @@ import com.vkochenkov.filmscatalog.data.DataStorage
 import com.vkochenkov.filmscatalog.model.Film
 import com.vkochenkov.filmscatalog.recycler.FilmsAdapter
 
-class FilmsListFragment : Fragment(),
-    View.OnClickListener {
+class FilmsListFragment : Fragment() {
 
     private var filmsArr = DataStorage.filmsArr
 
@@ -32,7 +31,6 @@ class FilmsListFragment : Fragment(),
 
         initFields(view)
         initRecycler(view)
-        setOnClickListeners(view)
 
         return view
     }
@@ -41,13 +39,6 @@ class FilmsListFragment : Fragment(),
         super.onResume()
         filmsRecycler.adapter?.notifyDataSetChanged()
         (activity as AppCompatActivity).findViewById<View>(R.id.bottom_nav_view).visibility = View.VISIBLE
-
-    }
-
-    override fun onClick(view: View?) {
-        when (view?.id) {
-            R.id.btn_share -> shareFriends()
-        }
     }
 
     private fun initFields(view: View) {
@@ -63,10 +54,6 @@ class FilmsListFragment : Fragment(),
         filmsRecycler.adapter = FilmsAdapter(filmsArr) { film ->
             openSelectedFilmFragment(film)
         }
-    }
-
-    private fun setOnClickListeners(view: View) {
-        view.findViewById<View>(R.id.btn_favourites).setOnClickListener(this)
     }
 
     private fun openSelectedFilmFragment(film: Film) {

@@ -34,7 +34,6 @@ class FavouriteFilmsListFragment : Fragment() {
 
         initFields(view)
         initRecycler(view)
-        setToolbar()
 
         return view
     }
@@ -57,13 +56,6 @@ class FavouriteFilmsListFragment : Fragment() {
             .replace(R.id.fragments_container, filmInfoFragment)
             .addToBackStack(null)
             .commit()
-    }
-
-    private fun setToolbar() {
-        (activity as AppCompatActivity).setSupportActionBar(favouritesToolbar)
-        favouritesToolbar.setNavigationOnClickListener {
-            (activity as AppCompatActivity).onBackPressed()
-        }
     }
 
     private fun initFields(view: View) {

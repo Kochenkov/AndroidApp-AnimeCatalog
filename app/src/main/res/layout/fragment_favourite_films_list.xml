@@ -17,9 +17,8 @@
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/favourites_toolbar"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
-            app:navigationIcon="?attr/homeAsUpIndicator"
             app:title="@string/favourites_title_text" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
