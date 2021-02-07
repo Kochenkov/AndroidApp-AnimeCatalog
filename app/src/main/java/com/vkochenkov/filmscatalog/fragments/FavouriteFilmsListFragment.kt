@@ -39,12 +39,19 @@ class FavouriteFilmsListFragment : Fragment() {
         return view
     }
 
+    override fun onResume() {
+        super.onResume()
+        (activity as AppCompatActivity).findViewById<View>(R.id.bottom_nav_view).visibility = View.VISIBLE
+    }
+
     private fun openSelectedFilmFragment(film: Film) {
         val bundle = Bundle()
         bundle.putParcelable(MainActivity.FILM, film)
 
         val filmInfoFragment = FilmInfoFragment()
         filmInfoFragment.arguments = bundle
+
+        (activity as AppCompatActivity).findViewById<View>(R.id.bottom_nav_view).visibility = View.GONE
 
         (activity as AppCompatActivity).supportFragmentManager.beginTransaction()
             .replace(R.id.fragments_container, filmInfoFragment)

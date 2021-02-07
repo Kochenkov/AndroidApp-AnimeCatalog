@@ -40,12 +40,13 @@ class FilmsListFragment : Fragment(),
     override fun onResume() {
         super.onResume()
         filmsRecycler.adapter?.notifyDataSetChanged()
+        (activity as AppCompatActivity).findViewById<View>(R.id.bottom_nav_view).visibility = View.VISIBLE
+
     }
 
     override fun onClick(view: View?) {
         when (view?.id) {
             R.id.btn_share -> shareFriends()
-            R.id.btn_favourites -> openFavouritesFilmsListFragment()
         }
     }
 
@@ -65,7 +66,6 @@ class FilmsListFragment : Fragment(),
     }
 
     private fun setOnClickListeners(view: View) {
-        view.findViewById<View>(R.id.btn_share).setOnClickListener(this)
         view.findViewById<View>(R.id.btn_favourites).setOnClickListener(this)
     }
 
@@ -76,15 +76,11 @@ class FilmsListFragment : Fragment(),
         val filmInfoFragment = FilmInfoFragment()
         filmInfoFragment.arguments = bundle
 
+        (activity as AppCompatActivity).findViewById<View>(R.id.bottom_nav_view).visibility =
+            View.GONE
+
         (activity as AppCompatActivity).supportFragmentManager.beginTransaction()
             .replace(R.id.fragments_container, filmInfoFragment)
-            .addToBackStack(null)
-            .commit()
-    }
-
-    private fun openFavouritesFilmsListFragment() {
-        (activity as AppCompatActivity).supportFragmentManager.beginTransaction()
-            .replace(R.id.fragments_container, FavouriteFilmsListFragment())
             .addToBackStack(null)
             .commit()
     }
