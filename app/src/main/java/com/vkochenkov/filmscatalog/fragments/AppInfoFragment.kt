@@ -2,18 +2,18 @@ package com.vkochenkov.filmscatalog.fragments
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
+import androidx.fragment.app.Fragment
 import com.vkochenkov.filmscatalog.R
-
 
 class AppInfoFragment : Fragment() {
 
-    lateinit var shareBtn: Button
+    private lateinit var mainToolbar: Toolbar
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -21,6 +21,7 @@ class AppInfoFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_app_info, container, false)
 
+        mainToolbar = (activity as AppCompatActivity).findViewById(R.id.main_toolbar)
         setOnClickListenerForShareBtn(view)
 
         return view
@@ -28,7 +29,10 @@ class AppInfoFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        (activity as AppCompatActivity).findViewById<View>(R.id.bottom_nav_view).visibility = View.VISIBLE
+        (activity as AppCompatActivity).findViewById<View>(R.id.bottom_nav_view).visibility =
+            View.VISIBLE
+        mainToolbar.setTitle(R.string.info_title_text)
+        mainToolbar.visibility = View.VISIBLE
     }
 
     private fun setOnClickListenerForShareBtn(view: View?) {

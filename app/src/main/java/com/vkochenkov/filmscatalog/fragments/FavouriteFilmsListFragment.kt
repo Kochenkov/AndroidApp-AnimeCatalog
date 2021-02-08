@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -21,6 +22,7 @@ class FavouriteFilmsListFragment : Fragment() {
 
     private lateinit var favouriteFilmsRecycler: RecyclerView
     private lateinit var emptyListTextView: TextView
+    private lateinit var mainToolbar: Toolbar
 
     private var favouriteFilmsList = DataStorage.favouriteFilmsList
 
@@ -40,6 +42,8 @@ class FavouriteFilmsListFragment : Fragment() {
         super.onResume()
         (activity as AppCompatActivity).findViewById<View>(R.id.bottom_nav_view).visibility =
             View.VISIBLE
+        mainToolbar.setTitle(R.string.favourites_title_text)
+        mainToolbar.visibility = View.VISIBLE
     }
 
     private fun openSelectedFilmFragment(film: Film) {
@@ -58,6 +62,7 @@ class FavouriteFilmsListFragment : Fragment() {
     private fun initFields(view: View) {
         favouriteFilmsRecycler = view.findViewById(R.id.favourite_films_list)
         emptyListTextView = view.findViewById(R.id.empty_favourites_list_text)
+        mainToolbar = (activity as AppCompatActivity).findViewById(R.id.main_toolbar)
     }
 
     private fun initRecycler(view: View) {

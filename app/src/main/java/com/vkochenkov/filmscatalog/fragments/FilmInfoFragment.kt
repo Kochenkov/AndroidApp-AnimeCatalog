@@ -27,11 +27,14 @@ class FilmInfoFragment : Fragment() {
 
         (activity as AppCompatActivity).findViewById<View>(R.id.bottom_nav_view).visibility =
             View.GONE
+        (activity as AppCompatActivity).findViewById<View>(R.id.main_toolbar).visibility =
+            View.GONE
 
         val view = inflater.inflate(R.layout.fragment_film_info, container, false)
 
         initFields(view)
         setToolbar()
+        getBundleWithFilmInfo()
         fillFieldsWithData()
 
         return view
@@ -45,9 +48,12 @@ class FilmInfoFragment : Fragment() {
     }
 
     private fun initFields(view: View) {
-        imageView = view.findViewById(R.id.image_view)
         toolbar = view.findViewById(R.id.toolbar_film_info)
+        imageView = view.findViewById(R.id.image_view)
         descriptorView = view.findViewById(R.id.tv_description_film)
+    }
+
+    private fun getBundleWithFilmInfo() {
         val bundle = arguments
         film = bundle?.getParcelable(FILM)!!
     }
