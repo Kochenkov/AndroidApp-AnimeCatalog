@@ -38,4 +38,6 @@
     <string name="bottom_menu_home_text">Home</string>
     <string name="bottom_menu_favourites_text">Favourites</string>
     <string name="bottom_menu_info_text">Info</string>
+    <string name="was_deleted_str">was deleted</string>
+    <string name="cancel_snackbar_str">cancel</string>
 </resources>

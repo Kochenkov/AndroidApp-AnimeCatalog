@@ -38,5 +38,7 @@
     <string name="bottom_menu_home_text">Домой</string>
     <string name="bottom_menu_favourites_text">Избранное</string>
     <string name="bottom_menu_info_text">Инфо</string>
+    <string name="was_deleted_str">был удален</string>
+    <string name="cancel_snackbar_str">отмена</string>
 
 </resources>
