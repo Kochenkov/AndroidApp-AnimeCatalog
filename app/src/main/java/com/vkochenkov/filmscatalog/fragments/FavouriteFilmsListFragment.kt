@@ -75,7 +75,6 @@ class FavouriteFilmsListFragment : Fragment() {
         }
         favouriteFilmsRecycler.adapter = FavouriteFilmsAdapter(
             favouriteFilmsList,
-            emptyListTextView,
             object : FavouriteFilmItemClickListener {
                 override fun detailsClickListener(film: Film) {
                     DataStorage.previousSelectedFilm = DataStorage.currentSelectedFilm
@@ -92,13 +91,7 @@ class FavouriteFilmsListFragment : Fragment() {
                     deleteItemActions(film, position)
                     showSnackBar(film, position, view)
                 }
-
             })
-        if (favouriteFilmsList.isEmpty()) {
-            emptyListTextView.visibility = View.VISIBLE
-        } else {
-            emptyListTextView.visibility = View.GONE
-        }
     }
 
     private fun showSnackBar(film: Film, position: Int, view: View) {
@@ -109,14 +102,6 @@ class FavouriteFilmsListFragment : Fragment() {
             restoreItemActions(film, position)
         }
         snackbar.show()
-    }
-
-    private fun showStubIfListEmpty(itemsList: MutableList<Film>) {
-        if (itemsList.isEmpty()) {
-            emptyListTextView.visibility = View.VISIBLE
-        } else {
-            emptyListTextView.visibility = View.GONE
-        }
     }
 
     private fun deleteItemActions(film: Film, position: Int) {
@@ -133,5 +118,13 @@ class FavouriteFilmsListFragment : Fragment() {
         favouriteFilmsRecycler.adapter?.notifyItemRemoved(position)
         favouriteFilmsRecycler.adapter?.notifyItemChanged(position)
         showStubIfListEmpty(DataStorage.favouriteFilmsList)
+    }
+
+    private fun showStubIfListEmpty(itemsList: MutableList<Film>) {
+        if (itemsList.isEmpty()) {
+            emptyListTextView.visibility = View.VISIBLE
+        } else {
+            emptyListTextView.visibility = View.GONE
+        }
     }
 }

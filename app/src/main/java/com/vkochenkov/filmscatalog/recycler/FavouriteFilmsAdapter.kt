@@ -2,14 +2,12 @@ package com.vkochenkov.filmscatalog.recycler
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.vkochenkov.filmscatalog.R
 import com.vkochenkov.filmscatalog.model.Film
 
 class FavouriteFilmsAdapter(
     private val itemsList: List<Film>,
-    private val emptyListTextView: TextView,
     private val clickListener: FavouriteFilmItemClickListener
 ) :
     RecyclerView.Adapter<FavouriteFilmViewHolder>() {
