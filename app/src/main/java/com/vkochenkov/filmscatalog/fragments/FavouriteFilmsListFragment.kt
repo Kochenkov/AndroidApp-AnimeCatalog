@@ -17,8 +17,8 @@ import com.vkochenkov.filmscatalog.MainActivity
 import com.vkochenkov.filmscatalog.R
 import com.vkochenkov.filmscatalog.data.DataStorage
 import com.vkochenkov.filmscatalog.model.Film
+import com.vkochenkov.filmscatalog.recycler.FavouriteFilmItemClickListener
 import com.vkochenkov.filmscatalog.recycler.FavouriteFilmsAdapter
-import com.vkochenkov.filmscatalog.recycler.FavouriteItemClickListener
 
 class FavouriteFilmsListFragment : Fragment() {
 
@@ -74,26 +74,26 @@ class FavouriteFilmsListFragment : Fragment() {
             favouriteFilmsRecycler.layoutManager = GridLayoutManager(view.context, 2)
         }
         favouriteFilmsRecycler.adapter = FavouriteFilmsAdapter(
-                favouriteFilmsList,
-                emptyListTextView,
-                object : FavouriteItemClickListener {
-                    override fun detailsClickListener(film: Film) {
-                        DataStorage.previousSelectedFilm = DataStorage.currentSelectedFilm
-                        DataStorage.previousSelectedFilm?.selected = false
-                        film.selected = true
-                        DataStorage.currentSelectedFilm = film
+            favouriteFilmsList,
+            emptyListTextView,
+            object : FavouriteFilmItemClickListener {
+                override fun detailsClickListener(film: Film) {
+                    DataStorage.previousSelectedFilm = DataStorage.currentSelectedFilm
+                    DataStorage.previousSelectedFilm?.selected = false
+                    film.selected = true
+                    DataStorage.currentSelectedFilm = film
 
-                        favouriteFilmsRecycler.adapter?.notifyDataSetChanged()
+                    favouriteFilmsRecycler.adapter?.notifyDataSetChanged()
 
-                        openSelectedFilmFragment(film)
-                    }
+                    openSelectedFilmFragment(film)
+                }
 
-                    override fun deleteClickListener(film: Film, position: Int) {
-                        deleteItemActions(film, position)
-                        showSnackBar(film, position, view)
-                    }
+                override fun deleteClickListener(film: Film, position: Int) {
+                    deleteItemActions(film, position)
+                    showSnackBar(film, position, view)
+                }
 
-                })
+            })
         if (favouriteFilmsList.isEmpty()) {
             emptyListTextView.visibility = View.VISIBLE
         } else {
@@ -102,7 +102,8 @@ class FavouriteFilmsListFragment : Fragment() {
     }
 
     private fun showSnackBar(film: Film, position: Int, view: View) {
-        val str = "${context?.getString(film.titleRes)} ${context?.getString(R.string.was_deleted_str)}"
+        val str =
+            "${context?.getString(film.titleRes)} ${context?.getString(R.string.was_deleted_str)}"
         val snackbar = Snackbar.make(view, str, Snackbar.LENGTH_SHORT)
         snackbar.setAction(context?.getString(R.string.cancel_snackbar_str)) {
             restoreItemActions(film, position)

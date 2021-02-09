@@ -2,9 +2,9 @@ package com.vkochenkov.filmscatalog.recycler
 
 import com.vkochenkov.filmscatalog.model.Film
 
-interface FavouriteItemClickListener {
+interface FilmItemClickListener {
 
     fun detailsClickListener(film: Film)
 
-    fun deleteClickListener(film: Film, position: Int)
+    fun likeClickListener(film: Film, position: Int)
 }

@@ -15,6 +15,7 @@ import com.vkochenkov.filmscatalog.MainActivity.Companion.FILM
 import com.vkochenkov.filmscatalog.R
 import com.vkochenkov.filmscatalog.data.DataStorage
 import com.vkochenkov.filmscatalog.model.Film
+import com.vkochenkov.filmscatalog.recycler.FilmItemClickListener
 import com.vkochenkov.filmscatalog.recycler.FilmsAdapter
 
 class FilmsListFragment : Fragment() {
@@ -57,9 +58,30 @@ class FilmsListFragment : Fragment() {
         } else {
             filmsRecycler.layoutManager = GridLayoutManager(view.context, 2)
         }
-        filmsRecycler.adapter = FilmsAdapter(filmsArr) { film ->
-            openSelectedFilmFragment(film)
-        }
+        filmsRecycler.adapter = FilmsAdapter(filmsArr, object : FilmItemClickListener {
+            override fun detailsClickListener(film: Film) {
+                DataStorage.previousSelectedFilm = DataStorage.currentSelectedFilm
+                DataStorage.previousSelectedFilm?.selected = false
+                film.selected = true
+                DataStorage.currentSelectedFilm = film
+
+                filmsRecycler.adapter?.notifyDataSetChanged()
+
+                openSelectedFilmFragment(film)
+            }
+
+            override fun likeClickListener(film: Film, position: Int) {
+                if (film.liked) {
+                    film.liked = false
+                    DataStorage.favouriteFilmsList.remove(film)
+                } else {
+                    film.liked = true
+                    DataStorage.favouriteFilmsList.add(film)
+                }
+                filmsRecycler.adapter?.notifyItemChanged(position)
+            }
+
+        })
     }
 
     private fun openSelectedFilmFragment(film: Film) {
