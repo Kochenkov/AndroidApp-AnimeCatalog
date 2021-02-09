@@ -29,10 +29,7 @@ class AppInfoFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        (activity as AppCompatActivity).findViewById<View>(R.id.bottom_nav_view).visibility =
-            View.VISIBLE
         mainToolbar.setTitle(R.string.info_title_text)
-        mainToolbar.visibility = View.VISIBLE
     }
 
     private fun setOnClickListenerForShareBtn(view: View?) {

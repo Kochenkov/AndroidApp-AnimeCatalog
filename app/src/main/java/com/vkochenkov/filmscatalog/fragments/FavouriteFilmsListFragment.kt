@@ -42,10 +42,9 @@ class FavouriteFilmsListFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        (activity as AppCompatActivity).findViewById<View>(R.id.bottom_nav_view).visibility =
-            View.VISIBLE
         mainToolbar.setTitle(R.string.favourites_title_text)
-        mainToolbar.visibility = View.VISIBLE
+
+        showStubIfListEmpty(favouriteFilmsList)
     }
 
     private fun openSelectedFilmFragment(film: Film) {
@@ -106,18 +105,18 @@ class FavouriteFilmsListFragment : Fragment() {
 
     private fun deleteItemActions(film: Film, position: Int) {
         film.liked = false
-        DataStorage.favouriteFilmsList.removeAt(position)
+        favouriteFilmsList.removeAt(position)
         favouriteFilmsRecycler.adapter?.notifyItemRemoved(position)
         favouriteFilmsRecycler.adapter?.notifyItemChanged(position)
-        showStubIfListEmpty(DataStorage.favouriteFilmsList)
+        showStubIfListEmpty(favouriteFilmsList)
     }
 
     private fun restoreItemActions(film: Film, position: Int) {
         film.liked = true
-        DataStorage.favouriteFilmsList.add(position, film)
+        favouriteFilmsList.add(position, film)
         favouriteFilmsRecycler.adapter?.notifyItemRemoved(position)
         favouriteFilmsRecycler.adapter?.notifyItemChanged(position)
-        showStubIfListEmpty(DataStorage.favouriteFilmsList)
+        showStubIfListEmpty(favouriteFilmsList)
     }
 
     private fun showStubIfListEmpty(itemsList: MutableList<Film>) {

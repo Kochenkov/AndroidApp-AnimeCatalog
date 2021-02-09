@@ -25,19 +25,34 @@ class FilmInfoFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        (activity as AppCompatActivity).findViewById<View>(R.id.bottom_nav_view).visibility =
-            View.GONE
-        (activity as AppCompatActivity).findViewById<View>(R.id.main_toolbar).visibility =
-            View.GONE
-
         val view = inflater.inflate(R.layout.fragment_film_info, container, false)
 
+        hideMainBottomAndToolBars()
         initFields(view)
         setToolbar()
         getBundleWithFilmInfo()
         fillFieldsWithData()
 
         return view
+    }
+
+    override fun onStop() {
+        super.onStop()
+        showMainBottomAndToolBars()
+    }
+
+    private fun hideMainBottomAndToolBars() {
+        (activity as AppCompatActivity).findViewById<View>(R.id.bottom_nav_view).visibility =
+            View.GONE
+        (activity as AppCompatActivity).findViewById<View>(R.id.main_toolbar).visibility =
+            View.GONE
+    }
+
+    private fun showMainBottomAndToolBars() {
+        (activity as AppCompatActivity).findViewById<View>(R.id.bottom_nav_view).visibility =
+            View.VISIBLE
+        (activity as AppCompatActivity).findViewById<View>(R.id.main_toolbar).visibility =
+            View.VISIBLE
     }
 
     private fun setToolbar() {

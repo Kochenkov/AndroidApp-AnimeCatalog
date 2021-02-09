@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.vkochenkov.filmscatalog.MainActivity.Companion.FILM
 import com.vkochenkov.filmscatalog.R
 import com.vkochenkov.filmscatalog.data.DataStorage
@@ -40,10 +41,7 @@ class FilmsListFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         filmsRecycler.adapter?.notifyDataSetChanged()
-        (activity as AppCompatActivity).findViewById<View>(R.id.bottom_nav_view).visibility =
-            View.VISIBLE
         mainToolbar.setTitle(R.string.app_name)
-        mainToolbar.visibility = View.VISIBLE
     }
 
 
