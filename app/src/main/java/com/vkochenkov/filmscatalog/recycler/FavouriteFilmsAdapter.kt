@@ -1,17 +1,14 @@
 package com.vkochenkov.filmscatalog.recycler
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.vkochenkov.filmscatalog.R
-import com.vkochenkov.filmscatalog.data.DataStorage
 import com.vkochenkov.filmscatalog.model.Film
 
 class FavouriteFilmsAdapter(
-    private val itemsList: List<Film>, private val emptyListTextView: TextView,
-    private val clickListener: (film: Film) -> Unit
+    private val itemsList: List<Film>,
+    private val clickListener: FavouriteFilmItemClickListener
 ) :
     RecyclerView.Adapter<FavouriteFilmViewHolder>() {
 
@@ -34,14 +31,7 @@ class FavouriteFilmsAdapter(
 
     private fun setOnClickListenerForDetailsBtn(holder: FavouriteFilmViewHolder, filmItem: Film) {
         holder.filmDetailsBtn.setOnClickListener {
-            DataStorage.previousSelectedFilm = DataStorage.currentSelectedFilm
-            DataStorage.previousSelectedFilm?.selected = false
-            filmItem.selected = true
-            DataStorage.currentSelectedFilm = filmItem
-
-            notifyDataSetChanged()
-
-            clickListener(filmItem)
+            clickListener.detailsClickListener(filmItem)
         }
     }
 
@@ -51,19 +41,7 @@ class FavouriteFilmsAdapter(
         position: Int
     ) {
         holder.filmDeleteBtn.setOnClickListener {
-            filmItem.liked = false
-            DataStorage.favouriteFilmsList.removeAt(position)
-            notifyItemRemoved(position)
-            notifyItemChanged(position)
-            showStubIfListEmpty()
-        }
-    }
-
-    private fun showStubIfListEmpty() {
-        if (itemsList.isEmpty()) {
-            emptyListTextView.visibility = View.VISIBLE
-        } else {
-            emptyListTextView.visibility = View.GONE
+            clickListener.deleteClickListener(filmItem, position)
         }
     }
 }

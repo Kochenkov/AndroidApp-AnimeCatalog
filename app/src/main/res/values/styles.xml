@@ -7,4 +7,10 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="ExpandedToolbarTextStyle">
+        <item name="android:shadowColor">@color/colorBlack</item>
+        <item name="android:textColor">@color/colorWhite</item>
+        <item name="android:shadowRadius">10</item>
+    </style>
+
 </resources>

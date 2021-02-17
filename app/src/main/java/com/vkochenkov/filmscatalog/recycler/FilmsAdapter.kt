@@ -4,12 +4,11 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.vkochenkov.filmscatalog.R
-import com.vkochenkov.filmscatalog.data.DataStorage
 import com.vkochenkov.filmscatalog.model.Film
 
 class FilmsAdapter(
     private val itemsList: List<Film>,
-    private val clickListener: (film: Film) -> Unit
+    private val clickListener: FilmItemClickListener
 ) :
     RecyclerView.Adapter<FilmViewHolder>() {
 
@@ -31,14 +30,7 @@ class FilmsAdapter(
 
     private fun setOnClickListenerForDetailsBtn(holder: FilmViewHolder, filmItem: Film) {
         holder.filmDetailsBtn.setOnClickListener {
-            DataStorage.previousSelectedFilm = DataStorage.currentSelectedFilm
-            DataStorage.previousSelectedFilm?.selected = false
-            filmItem.selected = true
-            DataStorage.currentSelectedFilm = filmItem
-
-            notifyDataSetChanged()
-
-            clickListener(filmItem)
+            clickListener.detailsClickListener(filmItem)
         }
     }
 
@@ -48,14 +40,7 @@ class FilmsAdapter(
         position: Int
     ) {
         holder.filmLikeBtn.setOnClickListener {
-            if (filmItem.liked) {
-                filmItem.liked = false
-                DataStorage.favouriteFilmsList.remove(filmItem)
-            } else {
-                filmItem.liked = true
-                DataStorage.favouriteFilmsList.add(filmItem)
-            }
-            notifyItemChanged(position)
+            clickListener.likeClickListener(filmItem, position)
         }
     }
 }
