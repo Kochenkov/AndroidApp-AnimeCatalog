@@ -20,7 +20,35 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        initFields()
+        setBottomNavigationClickListener()
+
+        if (supportFragmentManager.backStackEntryCount == 0) {
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.fragments_container, FilmsListFragment())
+                .addToBackStack("FilmsListFragment")
+                .commit()
+        }
+    }
+
+    override fun onBackPressed() {
+        if (supportFragmentManager.backStackEntryCount > 1) {
+            super.onBackPressed()
+        } else {
+            showExitDialog()
+        }
+    }
+
+    private fun showExitDialog() {
+        val exitDialog = ExitDialog(this, this)
+        exitDialog.show()
+    }
+
+    private fun initFields() {
         bottomNavView = findViewById(R.id.bottom_nav_view)
+    }
+
+    private fun setBottomNavigationClickListener() {
         bottomNavView.setOnNavigationItemSelectedListener { item ->
             supportFragmentManager.popBackStack()
             when (item.itemId) {
@@ -45,25 +73,5 @@ class MainActivity : AppCompatActivity() {
             }
             true
         }
-
-        if (supportFragmentManager.backStackEntryCount == 0) {
-            supportFragmentManager.beginTransaction()
-                .replace(R.id.fragments_container, FilmsListFragment())
-                .addToBackStack("FilmsListFragment")
-                .commit()
-        }
-    }
-
-    override fun onBackPressed() {
-        if (supportFragmentManager.backStackEntryCount > 1) {
-            super.onBackPressed()
-        } else {
-            showExitDialog()
-        }
-    }
-
-    private fun showExitDialog() {
-        val exitDialog = ExitDialog(this, this)
-        exitDialog.show()
     }
 }
