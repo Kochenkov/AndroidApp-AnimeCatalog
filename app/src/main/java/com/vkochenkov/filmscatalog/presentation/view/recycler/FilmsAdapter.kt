@@ -1,10 +1,10 @@
-package com.vkochenkov.filmscatalog.recycler
+package com.vkochenkov.filmscatalog.presentation.view.recycler
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.vkochenkov.filmscatalog.R
-import com.vkochenkov.filmscatalog.model.Film
+import com.vkochenkov.filmscatalog.data.Film
 
 class FilmsAdapter(
     private val itemsList: List<Film>,

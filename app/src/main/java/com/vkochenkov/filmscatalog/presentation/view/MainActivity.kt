@@ -1,12 +1,13 @@
-package com.vkochenkov.filmscatalog
+package com.vkochenkov.filmscatalog.presentation.view
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.vkochenkov.filmscatalog.dialogs.ExitDialog
-import com.vkochenkov.filmscatalog.fragments.FavouriteFilmsListFragment
-import com.vkochenkov.filmscatalog.fragments.FilmsListFragment
-import com.vkochenkov.filmscatalog.fragments.AppInfoFragment
+import com.vkochenkov.filmscatalog.R
+import com.vkochenkov.filmscatalog.presentation.view.dialogs.ExitDialog
+import com.vkochenkov.filmscatalog.presentation.view.fragments.FavouriteFilmsListFragment
+import com.vkochenkov.filmscatalog.presentation.view.fragments.FilmsListFragment
+import com.vkochenkov.filmscatalog.presentation.view.fragments.AppInfoFragment
 
 class MainActivity : AppCompatActivity() {
 

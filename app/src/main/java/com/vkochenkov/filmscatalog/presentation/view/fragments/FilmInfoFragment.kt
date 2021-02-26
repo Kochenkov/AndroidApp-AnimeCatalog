@@ -1,4 +1,4 @@
-package com.vkochenkov.filmscatalog.fragments
+package com.vkochenkov.filmscatalog.presentation.view.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,9 +9,9 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
-import com.vkochenkov.filmscatalog.MainActivity.Companion.FILM
+import com.vkochenkov.filmscatalog.presentation.view.MainActivity.Companion.FILM
 import com.vkochenkov.filmscatalog.R
-import com.vkochenkov.filmscatalog.model.Film
+import com.vkochenkov.filmscatalog.data.Film
 
 class FilmInfoFragment : Fragment() {
 

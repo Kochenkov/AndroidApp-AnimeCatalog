@@ -1,4 +1,4 @@
-package com.vkochenkov.filmscatalog.fragments
+package com.vkochenkov.filmscatalog.presentation.view.fragments
 
 import android.content.res.Configuration
 import android.os.Bundle
@@ -11,13 +11,12 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.vkochenkov.filmscatalog.MainActivity.Companion.FILM
+import com.vkochenkov.filmscatalog.presentation.view.MainActivity.Companion.FILM
 import com.vkochenkov.filmscatalog.R
 import com.vkochenkov.filmscatalog.data.DataStorage
-import com.vkochenkov.filmscatalog.model.Film
-import com.vkochenkov.filmscatalog.recycler.FilmItemClickListener
-import com.vkochenkov.filmscatalog.recycler.FilmsAdapter
+import com.vkochenkov.filmscatalog.data.Film
+import com.vkochenkov.filmscatalog.presentation.view.recycler.FilmItemClickListener
+import com.vkochenkov.filmscatalog.presentation.view.recycler.FilmsAdapter
 
 class FilmsListFragment : Fragment() {
 

@@ -1,4 +1,4 @@
-package com.vkochenkov.filmscatalog.fragments
+package com.vkochenkov.filmscatalog.presentation.view.fragments
 
 import android.content.res.Configuration
 import android.os.Bundle
@@ -13,12 +13,12 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
-import com.vkochenkov.filmscatalog.MainActivity
+import com.vkochenkov.filmscatalog.presentation.view.MainActivity
 import com.vkochenkov.filmscatalog.R
 import com.vkochenkov.filmscatalog.data.DataStorage
-import com.vkochenkov.filmscatalog.model.Film
-import com.vkochenkov.filmscatalog.recycler.FavouriteFilmItemClickListener
-import com.vkochenkov.filmscatalog.recycler.FavouriteFilmsAdapter
+import com.vkochenkov.filmscatalog.data.Film
+import com.vkochenkov.filmscatalog.presentation.view.recycler.FavouriteFilmItemClickListener
+import com.vkochenkov.filmscatalog.presentation.view.recycler.FavouriteFilmsAdapter
 
 class FavouriteFilmsListFragment : Fragment() {
 

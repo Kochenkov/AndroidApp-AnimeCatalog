@@ -1,4 +1,4 @@
-package com.vkochenkov.filmscatalog.dialogs
+package com.vkochenkov.filmscatalog.presentation.view.dialogs
 
 import android.app.Activity
 import android.app.Dialog

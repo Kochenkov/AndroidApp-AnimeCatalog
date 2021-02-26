@@ -1,6 +1,6 @@
-package com.vkochenkov.filmscatalog.recycler
+package com.vkochenkov.filmscatalog.presentation.view.recycler
 
-import com.vkochenkov.filmscatalog.model.Film
+import com.vkochenkov.filmscatalog.data.Film
 
 interface FavouriteFilmItemClickListener {
 

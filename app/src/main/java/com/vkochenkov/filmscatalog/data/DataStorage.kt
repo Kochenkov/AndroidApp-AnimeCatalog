@@ -1,7 +1,6 @@
 package com.vkochenkov.filmscatalog.data
 
 import com.vkochenkov.filmscatalog.R
-import com.vkochenkov.filmscatalog.model.Film
 
 object DataStorage {
     var filmsArr: MutableList<Film> = arrayListOf(

@@ -1,4 +1,4 @@
-package com.vkochenkov.filmscatalog.recycler
+package com.vkochenkov.filmscatalog.presentation.view.recycler
 
 import android.view.View
 import android.widget.Button
@@ -7,7 +7,7 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.vkochenkov.filmscatalog.R
-import com.vkochenkov.filmscatalog.model.Film
+import com.vkochenkov.filmscatalog.data.Film
 
 class FilmViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     val filmTitle: TextView = itemView.findViewById(R.id.item_film_title)
