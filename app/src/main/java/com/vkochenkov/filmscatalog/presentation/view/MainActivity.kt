@@ -37,6 +37,7 @@ class MainActivity : AppCompatActivity() {
                 .commit()
         }
 
+        //todo
         //for test
         App.instance?.apiService?.getAnimeList()?.enqueue(object : Callback<ResponseFromApi> {
             override fun onResponse(

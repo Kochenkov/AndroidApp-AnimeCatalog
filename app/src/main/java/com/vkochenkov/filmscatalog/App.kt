@@ -1,14 +1,14 @@
 package com.vkochenkov.filmscatalog
 
 import android.app.Application
-import com.google.gson.Gson
 import com.vkochenkov.filmscatalog.data.api.ApiService
 import com.vkochenkov.filmscatalog.data.api.ApiService.Companion.BASE_URL
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-public class App: Application() {
+class App: Application() {
 
     companion object {
         var instance: App? = null
@@ -26,13 +26,20 @@ public class App: Application() {
 
     private fun initRetrofit() {
 
+        val logging = HttpLoggingInterceptor()
+        logging.level = HttpLoggingInterceptor.Level.BODY
+
+        val okHttpClient = OkHttpClient.Builder()
+            .addInterceptor(logging)
+            .build()
+
+        val gsonConverterFactory = GsonConverterFactory.create()
+
         apiService = Retrofit.Builder()
-           // .client(OkHttpClient.Builder().build())
+            .client(okHttpClient)
             .baseUrl(BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
+            .addConverterFactory(gsonConverterFactory)
             .build()
             .create(ApiService::class.java)
-
     }
-
 }
