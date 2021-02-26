@@ -73,7 +73,6 @@ class FavouriteFilmsListFragment : Fragment() {
             favouriteFilmsRecycler.layoutManager = GridLayoutManager(view.context, 2)
         }
         favouriteFilmsRecycler.adapter = FavouriteFilmsAdapter(
-            favouriteFilmsList,
             object : FavouriteFilmItemClickListener {
                 override fun detailsClickListener(film: Film) {
                     DataStorage.previousSelectedFilm = DataStorage.currentSelectedFilm
@@ -91,6 +90,7 @@ class FavouriteFilmsListFragment : Fragment() {
                     showSnackBar(film, position, view)
                 }
             })
+        (favouriteFilmsRecycler.adapter as FavouriteFilmsAdapter).setData(favouriteFilmsList)
     }
 
     private fun showSnackBar(film: Film, position: Int, view: View) {

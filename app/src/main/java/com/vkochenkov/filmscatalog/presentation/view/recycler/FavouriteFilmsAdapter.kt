@@ -6,11 +6,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.vkochenkov.filmscatalog.R
 import com.vkochenkov.filmscatalog.data.Film
 
-class FavouriteFilmsAdapter(
-    private val itemsList: List<Film>,
-    private val clickListener: FavouriteFilmItemClickListener
-) :
+class FavouriteFilmsAdapter(private val clickListener: FavouriteFilmItemClickListener) :
     RecyclerView.Adapter<FavouriteFilmViewHolder>() {
+
+    private var itemsList: List<Film> = ArrayList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavouriteFilmViewHolder {
         val view =
@@ -27,6 +26,10 @@ class FavouriteFilmsAdapter(
 
     override fun getItemCount(): Int {
         return itemsList.size
+    }
+
+    fun setData(itemsList: List<Film>) {
+        this.itemsList = itemsList
     }
 
     private fun setOnClickListenerForDetailsBtn(holder: FavouriteFilmViewHolder, filmItem: Film) {

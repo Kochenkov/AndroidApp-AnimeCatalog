@@ -55,7 +55,7 @@ class FilmsListFragment : Fragment() {
         } else {
             filmsRecycler.layoutManager = GridLayoutManager(view.context, 2)
         }
-        filmsRecycler.adapter = FilmsAdapter(filmsArr, object : FilmItemClickListener {
+        filmsRecycler.adapter = FilmsAdapter(object : FilmItemClickListener {
             override fun detailsClickListener(film: Film) {
                 DataStorage.previousSelectedFilm = DataStorage.currentSelectedFilm
                 DataStorage.previousSelectedFilm?.selected = false
@@ -79,6 +79,7 @@ class FilmsListFragment : Fragment() {
             }
 
         })
+        (filmsRecycler.adapter as FilmsAdapter).setData(filmsArr)
     }
 
     private fun openSelectedFilmFragment(film: Film) {

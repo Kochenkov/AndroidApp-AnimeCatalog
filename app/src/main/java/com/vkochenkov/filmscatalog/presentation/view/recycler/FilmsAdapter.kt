@@ -6,11 +6,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.vkochenkov.filmscatalog.R
 import com.vkochenkov.filmscatalog.data.Film
 
-class FilmsAdapter(
-    private val itemsList: List<Film>,
-    private val clickListener: FilmItemClickListener
-) :
+class FilmsAdapter(private val clickListener: FilmItemClickListener) :
     RecyclerView.Adapter<FilmViewHolder>() {
+
+    private var itemsList: List<Film> = ArrayList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FilmViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_film, parent, false)
@@ -26,6 +25,10 @@ class FilmsAdapter(
 
     override fun getItemCount(): Int {
         return itemsList.size
+    }
+
+    fun setData(itemsList: List<Film>) {
+        this.itemsList = itemsList
     }
 
     private fun setOnClickListenerForDetailsBtn(holder: FilmViewHolder, filmItem: Film) {
