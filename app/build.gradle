@@ -6,7 +6,7 @@ android {
     compileSdkVersion 30
 
     defaultConfig {
-        applicationId "com.vkochenkov.filmscatalog"
+        applicationId "com.vkochenkov.animecatalog"
         minSdkVersion 21
         targetSdkVersion 30
         versionCode 1
