@@ -74,8 +74,8 @@ class FilmInfoFragment : Fragment() {
     }
 
     private fun fillFieldsWithData() {
-        imageView.setImageResource(film.imageRes)
-        toolbar.title = getText(film.titleRes)
-        descriptorView.text = getText(film.descriptionRes)
+       // imageView.setImageResource(film.imageRes)
+        toolbar.title = film.title
+        descriptorView.text = film.description
     }
 }

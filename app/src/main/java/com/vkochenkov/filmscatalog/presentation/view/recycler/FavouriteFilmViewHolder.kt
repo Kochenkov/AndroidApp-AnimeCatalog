@@ -16,8 +16,8 @@ class FavouriteFilmViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView
     val filmDeleteBtn: ImageView = itemView.findViewById(R.id.item_favourite_film_delete_btn)
 
     fun bind(item: Film) {
-        filmTitle.text = itemView.context.getString(item.titleRes)
-        filmImage.setImageResource(item.imageRes)
+        filmTitle.text = item.title
+       // filmImage.setImageResource(item.imageRes)
 
         if (item.selected) {
             filmTitle.setTextColor(ContextCompat.getColor(itemView.context, R.color.colorAccent))

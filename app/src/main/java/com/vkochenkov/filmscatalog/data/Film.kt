@@ -5,9 +5,9 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class Film(
-    val titleRes: Int,
-    val descriptionRes: Int,
-    val imageRes: Int
+    val title: String,
+    val description: String,
+    val imageUrl: String
 ): Parcelable {
     var selected = false
     var liked = false

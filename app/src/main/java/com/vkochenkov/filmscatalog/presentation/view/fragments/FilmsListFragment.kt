@@ -2,25 +2,32 @@ package com.vkochenkov.filmscatalog.presentation.view.fragments
 
 import android.content.res.Configuration
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.vkochenkov.filmscatalog.presentation.view.MainActivity.Companion.FILM
 import com.vkochenkov.filmscatalog.R
 import com.vkochenkov.filmscatalog.data.DataStorage
 import com.vkochenkov.filmscatalog.data.Film
+import com.vkochenkov.filmscatalog.presentation.view.MainActivity.Companion.FILM
 import com.vkochenkov.filmscatalog.presentation.view.recycler.FilmItemClickListener
 import com.vkochenkov.filmscatalog.presentation.view.recycler.FilmsAdapter
+import com.vkochenkov.filmscatalog.presentation.viewmodel.FilmsViewModel
 
 class FilmsListFragment : Fragment() {
 
-    private var filmsArr = DataStorage.filmsArr
+    //инициализируем вью-модель
+    private val filmsViewModel by lazy {
+        ViewModelProviders.of(this).get(FilmsViewModel::class.java)
+    }
 
     private lateinit var filmsRecycler: RecyclerView
     private lateinit var mainToolbar: Toolbar
@@ -34,7 +41,11 @@ class FilmsListFragment : Fragment() {
         initFields(view)
         initRecycler(view)
 
+        filmsViewModel.updateFilmsList()
+
+
         return view
+
     }
 
     override fun onResume() {
@@ -55,6 +66,7 @@ class FilmsListFragment : Fragment() {
         } else {
             filmsRecycler.layoutManager = GridLayoutManager(view.context, 2)
         }
+
         filmsRecycler.adapter = FilmsAdapter(object : FilmItemClickListener {
             override fun detailsClickListener(film: Film) {
                 DataStorage.previousSelectedFilm = DataStorage.currentSelectedFilm
@@ -77,9 +89,14 @@ class FilmsListFragment : Fragment() {
                 }
                 filmsRecycler.adapter?.notifyItemChanged(position)
             }
-
         })
-        (filmsRecycler.adapter as FilmsAdapter).setData(filmsArr)
+
+        //подписыыаем адаптер на изменение списка
+        filmsViewModel.filmsList.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                (filmsRecycler.adapter as FilmsAdapter).refreshDataList(it)
+            }
+        })
     }
 
     private fun openSelectedFilmFragment(film: Film) {

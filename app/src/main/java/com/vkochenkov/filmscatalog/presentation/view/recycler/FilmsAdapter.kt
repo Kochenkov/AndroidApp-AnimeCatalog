@@ -31,6 +31,11 @@ class FilmsAdapter(private val clickListener: FilmItemClickListener) :
         this.itemsList = itemsList
     }
 
+    fun refreshDataList(itemsList: List<Film>) {
+        setData(itemsList)
+        notifyDataSetChanged()
+    }
+
     private fun setOnClickListenerForDetailsBtn(holder: FilmViewHolder, filmItem: Film) {
         holder.filmDetailsBtn.setOnClickListener {
             clickListener.detailsClickListener(filmItem)

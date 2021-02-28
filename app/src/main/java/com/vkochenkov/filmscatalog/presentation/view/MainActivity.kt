@@ -1,19 +1,13 @@
 package com.vkochenkov.filmscatalog.presentation.view
 
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.vkochenkov.filmscatalog.App
 import com.vkochenkov.filmscatalog.R
-import com.vkochenkov.filmscatalog.data.api.pojo.ResponseFromApi
 import com.vkochenkov.filmscatalog.presentation.view.dialogs.ExitDialog
 import com.vkochenkov.filmscatalog.presentation.view.fragments.AppInfoFragment
 import com.vkochenkov.filmscatalog.presentation.view.fragments.FavouriteFilmsListFragment
 import com.vkochenkov.filmscatalog.presentation.view.fragments.FilmsListFragment
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class MainActivity : AppCompatActivity() {
 
@@ -36,24 +30,6 @@ class MainActivity : AppCompatActivity() {
                 .addToBackStack("FilmsListFragment")
                 .commit()
         }
-
-        //todo
-        //for test
-        App.instance?.apiService?.getAnimeList()?.enqueue(object : Callback<ResponseFromApi> {
-            override fun onResponse(
-                call: Call<ResponseFromApi>,
-                response: Response<ResponseFromApi>
-            ) {
-                Log.d("fromapi", response.body()?.data?.get(0)?.attributes?.title.toString())
-                //todo
-            }
-
-            override fun onFailure(call: Call<ResponseFromApi>, t: Throwable) {
-                Log.d("fromapi", t.message!!)
-
-                //todo
-            }
-        })
     }
 
     override fun onBackPressed() {
