@@ -1,5 +1,7 @@
 package com.vkochenkov.filmscatalog.presentation.view.fragments
 
+import android.graphics.Bitmap
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +11,9 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.target.CustomTarget
+import com.bumptech.glide.request.transition.Transition
 import com.vkochenkov.filmscatalog.presentation.view.MainActivity.Companion.FILM
 import com.vkochenkov.filmscatalog.R
 import com.vkochenkov.filmscatalog.data.Film
@@ -36,8 +41,8 @@ class FilmInfoFragment : Fragment() {
         return view
     }
 
-    override fun onStop() {
-        super.onStop()
+    override fun onDestroy() {
+        super.onDestroy()
         showMainBottomAndToolBars()
     }
 
@@ -74,8 +79,23 @@ class FilmInfoFragment : Fragment() {
     }
 
     private fun fillFieldsWithData() {
-       // imageView.setImageResource(film.imageRes)
         toolbar.title = film.title
         descriptorView.text = film.description
+
+        Glide.with(this)
+            .asBitmap()
+            .load(film.imageUrl)
+            .into(object : CustomTarget<Bitmap>(){
+                override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
+                    imageView.setImageBitmap(resource)
+                }
+                override fun onLoadCleared(placeholder: Drawable?) {
+                    // this is called when imageView is cleared on lifecycle call or for
+                    // some other reason.
+                    // if you are referencing the bitmap somewhere else too other than this imageView
+                    // clear it here as you can no longer have the bitmap
+                    //todo
+                }
+            })
     }
 }

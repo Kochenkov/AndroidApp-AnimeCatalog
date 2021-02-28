@@ -10,17 +10,14 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class FilmsViewModel: ViewModel() {
+class FilmsViewModel : ViewModel() {
 
     val filmsList: MutableLiveData<List<Film>> = MutableLiveData()
 
     //получение данных
     fun updateFilmsList() {
 
-        //не работает у меня при переключении между фрагментами (чищу бекстек?)
-        if (filmsList.value==null) {
-            getDataFromApi()
-        }
+        getDataFromApi()
     }
 
     //todo вынести в интерактор?

@@ -45,7 +45,6 @@ class FilmsListFragment : Fragment() {
 
 
         return view
-
     }
 
     override fun onResume() {

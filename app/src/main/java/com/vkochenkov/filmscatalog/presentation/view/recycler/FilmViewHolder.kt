@@ -23,7 +23,7 @@ class FilmViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     fun bind(item: Film) {
         filmTitle.text = item.title
 
-        //загрузка картинки по
+        //загрузка картинки по http
         Glide.with(itemView.context)
             .asBitmap()
             .load(item.imageUrl)
@@ -36,6 +36,7 @@ class FilmViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
                     // some other reason.
                     // if you are referencing the bitmap somewhere else too other than this imageView
                     // clear it here as you can no longer have the bitmap
+                    //todo
                 }
             })
 
