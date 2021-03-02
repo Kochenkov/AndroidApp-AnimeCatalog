@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.vkochenkov.filmscatalog.R
 import com.vkochenkov.filmscatalog.model.DataStorage
-import com.vkochenkov.filmscatalog.model.Film
+import com.vkochenkov.filmscatalog.model.entities.Film
 import com.vkochenkov.filmscatalog.view.MainActivity.Companion.FILM
 import com.vkochenkov.filmscatalog.view.recycler.FilmItemClickListener
 import com.vkochenkov.filmscatalog.view.recycler.FilmsAdapter
@@ -41,7 +41,7 @@ class FilmsListFragment : Fragment() {
         initRecycler(view)
 
         //обновляем данные во вью модели
-        filmsViewModel.updateFilmsList()
+        filmsViewModel.getFilms()
 
         return view
     }
@@ -68,8 +68,8 @@ class FilmsListFragment : Fragment() {
         filmsRecycler.adapter = FilmsAdapter(object : FilmItemClickListener {
             override fun detailsClickListener(film: Film) {
                 DataStorage.previousSelectedFilm = DataStorage.currentSelectedFilm
-                DataStorage.previousSelectedFilm?.selected = false
-                film.selected = true
+             //   DataStorage.previousSelectedFilm?.selected = false
+              //  film.selected = true
                 DataStorage.currentSelectedFilm = film
 
                 filmsRecycler.adapter?.notifyDataSetChanged()
@@ -90,7 +90,7 @@ class FilmsListFragment : Fragment() {
         })
 
         //подписыыаем адаптер на изменение списка
-        filmsViewModel.filmsList.observe(viewLifecycleOwner, Observer {
+        filmsViewModel.getFilms().observe(viewLifecycleOwner, Observer {
             it?.let {
                 (filmsRecycler.adapter as FilmsAdapter).refreshDataList(it)
             }

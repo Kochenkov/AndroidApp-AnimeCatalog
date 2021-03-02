@@ -1,6 +1,6 @@
 package com.vkochenkov.filmscatalog.view.recycler
 
-import com.vkochenkov.filmscatalog.model.Film
+import com.vkochenkov.filmscatalog.model.entities.Film
 
 interface FilmItemClickListener {
 

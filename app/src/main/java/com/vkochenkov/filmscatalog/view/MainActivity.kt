@@ -3,6 +3,7 @@ package com.vkochenkov.filmscatalog.view
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.vkochenkov.filmscatalog.App
 import com.vkochenkov.filmscatalog.R
 import com.vkochenkov.filmscatalog.view.dialogs.ExitDialog
 import com.vkochenkov.filmscatalog.view.fragments.AppInfoFragment

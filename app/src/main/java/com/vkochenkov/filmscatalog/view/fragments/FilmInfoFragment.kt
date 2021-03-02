@@ -16,7 +16,7 @@ import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
 import com.vkochenkov.filmscatalog.view.MainActivity.Companion.FILM
 import com.vkochenkov.filmscatalog.R
-import com.vkochenkov.filmscatalog.model.Film
+import com.vkochenkov.filmscatalog.model.entities.Film
 
 class FilmInfoFragment : Fragment() {
 

@@ -16,7 +16,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.vkochenkov.filmscatalog.view.MainActivity
 import com.vkochenkov.filmscatalog.R
 import com.vkochenkov.filmscatalog.model.DataStorage
-import com.vkochenkov.filmscatalog.model.Film
+import com.vkochenkov.filmscatalog.model.entities.Film
 import com.vkochenkov.filmscatalog.view.recycler.FavouriteFilmItemClickListener
 import com.vkochenkov.filmscatalog.view.recycler.FavouriteFilmsAdapter
 
@@ -76,8 +76,8 @@ class FavouriteFilmsListFragment : Fragment() {
             object : FavouriteFilmItemClickListener {
                 override fun detailsClickListener(film: Film) {
                     DataStorage.previousSelectedFilm = DataStorage.currentSelectedFilm
-                    DataStorage.previousSelectedFilm?.selected = false
-                    film.selected = true
+                   // DataStorage.previousSelectedFilm?.selected = false
+                 //   film.selected = true
                     DataStorage.currentSelectedFilm = film
 
                     favouriteFilmsRecycler.adapter?.notifyDataSetChanged()
