@@ -41,6 +41,7 @@ class FavouriteFilmsListFragment : Fragment() {
 
         initFields(view)
         initRecycler(view)
+        showStubIfListEmpty()
 
         return view
     }
@@ -48,8 +49,6 @@ class FavouriteFilmsListFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         mainToolbar.setTitle(R.string.favourites_title_text)
-
-        showStubIfListEmpty()
     }
 
     private fun openSelectedFilmFragment(film: Film) {
@@ -114,28 +113,25 @@ class FavouriteFilmsListFragment : Fragment() {
     }
 
     private fun deleteItemActions(film: Film, position: Int) {
-        //film.liked = false
         favouritesFilmsViewModel.unlikeFilm(film.serverName)
-     //   favouriteFilmsList.removeAt(position)
         favouriteFilmsRecycler.adapter?.notifyItemRemoved(position)
         favouriteFilmsRecycler.adapter?.notifyItemChanged(position)
-        showStubIfListEmpty()
     }
 
     private fun restoreItemActions(film: Film, position: Int) {
-       // film.liked = true
         favouritesFilmsViewModel.likeFilm(film.serverName)
-      //  favouriteFilmsList.add(position, film)
         favouriteFilmsRecycler.adapter?.notifyItemRemoved(position)
         favouriteFilmsRecycler.adapter?.notifyItemChanged(position)
-        showStubIfListEmpty()
     }
 
     private fun showStubIfListEmpty() {
-        if (favouritesFilmsViewModel.getFavourites().value == null || favouritesFilmsViewModel.getFavourites().value?.size ==0) {
-            emptyListTextView.visibility = View.VISIBLE
-        } else {
-            emptyListTextView.visibility = View.GONE
-        }
+        favouritesFilmsViewModel.getFavourites().observe(viewLifecycleOwner, Observer {
+            if (it.isEmpty()) {
+                emptyListTextView.visibility = View.VISIBLE
+            }
+            else {
+                emptyListTextView.visibility = View.GONE
+            }
+        })
     }
 }
