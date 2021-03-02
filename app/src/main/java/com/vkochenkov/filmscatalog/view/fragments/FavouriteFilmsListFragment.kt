@@ -18,7 +18,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.vkochenkov.filmscatalog.view.MainActivity
 import com.vkochenkov.filmscatalog.R
 import com.vkochenkov.filmscatalog.model.DataStorage
-import com.vkochenkov.filmscatalog.model.entities.Film
+import com.vkochenkov.filmscatalog.model.db.Film
 import com.vkochenkov.filmscatalog.view.recycler.favourites.FavouriteFilmItemClickListener
 import com.vkochenkov.filmscatalog.view.recycler.favourites.FavouriteFilmsAdapter
 import com.vkochenkov.filmscatalog.viewmodel.FavouriteFilmsViewModel

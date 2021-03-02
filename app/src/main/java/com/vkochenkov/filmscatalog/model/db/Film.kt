@@ -1,4 +1,4 @@
-package com.vkochenkov.filmscatalog.model.entities
+package com.vkochenkov.filmscatalog.model.db
 
 import android.os.Parcelable
 import androidx.room.ColumnInfo

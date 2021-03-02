@@ -4,7 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import com.vkochenkov.filmscatalog.App
 import com.vkochenkov.filmscatalog.model.api.ResponseFromApi
-import com.vkochenkov.filmscatalog.model.entities.Film
+import com.vkochenkov.filmscatalog.model.db.Film
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -24,10 +24,14 @@ class Repository {
     }
 
     fun getFilmsFromDb(): LiveData<List<Film>> {
-       return App.instance!!.database.filmsDao().getAllFilms()
+        return App.instance!!.database.filmsDao().getAllFilms()
     }
 
-    fun getFilmsFromApi() {
+    fun saveFilmsToDb(films: List<Film>) {
+        App.instance?.database?.filmsDao()?.insertAllFilms(films)
+    }
+
+    fun getFilmsFromApi(callback: GetFilmsCallback) {
         App.instance?.apiService?.getAnimeList()?.enqueue(object : Callback<ResponseFromApi> {
             override fun onResponse(
                 call: Call<ResponseFromApi>,
@@ -55,15 +59,20 @@ class Repository {
                         )
                     }
 
-                    //сохраняем список в базу
-                    App.instance?.database?.filmsDao()?.insertAllFilms(filmsListFromApi)
+                    callback.onSuccess(filmsListFromApi)
+                } else {
+                    callback.onFailure("Api response code is: " + response.code().toString())
                 }
             }
 
             override fun onFailure(call: Call<ResponseFromApi>, t: Throwable) {
-                Log.d("fromapi", t.message!!)
-                //todo
+                callback.onFailure("Something went wrong")
             }
         })
+    }
+
+    interface GetFilmsCallback {
+        fun onSuccess(films: List<Film>)
+        fun onFailure(str: String)
     }
 }

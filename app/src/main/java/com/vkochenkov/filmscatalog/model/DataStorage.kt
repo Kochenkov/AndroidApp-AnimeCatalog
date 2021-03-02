@@ -1,6 +1,6 @@
 package com.vkochenkov.filmscatalog.model
 
-import com.vkochenkov.filmscatalog.model.entities.Film
+import com.vkochenkov.filmscatalog.model.db.Film
 
 //пока этот класс вместо базы данных
 object DataStorage {

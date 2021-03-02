@@ -1,6 +1,6 @@
 package com.vkochenkov.filmscatalog.view.recycler.favourites
 
-import com.vkochenkov.filmscatalog.model.entities.Film
+import com.vkochenkov.filmscatalog.model.db.Film
 
 interface FavouriteFilmItemClickListener {
 

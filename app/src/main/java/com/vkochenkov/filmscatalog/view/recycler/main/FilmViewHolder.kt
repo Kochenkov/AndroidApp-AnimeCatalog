@@ -6,13 +6,12 @@ import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
 import com.vkochenkov.filmscatalog.R
-import com.vkochenkov.filmscatalog.model.entities.Film
+import com.vkochenkov.filmscatalog.model.db.Film
 
 class FilmViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     val filmTitle: TextView = itemView.findViewById(R.id.item_film_title)

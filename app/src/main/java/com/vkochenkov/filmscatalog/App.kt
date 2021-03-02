@@ -1,11 +1,13 @@
 package com.vkochenkov.filmscatalog
 
 import android.app.Application
+import android.widget.Toast
 import androidx.room.Room
 import com.vkochenkov.filmscatalog.model.Repository
 import com.vkochenkov.filmscatalog.model.api.ApiService
 import com.vkochenkov.filmscatalog.model.api.ApiService.Companion.BASE_URL
 import com.vkochenkov.filmscatalog.model.db.FilmsDatabase
+import com.vkochenkov.filmscatalog.model.db.Film
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -31,7 +33,16 @@ class App : Application() {
         initDatabase()
 
         //делаем первый запрос к апишке
-        repository.getFilmsFromApi()
+        repository.getFilmsFromApi(object : Repository.GetFilmsCallback {
+            override fun onSuccess(films: List<Film>) {
+                repository.saveFilmsToDb(films)
+            }
+
+            override fun onFailure(str: String) {
+                Toast.makeText(this@App, str, Toast.LENGTH_SHORT).show()
+            }
+
+        })
     }
 
     private fun initRetrofit() {

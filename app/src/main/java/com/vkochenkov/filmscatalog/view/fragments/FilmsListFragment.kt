@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.vkochenkov.filmscatalog.R
-import com.vkochenkov.filmscatalog.model.entities.Film
+import com.vkochenkov.filmscatalog.model.db.Film
 import com.vkochenkov.filmscatalog.view.MainActivity.Companion.FILM
 import com.vkochenkov.filmscatalog.view.recycler.main.FilmItemClickListener
 import com.vkochenkov.filmscatalog.view.recycler.main.FilmsAdapter
@@ -38,9 +38,6 @@ class FilmsListFragment : Fragment() {
 
         initFields(view)
         initRecycler(view)
-
-        //обновляем данные во вью модели
-        filmsViewModel.getFilms()
 
         return view
     }
@@ -83,8 +80,6 @@ class FilmsListFragment : Fragment() {
                 override fun likeClickListener(film: Film, position: Int) {
                     if (film.liked) {
                         filmsViewModel.unlikeFilm(film.serverName)
-
-                        // DataStorage.favouriteFilmsList.remove(film)
                     } else {
                         filmsViewModel.likeFilm(film.serverName)
                     }
