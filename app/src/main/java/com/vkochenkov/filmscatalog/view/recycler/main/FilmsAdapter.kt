@@ -1,4 +1,4 @@
-package com.vkochenkov.filmscatalog.view.recycler
+package com.vkochenkov.filmscatalog.view.recycler.main
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

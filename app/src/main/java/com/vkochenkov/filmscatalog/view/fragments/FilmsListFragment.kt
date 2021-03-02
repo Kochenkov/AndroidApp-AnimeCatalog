@@ -14,11 +14,10 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.vkochenkov.filmscatalog.R
-import com.vkochenkov.filmscatalog.model.DataStorage
 import com.vkochenkov.filmscatalog.model.entities.Film
 import com.vkochenkov.filmscatalog.view.MainActivity.Companion.FILM
-import com.vkochenkov.filmscatalog.view.recycler.FilmItemClickListener
-import com.vkochenkov.filmscatalog.view.recycler.FilmsAdapter
+import com.vkochenkov.filmscatalog.view.recycler.main.FilmItemClickListener
+import com.vkochenkov.filmscatalog.view.recycler.main.FilmsAdapter
 import com.vkochenkov.filmscatalog.viewmodel.FilmsViewModel
 
 class FilmsListFragment : Fragment() {
@@ -65,31 +64,35 @@ class FilmsListFragment : Fragment() {
             filmsRecycler.layoutManager = GridLayoutManager(view.context, 2)
         }
 
-        filmsRecycler.adapter = FilmsAdapter(object : FilmItemClickListener {
-            override fun detailsClickListener(film: Film) {
-                DataStorage.previousSelectedFilm = DataStorage.currentSelectedFilm
-             //   DataStorage.previousSelectedFilm?.selected = false
-              //  film.selected = true
-                DataStorage.currentSelectedFilm = film
+        filmsRecycler.adapter =
+            FilmsAdapter(object :
+                FilmItemClickListener {
+                override fun detailsClickListener(film: Film) {
 
-                filmsRecycler.adapter?.notifyDataSetChanged()
 
-                openSelectedFilmFragment(film)
-            }
+                    //   DataStorage.previousSelectedFilm = DataStorage.currentSelectedFilm
+                    //   DataStorage.previousSelectedFilm?.selected = false
+                    //  film.selected = true
+                    //  DataStorage.currentSelectedFilm = film
 
-            override fun likeClickListener(film: Film, position: Int) {
-                if (film.liked) {
-                    film.liked = false
-                    DataStorage.favouriteFilmsList.remove(film)
-                } else {
-                    film.liked = true
-                    DataStorage.favouriteFilmsList.add(film)
+                   // filmsRecycler.adapter?.notifyDataSetChanged()
+
+                    openSelectedFilmFragment(film)
                 }
-                filmsRecycler.adapter?.notifyItemChanged(position)
-            }
-        })
 
-        //подписыыаем адаптер на изменение списка
+                override fun likeClickListener(film: Film, position: Int) {
+                    if (film.liked) {
+                        filmsViewModel.unlikeFilm(film.serverName)
+
+                        // DataStorage.favouriteFilmsList.remove(film)
+                    } else {
+                        filmsViewModel.likeFilm(film.serverName)
+                    }
+                    filmsRecycler.adapter?.notifyItemChanged(position)
+                }
+            })
+
+        //подписыаем адаптер на изменение списка
         filmsViewModel.getFilms().observe(viewLifecycleOwner, Observer {
             it?.let {
                 (filmsRecycler.adapter as FilmsAdapter).refreshDataList(it)

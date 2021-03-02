@@ -11,15 +11,16 @@ import retrofit2.Response
 
 class Repository {
 
-    fun getFilms() {
-        if (App.instance?.database?.filmsDao()?.getAllFilms()==null) {
-            getFilmsFromApi()
-        }
-        getFilmsFromDb()
+    fun getFavourites(): LiveData<List<Film>> {
+        return App.instance!!.database.filmsDao().getLikedFilms()
     }
 
-    fun getFavouritesFromRepository() {
-        //todo get favourites from db
+    fun likeFilm(name: String) {
+        App.instance?.database?.filmsDao()?.setLikedFilm(name)
+    }
+
+    fun unlikeFilm(name: String) {
+        App.instance?.database?.filmsDao()?.setUnlikedFilm(name)
     }
 
     fun getFilmsFromDb(): LiveData<List<Film>> {
@@ -48,7 +49,8 @@ class Repository {
                                 serverName,
                                 title,
                                 description,
-                                imageUrl
+                                imageUrl,
+                                false
                             )
                         )
                     }

@@ -1,4 +1,4 @@
-package com.vkochenkov.filmscatalog.view.recycler
+package com.vkochenkov.filmscatalog.view.recycler.favourites
 
 import com.vkochenkov.filmscatalog.model.entities.Film
 

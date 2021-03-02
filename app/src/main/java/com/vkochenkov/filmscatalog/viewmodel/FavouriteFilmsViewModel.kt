@@ -6,13 +6,13 @@ import com.vkochenkov.filmscatalog.App
 import com.vkochenkov.filmscatalog.model.entities.Film
 import com.vkochenkov.filmscatalog.model.Repository
 
-class FilmsViewModel : ViewModel() {
+class FavouriteFilmsViewModel : ViewModel() {
 
     private var repository: Repository = App.instance!!.repository
 
-    fun getFilms(): LiveData<List<Film>>
+    fun getFavourites(): LiveData<List<Film>>
     {
-        return repository.getFilmsFromDb()
+        return repository.getFavourites()
     }
 
     fun likeFilm(name: String) {

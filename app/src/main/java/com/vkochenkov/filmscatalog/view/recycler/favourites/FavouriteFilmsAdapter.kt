@@ -1,4 +1,4 @@
-package com.vkochenkov.filmscatalog.view.recycler
+package com.vkochenkov.filmscatalog.view.recycler.favourites
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -14,7 +14,9 @@ class FavouriteFilmsAdapter(private val clickListener: FavouriteFilmItemClickLis
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavouriteFilmViewHolder {
         val view =
             LayoutInflater.from(parent.context).inflate(R.layout.item_favourite_film, parent, false)
-        return FavouriteFilmViewHolder(view)
+        return FavouriteFilmViewHolder(
+            view
+        )
     }
 
     override fun onBindViewHolder(holder: FavouriteFilmViewHolder, position: Int) {
@@ -30,6 +32,11 @@ class FavouriteFilmsAdapter(private val clickListener: FavouriteFilmItemClickLis
 
     fun setData(itemsList: List<Film>) {
         this.itemsList = itemsList
+    }
+
+    fun refreshDataList(itemsList: List<Film>) {
+        setData(itemsList)
+        notifyDataSetChanged()
     }
 
     private fun setOnClickListenerForDetailsBtn(holder: FavouriteFilmViewHolder, filmItem: Film) {

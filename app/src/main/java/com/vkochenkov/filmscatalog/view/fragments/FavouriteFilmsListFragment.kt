@@ -9,6 +9,8 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -17,16 +19,19 @@ import com.vkochenkov.filmscatalog.view.MainActivity
 import com.vkochenkov.filmscatalog.R
 import com.vkochenkov.filmscatalog.model.DataStorage
 import com.vkochenkov.filmscatalog.model.entities.Film
-import com.vkochenkov.filmscatalog.view.recycler.FavouriteFilmItemClickListener
-import com.vkochenkov.filmscatalog.view.recycler.FavouriteFilmsAdapter
+import com.vkochenkov.filmscatalog.view.recycler.favourites.FavouriteFilmItemClickListener
+import com.vkochenkov.filmscatalog.view.recycler.favourites.FavouriteFilmsAdapter
+import com.vkochenkov.filmscatalog.viewmodel.FavouriteFilmsViewModel
 
 class FavouriteFilmsListFragment : Fragment() {
+
+    private val favouritesFilmsViewModel by lazy {
+        ViewModelProviders.of(this).get(FavouriteFilmsViewModel::class.java)
+    }
 
     private lateinit var favouriteFilmsRecycler: RecyclerView
     private lateinit var emptyListTextView: TextView
     private lateinit var mainToolbar: Toolbar
-
-    private var favouriteFilmsList = DataStorage.favouriteFilmsList
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,7 +49,7 @@ class FavouriteFilmsListFragment : Fragment() {
         super.onResume()
         mainToolbar.setTitle(R.string.favourites_title_text)
 
-        showStubIfListEmpty(favouriteFilmsList)
+        showStubIfListEmpty()
     }
 
     private fun openSelectedFilmFragment(film: Film) {
@@ -72,25 +77,31 @@ class FavouriteFilmsListFragment : Fragment() {
         } else {
             favouriteFilmsRecycler.layoutManager = GridLayoutManager(view.context, 2)
         }
-        favouriteFilmsRecycler.adapter = FavouriteFilmsAdapter(
-            object : FavouriteFilmItemClickListener {
-                override fun detailsClickListener(film: Film) {
-                    DataStorage.previousSelectedFilm = DataStorage.currentSelectedFilm
-                   // DataStorage.previousSelectedFilm?.selected = false
-                 //   film.selected = true
-                    DataStorage.currentSelectedFilm = film
+        favouriteFilmsRecycler.adapter =
+            FavouriteFilmsAdapter(
+                object :
+                    FavouriteFilmItemClickListener {
+                    override fun detailsClickListener(film: Film) {
+                        DataStorage.previousSelectedFilm = DataStorage.currentSelectedFilm
+                        // DataStorage.previousSelectedFilm?.selected = false
+                        //   film.selected = true
+                        DataStorage.currentSelectedFilm = film
 
-                    favouriteFilmsRecycler.adapter?.notifyDataSetChanged()
+                        favouriteFilmsRecycler.adapter?.notifyDataSetChanged()
 
-                    openSelectedFilmFragment(film)
-                }
+                        openSelectedFilmFragment(film)
+                    }
 
-                override fun deleteClickListener(film: Film, position: Int) {
-                    deleteItemActions(film, position)
-                    showSnackBar(film, position, view)
-                }
-            })
-        (favouriteFilmsRecycler.adapter as FavouriteFilmsAdapter).setData(favouriteFilmsList)
+                    override fun deleteClickListener(film: Film, position: Int) {
+                        deleteItemActions(film, position)
+                        showSnackBar(film, position, view)
+                    }
+                })
+        favouritesFilmsViewModel.getFavourites().observe(viewLifecycleOwner, Observer {
+            it?.let {
+                (favouriteFilmsRecycler.adapter as FavouriteFilmsAdapter).refreshDataList(it)
+            }
+        })
     }
 
     private fun showSnackBar(film: Film, position: Int, view: View) {
@@ -103,23 +114,25 @@ class FavouriteFilmsListFragment : Fragment() {
     }
 
     private fun deleteItemActions(film: Film, position: Int) {
-        film.liked = false
-        favouriteFilmsList.removeAt(position)
+        //film.liked = false
+        favouritesFilmsViewModel.unlikeFilm(film.serverName)
+     //   favouriteFilmsList.removeAt(position)
         favouriteFilmsRecycler.adapter?.notifyItemRemoved(position)
         favouriteFilmsRecycler.adapter?.notifyItemChanged(position)
-        showStubIfListEmpty(favouriteFilmsList)
+        showStubIfListEmpty()
     }
 
     private fun restoreItemActions(film: Film, position: Int) {
-        film.liked = true
-        favouriteFilmsList.add(position, film)
+       // film.liked = true
+        favouritesFilmsViewModel.likeFilm(film.serverName)
+      //  favouriteFilmsList.add(position, film)
         favouriteFilmsRecycler.adapter?.notifyItemRemoved(position)
         favouriteFilmsRecycler.adapter?.notifyItemChanged(position)
-        showStubIfListEmpty(favouriteFilmsList)
+        showStubIfListEmpty()
     }
 
-    private fun showStubIfListEmpty(itemsList: MutableList<Film>) {
-        if (itemsList.isEmpty()) {
+    private fun showStubIfListEmpty() {
+        if (favouritesFilmsViewModel.getFavourites().value == null || favouritesFilmsViewModel.getFavourites().value?.size ==0) {
             emptyListTextView.visibility = View.VISIBLE
         } else {
             emptyListTextView.visibility = View.GONE

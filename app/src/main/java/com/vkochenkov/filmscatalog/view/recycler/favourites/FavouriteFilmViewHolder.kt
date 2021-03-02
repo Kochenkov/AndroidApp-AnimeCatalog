@@ -1,4 +1,4 @@
-package com.vkochenkov.filmscatalog.view.recycler
+package com.vkochenkov.filmscatalog.view.recycler.favourites
 
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
@@ -13,11 +13,11 @@ import com.bumptech.glide.request.transition.Transition
 import com.vkochenkov.filmscatalog.R
 import com.vkochenkov.filmscatalog.model.entities.Film
 
-class FilmViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-    val filmTitle: TextView = itemView.findViewById(R.id.item_film_title)
-    val filmImage: ImageView = itemView.findViewById(R.id.item_film_image)
-    val filmDetailsBtn: Button = itemView.findViewById(R.id.item_film_details_btn)
-    val filmLikeBtn: ImageView = itemView.findViewById(R.id.item_film_like_btn)
+class FavouriteFilmViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    val filmTitle: TextView = itemView.findViewById(R.id.item_favourite_film_title)
+    val filmImage: ImageView = itemView.findViewById(R.id.item_favourite_film_image)
+    val filmDetailsBtn: Button = itemView.findViewById(R.id.item_favourite_film_details_btn)
+    val filmDeleteBtn: ImageView = itemView.findViewById(R.id.item_favourite_film_delete_btn)
 
     fun bind(item: Film) {
         filmTitle.text = item.title
@@ -26,10 +26,11 @@ class FilmViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         Glide.with(itemView.context)
             .asBitmap()
             .load(item.imageUrl)
-            .into(object : CustomTarget<Bitmap>(){
+            .into(object : CustomTarget<Bitmap>() {
                 override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
                     filmImage.setImageBitmap(resource)
                 }
+
                 override fun onLoadCleared(placeholder: Drawable?) {
                     // this is called when imageView is cleared on lifecycle call or for
                     // some other reason.
@@ -44,11 +45,5 @@ class FilmViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 //        } else {
 //            filmTitle.setTextColor(ContextCompat.getColor(itemView.context, R.color.colorBlack))
 //        }
-
-        if (item.liked) {
-            filmLikeBtn.setImageResource(R.drawable.ic_heart_fill)
-        } else {
-            filmLikeBtn.setImageResource(R.drawable.ic_heart_empty)
-        }
     }
 }
