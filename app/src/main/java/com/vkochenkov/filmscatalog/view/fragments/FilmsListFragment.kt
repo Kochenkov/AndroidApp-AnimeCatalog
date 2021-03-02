@@ -1,8 +1,7 @@
-package com.vkochenkov.filmscatalog.presentation.view.fragments
+package com.vkochenkov.filmscatalog.view.fragments
 
 import android.content.res.Configuration
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,12 +14,12 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.vkochenkov.filmscatalog.R
-import com.vkochenkov.filmscatalog.data.DataStorage
-import com.vkochenkov.filmscatalog.data.Film
-import com.vkochenkov.filmscatalog.presentation.view.MainActivity.Companion.FILM
-import com.vkochenkov.filmscatalog.presentation.view.recycler.FilmItemClickListener
-import com.vkochenkov.filmscatalog.presentation.view.recycler.FilmsAdapter
-import com.vkochenkov.filmscatalog.presentation.viewmodel.FilmsViewModel
+import com.vkochenkov.filmscatalog.model.DataStorage
+import com.vkochenkov.filmscatalog.model.Film
+import com.vkochenkov.filmscatalog.view.MainActivity.Companion.FILM
+import com.vkochenkov.filmscatalog.view.recycler.FilmItemClickListener
+import com.vkochenkov.filmscatalog.view.recycler.FilmsAdapter
+import com.vkochenkov.filmscatalog.viewmodel.FilmsViewModel
 
 class FilmsListFragment : Fragment() {
 
@@ -41,8 +40,8 @@ class FilmsListFragment : Fragment() {
         initFields(view)
         initRecycler(view)
 
+        //обновляем данные во вью модели
         filmsViewModel.updateFilmsList()
-
 
         return view
     }

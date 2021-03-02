@@ -1,4 +1,4 @@
-package com.vkochenkov.filmscatalog.presentation.view.fragments
+package com.vkochenkov.filmscatalog.view.fragments
 
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
@@ -14,9 +14,9 @@ import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
-import com.vkochenkov.filmscatalog.presentation.view.MainActivity.Companion.FILM
+import com.vkochenkov.filmscatalog.view.MainActivity.Companion.FILM
 import com.vkochenkov.filmscatalog.R
-import com.vkochenkov.filmscatalog.data.Film
+import com.vkochenkov.filmscatalog.model.Film
 
 class FilmInfoFragment : Fragment() {
 

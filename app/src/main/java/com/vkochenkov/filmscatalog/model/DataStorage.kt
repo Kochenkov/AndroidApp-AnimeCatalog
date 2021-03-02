@@ -1,4 +1,4 @@
-package com.vkochenkov.filmscatalog.data
+package com.vkochenkov.filmscatalog.model
 
 //пока этот класс вместо базы данных
 object DataStorage {

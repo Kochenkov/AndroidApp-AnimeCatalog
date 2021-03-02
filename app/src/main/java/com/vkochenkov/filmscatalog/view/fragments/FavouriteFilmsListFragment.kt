@@ -1,4 +1,4 @@
-package com.vkochenkov.filmscatalog.presentation.view.fragments
+package com.vkochenkov.filmscatalog.view.fragments
 
 import android.content.res.Configuration
 import android.os.Bundle
@@ -13,12 +13,12 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
-import com.vkochenkov.filmscatalog.presentation.view.MainActivity
+import com.vkochenkov.filmscatalog.view.MainActivity
 import com.vkochenkov.filmscatalog.R
-import com.vkochenkov.filmscatalog.data.DataStorage
-import com.vkochenkov.filmscatalog.data.Film
-import com.vkochenkov.filmscatalog.presentation.view.recycler.FavouriteFilmItemClickListener
-import com.vkochenkov.filmscatalog.presentation.view.recycler.FavouriteFilmsAdapter
+import com.vkochenkov.filmscatalog.model.DataStorage
+import com.vkochenkov.filmscatalog.model.Film
+import com.vkochenkov.filmscatalog.view.recycler.FavouriteFilmItemClickListener
+import com.vkochenkov.filmscatalog.view.recycler.FavouriteFilmsAdapter
 
 class FavouriteFilmsListFragment : Fragment() {
 
@@ -94,8 +94,7 @@ class FavouriteFilmsListFragment : Fragment() {
     }
 
     private fun showSnackBar(film: Film, position: Int, view: View) {
-        val str =
-            "${film.title} ${context?.getString(R.string.was_deleted_str)}"
+        val str = "${film.title} ${context?.getString(R.string.was_deleted_str)}"
         val snackbar = Snackbar.make(view, str, Snackbar.LENGTH_SHORT)
         snackbar.setAction(context?.getString(R.string.cancel_snackbar_str)) {
             restoreItemActions(film, position)

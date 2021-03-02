@@ -1,6 +1,5 @@
-package com.vkochenkov.filmscatalog.data.api
+package com.vkochenkov.filmscatalog.model.api
 
-import com.vkochenkov.filmscatalog.data.api.pojo.ResponseFromApi
 import retrofit2.Call
 import retrofit2.http.GET
 

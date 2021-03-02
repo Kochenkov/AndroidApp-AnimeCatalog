@@ -1,8 +1,8 @@
 package com.vkochenkov.filmscatalog
 
 import android.app.Application
-import com.vkochenkov.filmscatalog.data.api.ApiService
-import com.vkochenkov.filmscatalog.data.api.ApiService.Companion.BASE_URL
+import com.vkochenkov.filmscatalog.model.api.ApiService
+import com.vkochenkov.filmscatalog.model.api.ApiService.Companion.BASE_URL
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit

@@ -1,4 +1,4 @@
-package com.vkochenkov.filmscatalog.data
+package com.vkochenkov.filmscatalog.model
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize

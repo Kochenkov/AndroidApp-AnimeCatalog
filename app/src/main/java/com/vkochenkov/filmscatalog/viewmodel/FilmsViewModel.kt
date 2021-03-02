@@ -1,11 +1,11 @@
-package com.vkochenkov.filmscatalog.presentation.viewmodel
+package com.vkochenkov.filmscatalog.viewmodel
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.vkochenkov.filmscatalog.App
-import com.vkochenkov.filmscatalog.data.Film
-import com.vkochenkov.filmscatalog.data.api.pojo.ResponseFromApi
+import com.vkochenkov.filmscatalog.model.Film
+import com.vkochenkov.filmscatalog.model.api.ResponseFromApi
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -20,7 +20,7 @@ class FilmsViewModel : ViewModel() {
         getDataFromApi()
     }
 
-    //todo вынести в интерактор?
+    //todo вынести в репозиторий?
     fun getDataFromApi() {
         App.instance?.apiService?.getAnimeList()?.enqueue(object : Callback<ResponseFromApi> {
             override fun onResponse(
