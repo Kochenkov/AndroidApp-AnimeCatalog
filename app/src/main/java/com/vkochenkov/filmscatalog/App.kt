@@ -33,7 +33,7 @@ class App : Application() {
         initDatabase()
 
         //делаем первый запрос к апишке
-        repository.getFilmsFromApi(object : Repository.GetFilmsFromApiCallback {
+        repository.getFilmsFromApi(0, object : Repository.GetFilmsFromApiCallback {
             override fun onSuccess(films: List<Film>) {
                 repository.saveFilmsToDb(films)
             }
@@ -47,7 +47,7 @@ class App : Application() {
     private fun initRetrofit() {
 
         val logging = HttpLoggingInterceptor()
-        logging.level = HttpLoggingInterceptor.Level.BODY
+        logging.level = HttpLoggingInterceptor.Level.HEADERS
 
         val okHttpClient = OkHttpClient.Builder()
             .addInterceptor(logging)

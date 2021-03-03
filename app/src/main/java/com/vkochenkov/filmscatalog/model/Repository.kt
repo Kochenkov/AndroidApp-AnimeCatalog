@@ -3,6 +3,7 @@ package com.vkochenkov.filmscatalog.model
 import android.util.Log
 import androidx.lifecycle.LiveData
 import com.vkochenkov.filmscatalog.App
+import com.vkochenkov.filmscatalog.model.api.ApiService.Companion.PAGES_SIZE
 import com.vkochenkov.filmscatalog.model.api.ResponseFromApi
 import com.vkochenkov.filmscatalog.model.db.Film
 import retrofit2.Call
@@ -31,8 +32,8 @@ class Repository {
         App.instance?.database?.filmsDao()?.insertAllFilms(films)
     }
 
-    fun getFilmsFromApi(callback: GetFilmsFromApiCallback) {
-        App.instance?.apiService?.getAnimeList()?.enqueue(object : Callback<ResponseFromApi> {
+    fun getFilmsFromApi(sincePage: Int, callback: GetFilmsFromApiCallback) {
+        App.instance?.apiService?.getAnimeListWithPages(PAGES_SIZE, sincePage)?.enqueue(object : Callback<ResponseFromApi> {
             override fun onResponse(
                 call: Call<ResponseFromApi>,
                 response: Response<ResponseFromApi>
@@ -70,6 +71,7 @@ class Repository {
             }
         })
     }
+
 
     interface GetFilmsFromApiCallback {
         fun onSuccess(films: List<Film>)
