@@ -31,7 +31,7 @@ class Repository {
         App.instance?.database?.filmsDao()?.insertAllFilms(films)
     }
 
-    fun getFilmsFromApi(callback: GetFilmsCallback) {
+    fun getFilmsFromApi(callback: GetFilmsFromApiCallback) {
         App.instance?.apiService?.getAnimeList()?.enqueue(object : Callback<ResponseFromApi> {
             override fun onResponse(
                 call: Call<ResponseFromApi>,
@@ -61,17 +61,17 @@ class Repository {
 
                     callback.onSuccess(filmsListFromApi)
                 } else {
-                    callback.onFailure("Api response code is: " + response.code().toString())
+                    callback.onFailure("Не удалось загрузить данные. Код ошибки: " + response.code().toString())
                 }
             }
 
             override fun onFailure(call: Call<ResponseFromApi>, t: Throwable) {
-                callback.onFailure("Something went wrong")
+                callback.onFailure("Не удалось подключиться к серверу, возможно отсутствует интернет подключение")
             }
         })
     }
 
-    interface GetFilmsCallback {
+    interface GetFilmsFromApiCallback {
         fun onSuccess(films: List<Film>)
         fun onFailure(str: String)
     }

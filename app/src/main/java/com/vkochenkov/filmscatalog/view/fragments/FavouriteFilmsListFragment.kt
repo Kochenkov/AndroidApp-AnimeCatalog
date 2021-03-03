@@ -17,7 +17,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.vkochenkov.filmscatalog.view.MainActivity
 import com.vkochenkov.filmscatalog.R
-import com.vkochenkov.filmscatalog.model.DataStorage
+import com.vkochenkov.filmscatalog.model.StoreSelectedFilm
 import com.vkochenkov.filmscatalog.model.db.Film
 import com.vkochenkov.filmscatalog.view.recycler.favourites.FavouriteFilmItemClickListener
 import com.vkochenkov.filmscatalog.view.recycler.favourites.FavouriteFilmsAdapter
@@ -81,11 +81,8 @@ class FavouriteFilmsListFragment : Fragment() {
                 object :
                     FavouriteFilmItemClickListener {
                     override fun detailsClickListener(film: Film) {
-                        DataStorage.previousSelectedFilm = DataStorage.currentSelectedFilm
-                        // DataStorage.previousSelectedFilm?.selected = false
-                        //   film.selected = true
-                        DataStorage.currentSelectedFilm = film
 
+                        StoreSelectedFilm.currentSelectedFilm = film
                         favouriteFilmsRecycler.adapter?.notifyDataSetChanged()
 
                         openSelectedFilmFragment(film)
@@ -96,7 +93,7 @@ class FavouriteFilmsListFragment : Fragment() {
                         showSnackBar(film, position, view)
                     }
                 })
-        favouritesFilmsViewModel.getFavourites().observe(viewLifecycleOwner, Observer {
+        favouritesFilmsViewModel.favouriteFilmsLiveData.observe(viewLifecycleOwner, Observer {
             it?.let {
                 (favouriteFilmsRecycler.adapter as FavouriteFilmsAdapter).refreshDataList(it)
             }
@@ -125,7 +122,7 @@ class FavouriteFilmsListFragment : Fragment() {
     }
 
     private fun showStubIfListEmpty() {
-        favouritesFilmsViewModel.getFavourites().observe(viewLifecycleOwner, Observer {
+        favouritesFilmsViewModel.favouriteFilmsLiveData.observe(viewLifecycleOwner, Observer {
             if (it.isEmpty()) {
                 emptyListTextView.visibility = View.VISIBLE
             }

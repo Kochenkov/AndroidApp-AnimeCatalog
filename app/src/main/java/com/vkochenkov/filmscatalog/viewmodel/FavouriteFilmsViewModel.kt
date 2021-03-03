@@ -10,10 +10,13 @@ class FavouriteFilmsViewModel : ViewModel() {
 
     private var repository: Repository = App.instance!!.repository
 
-    fun getFavourites(): LiveData<List<Film>>
-    {
-        return repository.getFavourites()
-    }
+    val favouriteFilmsLiveData: LiveData<List<Film>>
+        get()  = repository.getFavourites()
+
+//    fun getFavourites(): LiveData<List<Film>>
+//    {
+//        return repository.getFavourites()
+//    }
 
     fun likeFilm(name: String) {
         repository.likeFilm(name)

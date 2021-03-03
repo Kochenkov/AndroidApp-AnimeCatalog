@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.vkochenkov.filmscatalog.R
+import com.vkochenkov.filmscatalog.model.StoreSelectedFilm
 import com.vkochenkov.filmscatalog.model.db.Film
 import com.vkochenkov.filmscatalog.view.MainActivity.Companion.FILM
 import com.vkochenkov.filmscatalog.view.recycler.main.FilmItemClickListener
@@ -66,13 +67,8 @@ class FilmsListFragment : Fragment() {
                 FilmItemClickListener {
                 override fun detailsClickListener(film: Film) {
 
-
-                    //   DataStorage.previousSelectedFilm = DataStorage.currentSelectedFilm
-                    //   DataStorage.previousSelectedFilm?.selected = false
-                    //  film.selected = true
-                    //  DataStorage.currentSelectedFilm = film
-
-                   // filmsRecycler.adapter?.notifyDataSetChanged()
+                    StoreSelectedFilm.currentSelectedFilm = film
+                    filmsRecycler.adapter?.notifyDataSetChanged()
 
                     openSelectedFilmFragment(film)
                 }
@@ -88,7 +84,7 @@ class FilmsListFragment : Fragment() {
             })
 
         //подписыаем адаптер на изменение списка
-        filmsViewModel.getFilms().observe(viewLifecycleOwner, Observer {
+        filmsViewModel.filmsLiveData.observe(viewLifecycleOwner, Observer {
             it?.let {
                 (filmsRecycler.adapter as FilmsAdapter).refreshDataList(it)
             }

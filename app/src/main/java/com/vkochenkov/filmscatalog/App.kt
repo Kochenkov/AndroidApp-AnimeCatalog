@@ -33,7 +33,7 @@ class App : Application() {
         initDatabase()
 
         //делаем первый запрос к апишке
-        repository.getFilmsFromApi(object : Repository.GetFilmsCallback {
+        repository.getFilmsFromApi(object : Repository.GetFilmsFromApiCallback {
             override fun onSuccess(films: List<Film>) {
                 repository.saveFilmsToDb(films)
             }
@@ -41,7 +41,6 @@ class App : Application() {
             override fun onFailure(str: String) {
                 Toast.makeText(this@App, str, Toast.LENGTH_SHORT).show()
             }
-
         })
     }
 
