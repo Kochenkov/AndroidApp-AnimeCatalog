@@ -1,7 +1,5 @@
 package com.vkochenkov.filmscatalog.view.recycler.main
 
-import android.graphics.Bitmap
-import android.graphics.drawable.Drawable
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
@@ -9,8 +7,7 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.bumptech.glide.request.target.CustomTarget
-import com.bumptech.glide.request.transition.Transition
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.vkochenkov.filmscatalog.R
 import com.vkochenkov.filmscatalog.model.StoreSelectedFilm
 import com.vkochenkov.filmscatalog.model.db.Film
@@ -26,20 +23,9 @@ class FilmViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         //загрузка картинки по http
         Glide.with(itemView.context)
-            .asBitmap()
             .load(item.imageUrl)
-            .into(object : CustomTarget<Bitmap>(){
-                override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
-                    filmImage.setImageBitmap(resource)
-                }
-                override fun onLoadCleared(placeholder: Drawable?) {
-                    // this is called when imageView is cleared on lifecycle call or for
-                    // some other reason.
-                    // if you are referencing the bitmap somewhere else too other than this imageView
-                    // clear it here as you can no longer have the bitmap
-                    //todo
-                }
-            })
+            .diskCacheStrategy(DiskCacheStrategy.ALL)
+            .into(filmImage)
 
         if (item.serverName.equals(StoreSelectedFilm.currentSelectedFilm?.serverName)) {
             filmTitle.setTextColor(ContextCompat.getColor(itemView.context, R.color.colorAccent))
