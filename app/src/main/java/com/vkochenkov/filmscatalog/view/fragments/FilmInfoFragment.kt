@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
 import com.vkochenkov.filmscatalog.view.MainActivity.Companion.FILM
@@ -82,20 +83,11 @@ class FilmInfoFragment : Fragment() {
         toolbar.title = film.title
         descriptorView.text = film.description
 
-        Glide.with(this)
-            .asBitmap()
-            .load(film.imageUrl)
-            .into(object : CustomTarget<Bitmap>(){
-                override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
-                    imageView.setImageBitmap(resource)
-                }
-                override fun onLoadCleared(placeholder: Drawable?) {
-                    // this is called when imageView is cleared on lifecycle call or for
-                    // some other reason.
-                    // if you are referencing the bitmap somewhere else too other than this imageView
-                    // clear it here as you can no longer have the bitmap
-                    //todo
-                }
-            })
+        context?.let {
+            Glide.with(it)
+                .load(film.imageUrl)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .into(imageView)
+        }
     }
 }

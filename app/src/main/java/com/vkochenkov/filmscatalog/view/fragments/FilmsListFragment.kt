@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.vkochenkov.filmscatalog.R
 import com.vkochenkov.filmscatalog.model.LocalDataStore
+import com.vkochenkov.filmscatalog.model.LocalDataStore.isFirstStart
 import com.vkochenkov.filmscatalog.model.db.Film
 import com.vkochenkov.filmscatalog.view.MainActivity.Companion.FILM
 import com.vkochenkov.filmscatalog.view.recycler.main.FilmItemClickListener
@@ -46,12 +47,16 @@ class FilmsListFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_films_list, container, false)
 
         initFields(view)
-        initRecycler(view)
-        initPagination()
+        initRecyclerView(view)
+        initRecyclerPagination()
         initSwipeToRefresh()
+        initOnDataChangeObserver()
         initOnErrorObserver()
 
-        filmsViewModel.getFilmsWithPagging(progressBar)
+//        if (isFirstStart) {
+//            isFirstStart = false
+            filmsViewModel.getFilmsWithPagging(progressBar)
+//        }
 
         return view
     }
@@ -65,7 +70,7 @@ class FilmsListFragment : Fragment() {
     private fun initOnErrorObserver() {
         filmsViewModel.errorLiveData.observe(viewLifecycleOwner, Observer {
             it?.let {
-                Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, it, Toast.LENGTH_LONG).show()
             }
         })
     }
@@ -83,7 +88,7 @@ class FilmsListFragment : Fragment() {
         })
     }
 
-    private fun initPagination() {
+    private fun initRecyclerPagination() {
         filmsRecycler.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 if (dy > 0) { //check for scroll down
@@ -101,7 +106,7 @@ class FilmsListFragment : Fragment() {
         })
     }
 
-    private fun initRecycler(view: View) {
+    private fun initRecyclerView(view: View) {
         if (this.resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
             filmsRecycler.layoutManager = LinearLayoutManager(view.context)
         } else {
@@ -129,14 +134,14 @@ class FilmsListFragment : Fragment() {
                     filmsRecycler.adapter?.notifyItemChanged(position)
                 }
             })
+    }
 
-        //подписыаем адаптер на изменение списка
+    private fun initOnDataChangeObserver() {
         filmsViewModel.filmsLiveData.observe(viewLifecycleOwner, Observer {
             it?.let {
                 (filmsRecycler.adapter as FilmsAdapter).refreshDataList(it)
             }
         })
-
     }
 
     private fun openSelectedFilmFragment(film: Film) {

@@ -15,10 +15,10 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
-import com.vkochenkov.filmscatalog.view.MainActivity
 import com.vkochenkov.filmscatalog.R
 import com.vkochenkov.filmscatalog.model.LocalDataStore
 import com.vkochenkov.filmscatalog.model.db.Film
+import com.vkochenkov.filmscatalog.view.MainActivity
 import com.vkochenkov.filmscatalog.view.recycler.favourites.FavouriteFilmItemClickListener
 import com.vkochenkov.filmscatalog.view.recycler.favourites.FavouriteFilmsAdapter
 import com.vkochenkov.filmscatalog.viewmodel.FavouriteFilmsViewModel
@@ -42,6 +42,7 @@ class FavouriteFilmsListFragment : Fragment() {
         initFields(view)
         initRecycler(view)
         showStubIfListEmpty()
+        initOnDataChangeObserver()
 
         return view
     }
@@ -77,27 +78,19 @@ class FavouriteFilmsListFragment : Fragment() {
             favouriteFilmsRecycler.layoutManager = GridLayoutManager(view.context, 2)
         }
         favouriteFilmsRecycler.adapter =
-            FavouriteFilmsAdapter(
-                object :
-                    FavouriteFilmItemClickListener {
-                    override fun detailsClickListener(film: Film) {
+            FavouriteFilmsAdapter(object : FavouriteFilmItemClickListener {
+                override fun detailsClickListener(film: Film) {
 
-                        LocalDataStore.currentSelectedFilm = film
-                        favouriteFilmsRecycler.adapter?.notifyDataSetChanged()
+                    LocalDataStore.currentSelectedFilm = film
+                    favouriteFilmsRecycler.adapter?.notifyDataSetChanged()
+                    openSelectedFilmFragment(film)
+                }
 
-                        openSelectedFilmFragment(film)
-                    }
-
-                    override fun deleteClickListener(film: Film, position: Int) {
-                        deleteItemActions(film, position)
-                        showSnackBar(film, position, view)
-                    }
-                })
-        favouritesFilmsViewModel.favouriteFilmsLiveData.observe(viewLifecycleOwner, Observer {
-            it?.let {
-                (favouriteFilmsRecycler.adapter as FavouriteFilmsAdapter).refreshDataList(it)
-            }
-        })
+                override fun deleteClickListener(film: Film, position: Int) {
+                    deleteItemActions(film, position)
+                    showSnackBar(film, position, view)
+                }
+            })
     }
 
     private fun showSnackBar(film: Film, position: Int, view: View) {
@@ -121,12 +114,19 @@ class FavouriteFilmsListFragment : Fragment() {
         favouriteFilmsRecycler.adapter?.notifyItemChanged(position)
     }
 
+    private fun initOnDataChangeObserver() {
+        favouritesFilmsViewModel.favouriteFilmsLiveData.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                (favouriteFilmsRecycler.adapter as FavouriteFilmsAdapter).refreshDataList(it)
+            }
+        })
+    }
+
     private fun showStubIfListEmpty() {
         favouritesFilmsViewModel.favouriteFilmsLiveData.observe(viewLifecycleOwner, Observer {
             if (it.isEmpty()) {
                 emptyListTextView.visibility = View.VISIBLE
-            }
-            else {
+            } else {
                 emptyListTextView.visibility = View.GONE
             }
         })
