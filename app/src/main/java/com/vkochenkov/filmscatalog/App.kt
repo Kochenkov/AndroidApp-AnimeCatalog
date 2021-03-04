@@ -34,16 +34,16 @@ class App : Application() {
         initDatabase()
 
         //делаем первый запрос к апишке
-        repository.getFilmsFromApi(0, object : Repository.GetFilmsFromApiCallback {
-            override fun onSuccess(films: List<Film>) {
-                repository.saveFilmsToDb(films)
-                currentPageSize += 10
-            }
-
-            override fun onFailure(str: String) {
-                Toast.makeText(this@App, str, Toast.LENGTH_SHORT).show()
-            }
-        })
+//        repository.getFilmsFromApi(0, object : Repository.GetFilmsFromApiCallback {
+//            override fun onSuccess(films: List<Film>) {
+//                repository.saveFilmsToDb(films)
+//                currentPageSize += 10
+//            }
+//
+//            override fun onFailure(str: String) {
+//                Toast.makeText(this@App, str, Toast.LENGTH_SHORT).show()
+//            }
+//        })
     }
 
     private fun initRetrofit() {

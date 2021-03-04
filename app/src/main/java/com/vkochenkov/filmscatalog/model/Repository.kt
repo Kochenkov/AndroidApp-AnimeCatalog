@@ -17,6 +17,10 @@ class Repository {
         return App.instance!!.database.filmsDao().getFilmsWithPagination(currentPageSize)
     }
 
+    fun getFilmsWithPagination(page: Int): List<Film>? {
+        return App.instance!!.database.filmsDao().getFilmsWithPagination(page)
+    }
+
     fun getFavourites(): LiveData<List<Film>> {
         return App.instance!!.database.filmsDao().getLikedFilms()
     }

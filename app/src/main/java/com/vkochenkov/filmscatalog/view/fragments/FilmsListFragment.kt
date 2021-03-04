@@ -57,11 +57,14 @@ class FilmsListFragment : Fragment() {
         initRecycler(view)
         initPagination()
         initSwipeToRefresh()
+        initOnErrorObserver()
 
-        filmsViewModel.getPaggingDataFromDb()
+        filmsViewModel.getFilmsWithPagging(progressBar)
 
         return view
     }
+
+
 
     override fun onResume() {
         super.onResume()
@@ -69,24 +72,13 @@ class FilmsListFragment : Fragment() {
         mainToolbar.setTitle(R.string.app_name)
     }
 
-    private fun initSwipeToRefresh() {
-        swipeRefresh.setOnRefreshListener(SwipeRefreshLayout.OnRefreshListener {
-            App.instance?.repository?.getFilmsFromApi(0, object : Repository.GetFilmsFromApiCallback {
-                override fun onSuccess(films: List<Film>) {
-                    App.instance?.repository?.saveFilmsToDb(films)
-                    filmsViewModel.getPaggingDataFromDb()
-                    swipeRefresh.isRefreshing = false
-                }
-
-                override fun onFailure(str: String) {
-                    Toast.makeText(App.instance?.applicationContext, str, Toast.LENGTH_SHORT).show()
-                    swipeRefresh.isRefreshing = false
-                    filmsViewModel.getPaggingDataFromDb()
-                }
-            })
+    private fun initOnErrorObserver() {
+        filmsViewModel.errorLiveData.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
+            }
         })
     }
-
 
     private fun initFields(view: View) {
         filmsRecycler = view.findViewById(R.id.films_list)
@@ -94,6 +86,14 @@ class FilmsListFragment : Fragment() {
         progressBar = view.findViewById(R.id.films_progress_bar)
         nestedScrollView = view.findViewById(R.id.films_nested_scroll)
         swipeRefresh = view.findViewById(R.id.films_swipe_refresh)
+    }
+
+    private fun initSwipeToRefresh() {
+        swipeRefresh.setOnRefreshListener(SwipeRefreshLayout.OnRefreshListener {
+            filmsViewModel.getFilmsWithPagging(swipeRefresh)
+            currentPageSize += 10
+
+        })
     }
 
     private fun initPagination() {
@@ -106,26 +106,28 @@ class FilmsListFragment : Fragment() {
                 //показывать прогресс бар
 
                 //инкрементить пейдж
+                filmsViewModel.getFilmsWithPagging(progressBar)
+                currentPageSize += 10
 
-                progressBar.visibility = View.VISIBLE
+                //progressBar.visibility = View.VISIBLE
 
                 //делать запрос к апихе с новыми пейджами
-                App.instance?.repository?.getFilmsFromApi(currentPageSize, object : Repository.GetFilmsFromApiCallback {
-                    override fun onSuccess(films: List<Film>) {
-                        App.instance?.repository?.saveFilmsToDb(films)
-                        filmsViewModel.getPaggingDataFromDb()
-                        progressBar.visibility = View.INVISIBLE
-                        currentPageSize += 10
-                    }
-
-                    override fun onFailure(str: String) {
-                        Toast.makeText(App.instance?.applicationContext, str, Toast.LENGTH_SHORT).show()
-                        progressBar.visibility = View.INVISIBLE
-                        //todo
-                        currentPageSize += 10
-                        filmsViewModel.getPaggingDataFromDb()
-                    }
-                })
+//                App.instance?.repository?.getFilmsFromApi(currentPageSize, object : Repository.GetFilmsFromApiCallback {
+//                    override fun onSuccess(films: List<Film>) {
+//                        App.instance?.repository?.saveFilmsToDb(films)
+//                        filmsViewModel.getPaggingDataFromDb()
+//                        progressBar.visibility = View.INVISIBLE
+//                        currentPageSize += 10
+//                    }
+//
+//                    override fun onFailure(str: String) {
+//                        Toast.makeText(App.instance?.applicationContext, str, Toast.LENGTH_SHORT).show()
+//                        progressBar.visibility = View.INVISIBLE
+//                        //todo
+//                        currentPageSize += 10
+//                        filmsViewModel.getPaggingDataFromDb()
+//                    }
+//                })
             }
         })
     }
@@ -150,8 +152,10 @@ class FilmsListFragment : Fragment() {
 
                 override fun likeClickListener(film: Film, position: Int) {
                     if (film.liked) {
+                        film.liked = false
                         filmsViewModel.unlikeFilm(film.serverName)
                     } else {
+                        film.liked = true
                         filmsViewModel.likeFilm(film.serverName)
                     }
                     filmsRecycler.adapter?.notifyItemChanged(position)
