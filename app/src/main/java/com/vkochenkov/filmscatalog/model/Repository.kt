@@ -13,6 +13,10 @@ import retrofit2.Response
 
 class Repository {
 
+    fun getFilmsWithPagination(): List<Film>? {
+        return App.instance!!.database.filmsDao().getFilmsWithPagination(currentPageSize)
+    }
+
     fun getFavourites(): LiveData<List<Film>> {
         return App.instance!!.database.filmsDao().getLikedFilms()
     }

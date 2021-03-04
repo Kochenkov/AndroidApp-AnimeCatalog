@@ -58,6 +58,8 @@ class FilmsListFragment : Fragment() {
         initPagination()
         initSwipeToRefresh()
 
+        filmsViewModel.getPaggingDataFromDb()
+
         return view
     }
 
@@ -72,12 +74,14 @@ class FilmsListFragment : Fragment() {
             App.instance?.repository?.getFilmsFromApi(0, object : Repository.GetFilmsFromApiCallback {
                 override fun onSuccess(films: List<Film>) {
                     App.instance?.repository?.saveFilmsToDb(films)
+                    filmsViewModel.getPaggingDataFromDb()
                     swipeRefresh.isRefreshing = false
                 }
 
                 override fun onFailure(str: String) {
                     Toast.makeText(App.instance?.applicationContext, str, Toast.LENGTH_SHORT).show()
                     swipeRefresh.isRefreshing = false
+                    filmsViewModel.getPaggingDataFromDb()
                 }
             })
         })
@@ -109,6 +113,7 @@ class FilmsListFragment : Fragment() {
                 App.instance?.repository?.getFilmsFromApi(currentPageSize, object : Repository.GetFilmsFromApiCallback {
                     override fun onSuccess(films: List<Film>) {
                         App.instance?.repository?.saveFilmsToDb(films)
+                        filmsViewModel.getPaggingDataFromDb()
                         progressBar.visibility = View.INVISIBLE
                         currentPageSize += 10
                     }
@@ -118,6 +123,7 @@ class FilmsListFragment : Fragment() {
                         progressBar.visibility = View.INVISIBLE
                         //todo
                         currentPageSize += 10
+                        filmsViewModel.getPaggingDataFromDb()
                     }
                 })
             }

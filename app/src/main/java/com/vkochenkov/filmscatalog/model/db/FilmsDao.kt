@@ -33,5 +33,5 @@ interface FilmsDao {
 //    SELECT * FROM SOULS ORDER BY col LIMIT 10 OFFSET 10
 
     @Query("SELECT * FROM Films LIMIT :pages+10")
-    fun getFilmsWithPagination(pages: Int): LiveData<List<Film>>
+    fun getFilmsWithPagination(pages: Int): List<Film>
 }
