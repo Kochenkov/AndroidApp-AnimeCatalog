@@ -1,7 +1,9 @@
 package com.vkochenkov.filmscatalog.model
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import com.vkochenkov.filmscatalog.App
+import com.vkochenkov.filmscatalog.model.LocalDataStore.currentPageSize
 import com.vkochenkov.filmscatalog.model.api.ApiService.Companion.PAGES_SIZE
 import com.vkochenkov.filmscatalog.model.api.ResponseFromApi
 import com.vkochenkov.filmscatalog.model.db.Film
@@ -13,10 +15,6 @@ class Repository {
 
     fun getFilmsWithPagination(page: Int): List<Film>? {
         return App.instance!!.database.filmsDao().getFilmsWithPagination(page)
-    }
-
-    fun getFavouritesWithPagination(page: Int): List<Film>? {
-        return App.instance!!.database.filmsDao().getFavouritesWithPagination(page)
     }
 
     fun getFavourites(): LiveData<List<Film>> {
@@ -36,12 +34,14 @@ class Repository {
     }
 
     fun getFilmsFromApi(sincePage: Int, callback: GetFilmsFromApiCallback) {
+        Log.d("logg", "sincePage : $sincePage")
         App.instance?.apiService?.getAnimeListWithPages(PAGES_SIZE, sincePage)?.enqueue(object : Callback<ResponseFromApi> {
             override fun onResponse(
                 call: Call<ResponseFromApi>,
                 response: Response<ResponseFromApi>
             ) {
                 if (response.isSuccessful) {
+                    Log.d("fromapi", "success")
 
                     val filmsListFromApi = ArrayList<Film>()
 
@@ -64,7 +64,6 @@ class Repository {
 
                     callback.onSuccess(filmsListFromApi)
                 } else {
-                    //todo вынести тексты в ресурсы
                     callback.onFailure("Не удалось загрузить данные. Код ошибки: " + response.code().toString())
                 }
             }

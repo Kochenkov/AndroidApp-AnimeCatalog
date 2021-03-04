@@ -2,6 +2,7 @@ package com.vkochenkov.filmscatalog.view.fragments
 
 import android.content.res.Configuration
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -46,12 +47,10 @@ class FilmsListFragment : Fragment() {
 
         initFields(view)
         initRecycler(view)
-        initFilmsLiveDataObserver()
         initPagination()
         initSwipeToRefresh()
         initOnErrorObserver()
 
-        //первый запрос в сеть
         filmsViewModel.getFilmsWithPagging(progressBar)
 
         return view
@@ -93,7 +92,9 @@ class FilmsListFragment : Fragment() {
                     val pastVisiblesItems = (filmsRecycler.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition()
 
                     if (visibleItemCount + pastVisiblesItems >= totalItemCount) {
+                        Log.d("loggg", "Last Item Wow !")
                         filmsViewModel.getFilmsWithPagging(progressBar)
+
                     }
                 }
             }
@@ -128,14 +129,14 @@ class FilmsListFragment : Fragment() {
                     filmsRecycler.adapter?.notifyItemChanged(position)
                 }
             })
-    }
 
-    private fun initFilmsLiveDataObserver() {
+        //подписыаем адаптер на изменение списка
         filmsViewModel.filmsLiveData.observe(viewLifecycleOwner, Observer {
             it?.let {
                 (filmsRecycler.adapter as FilmsAdapter).refreshDataList(it)
             }
         })
+
     }
 
     private fun openSelectedFilmFragment(film: Film) {

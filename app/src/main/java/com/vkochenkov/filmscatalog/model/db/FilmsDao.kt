@@ -30,9 +30,8 @@ interface FilmsDao {
     @Query("DELETE FROM Films")
     fun deleteAllFilms()
 
+//    SELECT * FROM SOULS ORDER BY col LIMIT 10 OFFSET 10
+
     @Query("SELECT * FROM Films LIMIT :pages+10")
     fun getFilmsWithPagination(pages: Int): List<Film>
-
-    @Query("SELECT * FROM Films WHERE isLiked = 1 LIMIT :pages+10")
-    fun getFavouritesWithPagination(pages: Int): List<Film>
 }
