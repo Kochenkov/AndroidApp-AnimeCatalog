@@ -21,7 +21,8 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.vkochenkov.filmscatalog.App
 import com.vkochenkov.filmscatalog.R
 import com.vkochenkov.filmscatalog.model.Repository
-import com.vkochenkov.filmscatalog.model.StoreSelectedFilm
+import com.vkochenkov.filmscatalog.model.LocalDataStore
+import com.vkochenkov.filmscatalog.model.LocalDataStore.currentPageSize
 import com.vkochenkov.filmscatalog.model.db.Film
 import com.vkochenkov.filmscatalog.view.MainActivity.Companion.FILM
 import com.vkochenkov.filmscatalog.view.recycler.main.FilmItemClickListener
@@ -36,7 +37,7 @@ class FilmsListFragment : Fragment() {
         ViewModelProviders.of(this).get(FilmsViewModel::class.java)
     }
 
-    var pages: Int = 0
+   // var pages: Int = currentPageSize
 
 
     private lateinit var filmsRecycler: RecyclerView
@@ -68,7 +69,7 @@ class FilmsListFragment : Fragment() {
 
     private fun initSwipeToRefresh() {
         swipeRefresh.setOnRefreshListener(SwipeRefreshLayout.OnRefreshListener {
-            App.instance?.repository?.getFilmsFromApi(pages, object : Repository.GetFilmsFromApiCallback {
+            App.instance?.repository?.getFilmsFromApi(0, object : Repository.GetFilmsFromApiCallback {
                 override fun onSuccess(films: List<Film>) {
                     App.instance?.repository?.saveFilmsToDb(films)
                     swipeRefresh.isRefreshing = false
@@ -101,16 +102,22 @@ class FilmsListFragment : Fragment() {
                 //показывать прогресс бар
 
                 //инкрементить пейдж
-                pages += 10
+
+                progressBar.visibility = View.VISIBLE
 
                 //делать запрос к апихе с новыми пейджами
-                App.instance?.repository?.getFilmsFromApi(pages, object : Repository.GetFilmsFromApiCallback {
+                App.instance?.repository?.getFilmsFromApi(currentPageSize, object : Repository.GetFilmsFromApiCallback {
                     override fun onSuccess(films: List<Film>) {
                         App.instance?.repository?.saveFilmsToDb(films)
+                        progressBar.visibility = View.INVISIBLE
+                        currentPageSize += 10
                     }
 
                     override fun onFailure(str: String) {
                         Toast.makeText(App.instance?.applicationContext, str, Toast.LENGTH_SHORT).show()
+                        progressBar.visibility = View.INVISIBLE
+                        //todo
+                        currentPageSize += 10
                     }
                 })
             }
@@ -129,7 +136,7 @@ class FilmsListFragment : Fragment() {
                 FilmItemClickListener {
                 override fun detailsClickListener(film: Film) {
 
-                    StoreSelectedFilm.currentSelectedFilm = film
+                    LocalDataStore.currentSelectedFilm = film
                     filmsRecycler.adapter?.notifyDataSetChanged()
 
                     openSelectedFilmFragment(film)

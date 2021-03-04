@@ -17,7 +17,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.vkochenkov.filmscatalog.view.MainActivity
 import com.vkochenkov.filmscatalog.R
-import com.vkochenkov.filmscatalog.model.StoreSelectedFilm
+import com.vkochenkov.filmscatalog.model.LocalDataStore
 import com.vkochenkov.filmscatalog.model.db.Film
 import com.vkochenkov.filmscatalog.view.recycler.favourites.FavouriteFilmItemClickListener
 import com.vkochenkov.filmscatalog.view.recycler.favourites.FavouriteFilmsAdapter
@@ -82,7 +82,7 @@ class FavouriteFilmsListFragment : Fragment() {
                     FavouriteFilmItemClickListener {
                     override fun detailsClickListener(film: Film) {
 
-                        StoreSelectedFilm.currentSelectedFilm = film
+                        LocalDataStore.currentSelectedFilm = film
                         favouriteFilmsRecycler.adapter?.notifyDataSetChanged()
 
                         openSelectedFilmFragment(film)

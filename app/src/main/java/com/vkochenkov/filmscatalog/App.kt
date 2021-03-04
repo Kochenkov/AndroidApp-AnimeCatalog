@@ -3,6 +3,7 @@ package com.vkochenkov.filmscatalog
 import android.app.Application
 import android.widget.Toast
 import androidx.room.Room
+import com.vkochenkov.filmscatalog.model.LocalDataStore.currentPageSize
 import com.vkochenkov.filmscatalog.model.Repository
 import com.vkochenkov.filmscatalog.model.api.ApiService
 import com.vkochenkov.filmscatalog.model.api.ApiService.Companion.BASE_URL
@@ -36,6 +37,7 @@ class App : Application() {
         repository.getFilmsFromApi(0, object : Repository.GetFilmsFromApiCallback {
             override fun onSuccess(films: List<Film>) {
                 repository.saveFilmsToDb(films)
+                currentPageSize += 10
             }
 
             override fun onFailure(str: String) {

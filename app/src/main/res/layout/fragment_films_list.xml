@@ -28,7 +28,9 @@
             <ProgressBar
                 android:id="@+id/films_progress_bar"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                tools:visibility="visible"
+                android:visibility="invisible"/>
 
         </LinearLayout>
 

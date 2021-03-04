@@ -3,6 +3,7 @@ package com.vkochenkov.filmscatalog.model
 import android.util.Log
 import androidx.lifecycle.LiveData
 import com.vkochenkov.filmscatalog.App
+import com.vkochenkov.filmscatalog.model.LocalDataStore.currentPageSize
 import com.vkochenkov.filmscatalog.model.api.ApiService.Companion.PAGES_SIZE
 import com.vkochenkov.filmscatalog.model.api.ResponseFromApi
 import com.vkochenkov.filmscatalog.model.db.Film

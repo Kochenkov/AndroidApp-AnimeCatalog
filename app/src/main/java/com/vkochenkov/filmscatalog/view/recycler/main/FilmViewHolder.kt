@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.vkochenkov.filmscatalog.R
-import com.vkochenkov.filmscatalog.model.StoreSelectedFilm
+import com.vkochenkov.filmscatalog.model.LocalDataStore
 import com.vkochenkov.filmscatalog.model.db.Film
 
 class FilmViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -27,7 +27,7 @@ class FilmViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             .diskCacheStrategy(DiskCacheStrategy.ALL)
             .into(filmImage)
 
-        if (item.serverName.equals(StoreSelectedFilm.currentSelectedFilm?.serverName)) {
+        if (item.serverName.equals(LocalDataStore.currentSelectedFilm?.serverName)) {
             filmTitle.setTextColor(ContextCompat.getColor(itemView.context, R.color.colorAccent))
         } else {
             filmTitle.setTextColor(ContextCompat.getColor(itemView.context, R.color.colorBlack))
