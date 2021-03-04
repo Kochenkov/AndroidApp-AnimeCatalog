@@ -1,7 +1,6 @@
 package com.vkochenkov.filmscatalog.view.fragments
 
 import android.content.res.Configuration
-import android.nfc.tech.MifareUltralight.PAGE_SIZE
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -18,6 +17,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.vkochenkov.filmscatalog.App
 import com.vkochenkov.filmscatalog.R
 import com.vkochenkov.filmscatalog.model.Repository
@@ -42,7 +42,8 @@ class FilmsListFragment : Fragment() {
     private lateinit var filmsRecycler: RecyclerView
     private lateinit var mainToolbar: Toolbar
 
-    private lateinit var scrollView: NestedScrollView
+    private lateinit var nestedScrollView: NestedScrollView
+    private lateinit var swipeRefresh: SwipeRefreshLayout
     private lateinit var progressBar: ProgressBar
 
     override fun onCreateView(
@@ -53,6 +54,8 @@ class FilmsListFragment : Fragment() {
 
         initFields(view)
         initRecycler(view)
+        initPagination()
+        initSwipeToRefresh()
 
         return view
     }
@@ -63,12 +66,55 @@ class FilmsListFragment : Fragment() {
         mainToolbar.setTitle(R.string.app_name)
     }
 
+    private fun initSwipeToRefresh() {
+        swipeRefresh.setOnRefreshListener(SwipeRefreshLayout.OnRefreshListener {
+            App.instance?.repository?.getFilmsFromApi(pages, object : Repository.GetFilmsFromApiCallback {
+                override fun onSuccess(films: List<Film>) {
+                    App.instance?.repository?.saveFilmsToDb(films)
+                    swipeRefresh.isRefreshing = false
+                }
+
+                override fun onFailure(str: String) {
+                    Toast.makeText(App.instance?.applicationContext, str, Toast.LENGTH_SHORT).show()
+                    swipeRefresh.isRefreshing = false
+                }
+            })
+        })
+    }
+
 
     private fun initFields(view: View) {
         filmsRecycler = view.findViewById(R.id.films_list)
         mainToolbar = (activity as AppCompatActivity).findViewById(R.id.main_toolbar)
         progressBar = view.findViewById(R.id.films_progress_bar)
-        scrollView = view.findViewById(R.id.films_scroll)
+        nestedScrollView = view.findViewById(R.id.films_nested_scroll)
+        swipeRefresh = view.findViewById(R.id.films_swipe_refresh)
+    }
+
+    private fun initPagination() {
+        nestedScrollView.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
+            if (scrollY==v.getChildAt(0).measuredHeight - v.measuredHeight) {
+                Log.d("logg", "конец страницы!")
+
+                //todo
+
+                //показывать прогресс бар
+
+                //инкрементить пейдж
+                pages += 10
+
+                //делать запрос к апихе с новыми пейджами
+                App.instance?.repository?.getFilmsFromApi(pages, object : Repository.GetFilmsFromApiCallback {
+                    override fun onSuccess(films: List<Film>) {
+                        App.instance?.repository?.saveFilmsToDb(films)
+                    }
+
+                    override fun onFailure(str: String) {
+                        Toast.makeText(App.instance?.applicationContext, str, Toast.LENGTH_SHORT).show()
+                    }
+                })
+            }
+        })
     }
 
     private fun initRecycler(view: View) {
@@ -98,30 +144,6 @@ class FilmsListFragment : Fragment() {
                     filmsRecycler.adapter?.notifyItemChanged(position)
                 }
             })
-
-        scrollView.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
-            if (scrollY==v.getChildAt(0).measuredHeight - v.measuredHeight) {
-                Log.d("logg", "конец страницы!")
-
-                //todo
-
-                //показывать прогресс бар
-
-                //инкрементить пейдж
-                pages += 10
-
-                //делать запрос к апихе с новыми пейджами
-                App.instance?.repository?.getFilmsFromApi(pages, object : Repository.GetFilmsFromApiCallback {
-                    override fun onSuccess(films: List<Film>) {
-                        App.instance?.repository?.saveFilmsToDb(films)
-                    }
-
-                    override fun onFailure(str: String) {
-                        Toast.makeText(App.instance?.applicationContext, str, Toast.LENGTH_SHORT).show()
-                    }
-                })
-            }
-        })
 
         //подписыаем адаптер на изменение списка
         filmsViewModel.filmsLiveData.observe(viewLifecycleOwner, Observer {

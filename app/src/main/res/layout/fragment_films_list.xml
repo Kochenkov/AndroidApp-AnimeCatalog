@@ -1,33 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_height="match_parent"
+    android:id="@+id/films_swipe_refresh"
     android:layout_width="match_parent"
-    android:id="@+id/films_scroll">
+    android:layout_height="match_parent">
 
-    <LinearLayout
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/films_nested_scroll"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/films_list"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginStart="@dimen/recycler_margin"
-            android:layout_marginEnd="@dimen/recycler_margin"
-            android:layout_weight="1"
-            tools:listitem="@layout/item_film" />
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-        <ProgressBar
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/films_progress_bar"/>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/films_list"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginStart="@dimen/recycler_margin"
+                android:layout_marginEnd="@dimen/recycler_margin"
+                android:layout_weight="1"
+                tools:listitem="@layout/item_film" />
 
-    </LinearLayout>
+            <ProgressBar
+                android:id="@+id/films_progress_bar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 
 
-</androidx.core.widget.NestedScrollView>
+
 
