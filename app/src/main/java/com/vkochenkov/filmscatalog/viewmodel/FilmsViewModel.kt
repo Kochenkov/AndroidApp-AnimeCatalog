@@ -7,7 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.vkochenkov.filmscatalog.App
-import com.vkochenkov.filmscatalog.model.LocalDataStore.currentPageSize
+import com.vkochenkov.filmscatalog.model.LocalDataStore.currentFilmsPageSize
 import com.vkochenkov.filmscatalog.model.db.Film
 import com.vkochenkov.filmscatalog.model.Repository
 
@@ -26,38 +26,38 @@ class FilmsViewModel : ViewModel() {
 
     fun getFilmsWithPagging(progressBar: ProgressBar) {
         progressBar.visibility = View.VISIBLE
-        repository.getFilmsFromApi(currentPageSize, object : Repository.GetFilmsFromApiCallback {
+        repository.getFilmsFromApi(currentFilmsPageSize, object : Repository.GetFilmsFromApiCallback {
             override fun onSuccess(films: List<Film>) {
 
                 repository.saveFilmsToDb(films)
-                mutableFilmsLiveData.postValue(repository.getFilmsWithPagination(currentPageSize))
+                mutableFilmsLiveData.postValue(repository.getFilmsWithPagination(currentFilmsPageSize))
 
                 progressBar.visibility = View.INVISIBLE
 
-                currentPageSize += 10
+                currentFilmsPageSize += 10
 
             }
 
             override fun onFailure(str: String) {
 
-                mutableFilmsLiveData.postValue(repository.getFilmsWithPagination(currentPageSize))
+                mutableFilmsLiveData.postValue(repository.getFilmsWithPagination(currentFilmsPageSize))
                 mutableErrorLiveData.postValue(str)
 
                 progressBar.visibility = View.INVISIBLE
 
-                currentPageSize += 10
+                currentFilmsPageSize += 10
             }
         })
     }
 
     fun getFilmsWithPagging(swipeRefresh: SwipeRefreshLayout) {
         swipeRefresh.isRefreshing = true
-        currentPageSize = 0
-        repository.getFilmsFromApi(currentPageSize, object : Repository.GetFilmsFromApiCallback {
+        currentFilmsPageSize = 0
+        repository.getFilmsFromApi(currentFilmsPageSize, object : Repository.GetFilmsFromApiCallback {
             override fun onSuccess(films: List<Film>) {
 
                 repository.saveFilmsToDb(films)
-                mutableFilmsLiveData.postValue(repository.getFilmsWithPagination(currentPageSize))
+                mutableFilmsLiveData.postValue(repository.getFilmsWithPagination(currentFilmsPageSize))
 
                 swipeRefresh.isRefreshing = false
 
@@ -65,7 +65,7 @@ class FilmsViewModel : ViewModel() {
 
             override fun onFailure(str: String) {
 
-                mutableFilmsLiveData.postValue(repository.getFilmsWithPagination(currentPageSize))
+                mutableFilmsLiveData.postValue(repository.getFilmsWithPagination(currentFilmsPageSize))
                 mutableErrorLiveData.postValue(str)
 
                 swipeRefresh.isRefreshing = false

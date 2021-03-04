@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -18,6 +19,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.vkochenkov.filmscatalog.view.MainActivity
 import com.vkochenkov.filmscatalog.R
 import com.vkochenkov.filmscatalog.model.LocalDataStore
+import com.vkochenkov.filmscatalog.model.LocalDataStore.currentFavouritesPageSize
 import com.vkochenkov.filmscatalog.model.db.Film
 import com.vkochenkov.filmscatalog.view.recycler.favourites.FavouriteFilmItemClickListener
 import com.vkochenkov.filmscatalog.view.recycler.favourites.FavouriteFilmsAdapter
@@ -32,6 +34,7 @@ class FavouriteFilmsListFragment : Fragment() {
     private lateinit var favouriteFilmsRecycler: RecyclerView
     private lateinit var emptyListTextView: TextView
     private lateinit var mainToolbar: Toolbar
+    private lateinit var progressBar: ProgressBar
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,6 +45,9 @@ class FavouriteFilmsListFragment : Fragment() {
         initFields(view)
         initRecycler(view)
         showStubIfListEmpty()
+        initPagination()
+
+        favouritesFilmsViewModel.getFavouritesWithPagging(progressBar)
 
         return view
     }
@@ -68,6 +74,7 @@ class FavouriteFilmsListFragment : Fragment() {
         favouriteFilmsRecycler = view.findViewById(R.id.favourite_films_list)
         emptyListTextView = view.findViewById(R.id.empty_favourites_list_text)
         mainToolbar = (activity as AppCompatActivity).findViewById(R.id.main_toolbar)
+        progressBar = view.findViewById(R.id.favourites_progress_bar)
     }
 
     private fun initRecycler(view: View) {
@@ -93,9 +100,25 @@ class FavouriteFilmsListFragment : Fragment() {
                         showSnackBar(film, position, view)
                     }
                 })
-        favouritesFilmsViewModel.favouriteFilmsLiveData.observe(viewLifecycleOwner, Observer {
+        favouritesFilmsViewModel.favouritesLiveData.observe(viewLifecycleOwner, Observer {
             it?.let {
                 (favouriteFilmsRecycler.adapter as FavouriteFilmsAdapter).refreshDataList(it)
+            }
+        })
+    }
+
+    private fun initPagination() {
+        favouriteFilmsRecycler.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                if (dy > 0) { //check for scroll down
+                    val visibleItemCount = favouriteFilmsRecycler.layoutManager!!.getChildCount()
+                    val totalItemCount = favouriteFilmsRecycler.layoutManager!!.getItemCount()
+                    val pastVisiblesItems = (favouriteFilmsRecycler.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition()
+
+                    if (visibleItemCount + pastVisiblesItems >= totalItemCount) {
+                        favouritesFilmsViewModel.getFavouritesWithPagging(progressBar)
+                    }
+                }
             }
         })
     }
@@ -122,7 +145,7 @@ class FavouriteFilmsListFragment : Fragment() {
     }
 
     private fun showStubIfListEmpty() {
-        favouritesFilmsViewModel.favouriteFilmsLiveData.observe(viewLifecycleOwner, Observer {
+        favouritesFilmsViewModel.favouritesLiveData.observe(viewLifecycleOwner, Observer {
             if (it.isEmpty()) {
                 emptyListTextView.visibility = View.VISIBLE
             }
