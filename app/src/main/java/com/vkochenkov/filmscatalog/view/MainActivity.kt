@@ -50,6 +50,7 @@ class MainActivity : AppCompatActivity() {
         bottomNavView = findViewById(R.id.bottom_nav_view)
     }
 
+    //todo сделать что бы фрагменты не пересоздавались
     private fun setBottomNavigationClickListener() {
         bottomNavView.setOnNavigationItemSelectedListener { item ->
             supportFragmentManager.popBackStack()

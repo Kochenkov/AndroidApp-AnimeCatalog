@@ -1,17 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/films_swipe_refresh"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.core.widget.NestedScrollView
-        android:id="@+id/films_nested_scroll"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
@@ -20,21 +16,26 @@
                 android:id="@+id/films_list"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_marginStart="@dimen/recycler_margin"
-                android:layout_marginEnd="@dimen/recycler_margin"
                 android:layout_weight="1"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
                 tools:listitem="@layout/item_film" />
 
             <ProgressBar
                 android:id="@+id/films_progress_bar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                tools:visibility="visible"
-                android:visibility="invisible"/>
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:visibility="visible" />
 
-        </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </androidx.core.widget.NestedScrollView>
 
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 

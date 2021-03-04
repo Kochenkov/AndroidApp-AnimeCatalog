@@ -13,10 +13,6 @@ import retrofit2.Response
 
 class Repository {
 
-    fun getFilmsWithPagination(): List<Film>? {
-        return App.instance!!.database.filmsDao().getFilmsWithPagination(currentPageSize)
-    }
-
     fun getFilmsWithPagination(page: Int): List<Film>? {
         return App.instance!!.database.filmsDao().getFilmsWithPagination(page)
     }
@@ -33,15 +29,12 @@ class Repository {
         App.instance?.database?.filmsDao()?.setUnlikedFilm(name)
     }
 
-    fun getFilmsFromDb(): LiveData<List<Film>> {
-        return App.instance!!.database.filmsDao().getAllFilms()
-    }
-
     fun saveFilmsToDb(films: List<Film>) {
         App.instance?.database?.filmsDao()?.insertAllFilms(films)
     }
 
     fun getFilmsFromApi(sincePage: Int, callback: GetFilmsFromApiCallback) {
+        Log.d("logg", "sincePage : $sincePage")
         App.instance?.apiService?.getAnimeListWithPages(PAGES_SIZE, sincePage)?.enqueue(object : Callback<ResponseFromApi> {
             override fun onResponse(
                 call: Call<ResponseFromApi>,
@@ -76,7 +69,7 @@ class Repository {
             }
 
             override fun onFailure(call: Call<ResponseFromApi>, t: Throwable) {
-                callback.onFailure("Не удалось подключиться к серверу, возможно отсутствует интернет подключение")
+                callback.onFailure("Не удалось подключиться к серверу. Приложение работает в оффлайн-режиме.")
             }
         })
     }

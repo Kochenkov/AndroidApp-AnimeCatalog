@@ -10,7 +10,6 @@ import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -18,11 +17,8 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import com.vkochenkov.filmscatalog.App
 import com.vkochenkov.filmscatalog.R
-import com.vkochenkov.filmscatalog.model.Repository
 import com.vkochenkov.filmscatalog.model.LocalDataStore
-import com.vkochenkov.filmscatalog.model.LocalDataStore.currentPageSize
 import com.vkochenkov.filmscatalog.model.db.Film
 import com.vkochenkov.filmscatalog.view.MainActivity.Companion.FILM
 import com.vkochenkov.filmscatalog.view.recycler.main.FilmItemClickListener
@@ -37,13 +33,9 @@ class FilmsListFragment : Fragment() {
         ViewModelProviders.of(this).get(FilmsViewModel::class.java)
     }
 
-   // var pages: Int = currentPageSize
-
-
     private lateinit var filmsRecycler: RecyclerView
     private lateinit var mainToolbar: Toolbar
 
-    private lateinit var nestedScrollView: NestedScrollView
     private lateinit var swipeRefresh: SwipeRefreshLayout
     private lateinit var progressBar: ProgressBar
 
@@ -64,8 +56,6 @@ class FilmsListFragment : Fragment() {
         return view
     }
 
-
-
     override fun onResume() {
         super.onResume()
         filmsRecycler.adapter?.notifyDataSetChanged()
@@ -84,50 +74,29 @@ class FilmsListFragment : Fragment() {
         filmsRecycler = view.findViewById(R.id.films_list)
         mainToolbar = (activity as AppCompatActivity).findViewById(R.id.main_toolbar)
         progressBar = view.findViewById(R.id.films_progress_bar)
-        nestedScrollView = view.findViewById(R.id.films_nested_scroll)
         swipeRefresh = view.findViewById(R.id.films_swipe_refresh)
     }
 
     private fun initSwipeToRefresh() {
         swipeRefresh.setOnRefreshListener(SwipeRefreshLayout.OnRefreshListener {
             filmsViewModel.getFilmsWithPagging(swipeRefresh)
-            currentPageSize += 10
-
         })
     }
 
     private fun initPagination() {
-        nestedScrollView.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
-            if (scrollY==v.getChildAt(0).measuredHeight - v.measuredHeight) {
-                Log.d("logg", "конец страницы!")
+        filmsRecycler.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                if (dy > 0) { //check for scroll down
+                    val visibleItemCount = filmsRecycler.layoutManager!!.getChildCount()
+                    val totalItemCount = filmsRecycler.layoutManager!!.getItemCount()
+                    val pastVisiblesItems = (filmsRecycler.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition()
 
-                //todo
+                    if (visibleItemCount + pastVisiblesItems >= totalItemCount) {
+                        Log.d("loggg", "Last Item Wow !")
+                        filmsViewModel.getFilmsWithPagging(progressBar)
 
-                //показывать прогресс бар
-
-                //инкрементить пейдж
-                filmsViewModel.getFilmsWithPagging(progressBar)
-                currentPageSize += 10
-
-                //progressBar.visibility = View.VISIBLE
-
-                //делать запрос к апихе с новыми пейджами
-//                App.instance?.repository?.getFilmsFromApi(currentPageSize, object : Repository.GetFilmsFromApiCallback {
-//                    override fun onSuccess(films: List<Film>) {
-//                        App.instance?.repository?.saveFilmsToDb(films)
-//                        filmsViewModel.getPaggingDataFromDb()
-//                        progressBar.visibility = View.INVISIBLE
-//                        currentPageSize += 10
-//                    }
-//
-//                    override fun onFailure(str: String) {
-//                        Toast.makeText(App.instance?.applicationContext, str, Toast.LENGTH_SHORT).show()
-//                        progressBar.visibility = View.INVISIBLE
-//                        //todo
-//                        currentPageSize += 10
-//                        filmsViewModel.getPaggingDataFromDb()
-//                    }
-//                })
+                    }
+                }
             }
         })
     }
@@ -140,8 +109,7 @@ class FilmsListFragment : Fragment() {
         }
 
         filmsRecycler.adapter =
-            FilmsAdapter(object :
-                FilmItemClickListener {
+            FilmsAdapter(object : FilmItemClickListener {
                 override fun detailsClickListener(film: Film) {
 
                     LocalDataStore.currentSelectedFilm = film
@@ -168,6 +136,7 @@ class FilmsListFragment : Fragment() {
                 (filmsRecycler.adapter as FilmsAdapter).refreshDataList(it)
             }
         })
+
     }
 
     private fun openSelectedFilmFragment(film: Film) {
