@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
-import android.widget.Toast
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.google.android.material.snackbar.Snackbar
 import com.vkochenkov.filmscatalog.R
 import com.vkochenkov.filmscatalog.model.LocalDataStore
 import com.vkochenkov.filmscatalog.model.db.Film
@@ -61,14 +62,6 @@ class FilmsListFragment : Fragment() {
         mainToolbar.setTitle(R.string.app_name)
     }
 
-    private fun initOnErrorObserver() {
-        filmsViewModel.errorLiveData.observe(viewLifecycleOwner, Observer {
-            it?.let {
-                Toast.makeText(context, it, Toast.LENGTH_LONG).show()
-            }
-        })
-    }
-
     private fun initFields(view: View) {
         filmsRecycler = view.findViewById(R.id.films_list)
         mainToolbar = (activity as AppCompatActivity).findViewById(R.id.main_toolbar)
@@ -88,7 +81,8 @@ class FilmsListFragment : Fragment() {
                 if (dy > 0) { //check for scroll down
                     val visibleItemCount = filmsRecycler.layoutManager!!.getChildCount()
                     val totalItemCount = filmsRecycler.layoutManager!!.getItemCount()
-                    val pastVisiblesItems = (filmsRecycler.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition()
+                    val pastVisiblesItems =
+                        (filmsRecycler.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition()
 
                     if (visibleItemCount + pastVisiblesItems >= totalItemCount) {
                         filmsViewModel.getFilmsWithPaging(progressBar)
@@ -126,6 +120,22 @@ class FilmsListFragment : Fragment() {
                     filmsRecycler.adapter?.notifyItemChanged(position)
                 }
             })
+    }
+
+    private fun initOnErrorObserver() {
+        filmsViewModel.errorLiveData.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                val snackbar = Snackbar.make(this.requireView(), it, Snackbar.LENGTH_LONG)
+                snackbar.setAction(context?.getString(R.string.retry_request_str)) { retryRequest() }
+                val tv = snackbar.view.findViewById<View>(R.id.snackbar_text) as TextView
+                tv.maxLines = 3
+                snackbar.show()
+            }
+        })
+    }
+
+    private fun retryRequest() {
+        filmsViewModel.getFilmsWithPaging(progressBar)
     }
 
     private fun initOnDataChangeObserver() {

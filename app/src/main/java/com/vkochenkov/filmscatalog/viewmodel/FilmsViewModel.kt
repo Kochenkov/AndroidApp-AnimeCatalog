@@ -34,6 +34,7 @@ class FilmsViewModel : ViewModel() {
 
                 repository.saveFilmsToDb(films)
                 mutableFilmsLiveData.postValue(repository.getFilmsWithPagination(currentPageSize))
+                mutableErrorLiveData.value = null
 
                 progressBar.visibility = View.INVISIBLE
             }
@@ -56,6 +57,7 @@ class FilmsViewModel : ViewModel() {
 
                 repository.saveFilmsToDb(films)
                 mutableFilmsLiveData.postValue(repository.getFilmsWithPagination(currentPageSize))
+                mutableErrorLiveData.value = null
 
                 swipeRefresh.isRefreshing = false
             }
