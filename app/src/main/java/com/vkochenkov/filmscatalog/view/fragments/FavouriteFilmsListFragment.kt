@@ -10,7 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -26,7 +26,7 @@ import com.vkochenkov.filmscatalog.viewmodel.FavouriteFilmsViewModel
 class FavouriteFilmsListFragment : Fragment() {
 
     private val favouritesFilmsViewModel by lazy {
-        ViewModelProviders.of(this).get(FavouriteFilmsViewModel::class.java)
+        ViewModelProvider(this).get(FavouriteFilmsViewModel::class.java)
     }
 
     private lateinit var favouriteFilmsRecycler: RecyclerView

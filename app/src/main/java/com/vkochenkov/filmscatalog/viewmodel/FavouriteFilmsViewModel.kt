@@ -13,7 +13,6 @@ class FavouriteFilmsViewModel : ViewModel() {
 
     var mutableFavouritesLiveData = MutableLiveData<List<Film>>()
 
-
     val favouritesLiveData: LiveData<List<Film>>
         get() = mutableFavouritesLiveData
 
