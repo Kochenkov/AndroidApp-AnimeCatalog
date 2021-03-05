@@ -20,6 +20,6 @@ interface FilmsDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insertAllFilms(countryList: List<Film>)
 
-    @Query("SELECT * FROM Films LIMIT :pages")
+    @Query("SELECT * FROM Films LIMIT :pages+10")
     fun getFilmsWithPagination(pages: Int): List<Film>
 }

@@ -51,7 +51,7 @@ class FilmsViewModel : ViewModel() {
 
     fun getFilmsWithPaging(swipeRefresh: SwipeRefreshLayout) {
         swipeRefresh.isRefreshing = true
-        currentPageSize = 10
+        currentPageSize = 0
         repository.getFilmsFromApi(currentPageSize, object : Repository.GetFilmsFromApiCallback {
             override fun onSuccess(films: List<Film>) {
 
