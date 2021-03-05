@@ -2,7 +2,6 @@ package com.vkochenkov.filmscatalog.view.fragments
 
 import android.content.res.Configuration
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,7 +18,6 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.vkochenkov.filmscatalog.R
 import com.vkochenkov.filmscatalog.model.LocalDataStore
-import com.vkochenkov.filmscatalog.model.LocalDataStore.isFirstStart
 import com.vkochenkov.filmscatalog.model.db.Film
 import com.vkochenkov.filmscatalog.view.MainActivity.Companion.FILM
 import com.vkochenkov.filmscatalog.view.recycler.main.FilmItemClickListener
@@ -29,7 +27,6 @@ import com.vkochenkov.filmscatalog.viewmodel.FilmsViewModel
 
 class FilmsListFragment : Fragment() {
 
-    //инициализируем вью-модель
     private val filmsViewModel by lazy {
         ViewModelProviders.of(this).get(FilmsViewModel::class.java)
     }
@@ -53,10 +50,7 @@ class FilmsListFragment : Fragment() {
         initOnDataChangeObserver()
         initOnErrorObserver()
 
-//        if (isFirstStart) {
-//            isFirstStart = false
-            filmsViewModel.getFilmsWithPagging(progressBar)
-//        }
+        filmsViewModel.getFilmsWithPaging(progressBar, true)
 
         return view
     }
@@ -84,7 +78,7 @@ class FilmsListFragment : Fragment() {
 
     private fun initSwipeToRefresh() {
         swipeRefresh.setOnRefreshListener(SwipeRefreshLayout.OnRefreshListener {
-            filmsViewModel.getFilmsWithPagging(swipeRefresh)
+            filmsViewModel.getFilmsWithPaging(swipeRefresh)
         })
     }
 
@@ -97,9 +91,7 @@ class FilmsListFragment : Fragment() {
                     val pastVisiblesItems = (filmsRecycler.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition()
 
                     if (visibleItemCount + pastVisiblesItems >= totalItemCount) {
-                        Log.d("loggg", "Last Item Wow !")
-                        filmsViewModel.getFilmsWithPagging(progressBar)
-
+                        filmsViewModel.getFilmsWithPaging(progressBar)
                     }
                 }
             }

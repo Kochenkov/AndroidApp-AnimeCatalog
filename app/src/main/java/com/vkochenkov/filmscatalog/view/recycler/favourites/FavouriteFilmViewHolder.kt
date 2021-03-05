@@ -21,7 +21,6 @@ class FavouriteFilmViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView
     fun bind(item: Film) {
         filmTitle.text = item.title
 
-        //загрузка картинки по http
         Glide.with(itemView.context)
             .load(item.imageUrl)
             .diskCacheStrategy(DiskCacheStrategy.ALL)

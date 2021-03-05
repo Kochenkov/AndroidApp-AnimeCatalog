@@ -27,12 +27,8 @@ class FilmsAdapter(private val clickListener: FilmItemClickListener) :
         return itemsList.size
     }
 
-    fun setData(itemsList: List<Film>) {
-        this.itemsList = itemsList
-    }
-
     fun refreshDataList(itemsList: List<Film>) {
-        setData(itemsList)
+        this.itemsList = itemsList
         notifyDataSetChanged()
     }
 

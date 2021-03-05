@@ -2,8 +2,8 @@ package com.vkochenkov.filmscatalog.view
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.vkochenkov.filmscatalog.App
 import com.vkochenkov.filmscatalog.R
 import com.vkochenkov.filmscatalog.view.dialogs.ExitDialog
 import com.vkochenkov.filmscatalog.view.fragments.AppInfoFragment
@@ -13,6 +13,10 @@ import com.vkochenkov.filmscatalog.view.fragments.FilmsListFragment
 class MainActivity : AppCompatActivity() {
 
     lateinit var bottomNavView: BottomNavigationView
+
+    val fragment1 = FilmsListFragment()
+    val fragment2 = FavouriteFilmsListFragment()
+    val fragment3 = AppInfoFragment()
 
     companion object {
         const val FILM = "FILM"
@@ -26,12 +30,10 @@ class MainActivity : AppCompatActivity() {
         setBottomNavigationClickListener()
 
         if (supportFragmentManager.backStackEntryCount == 0) {
-            supportFragmentManager.beginTransaction()
-                .replace(R.id.fragments_container, FilmsListFragment())
-                .addToBackStack("FilmsListFragment")
-                .commit()
+            replaceFragment(fragment1)
         }
     }
+
 
     override fun onBackPressed() {
         if (supportFragmentManager.backStackEntryCount > 1) {
@@ -50,31 +52,28 @@ class MainActivity : AppCompatActivity() {
         bottomNavView = findViewById(R.id.bottom_nav_view)
     }
 
-    //todo сделать что бы фрагменты не пересоздавались
     private fun setBottomNavigationClickListener() {
         bottomNavView.setOnNavigationItemSelectedListener { item ->
             supportFragmentManager.popBackStack()
             when (item.itemId) {
                 R.id.menu_home_item -> {
-                    supportFragmentManager.beginTransaction()
-                        .replace(R.id.fragments_container, FilmsListFragment())
-                        .addToBackStack("FilmsListFragment")
-                        .commit()
+                    replaceFragment(fragment1)
                 }
                 R.id.menu_favourites_item -> {
-                    supportFragmentManager.beginTransaction()
-                        .replace(R.id.fragments_container, FavouriteFilmsListFragment())
-                        .addToBackStack("FavouriteFilmsListFragment")
-                        .commit()
+                    replaceFragment(fragment2)
                 }
                 R.id.menu_info_item -> {
-                    supportFragmentManager.beginTransaction()
-                        .replace(R.id.fragments_container, AppInfoFragment())
-                        .addToBackStack("InfoFragment")
-                        .commit()
+                    replaceFragment(fragment3)
                 }
             }
             true
         }
+    }
+
+    private fun replaceFragment(fragment: Fragment) {
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.fragments_container, fragment)
+            .addToBackStack(null)
+            .commit()
     }
 }

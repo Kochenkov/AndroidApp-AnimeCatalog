@@ -44,6 +44,8 @@ class FavouriteFilmsListFragment : Fragment() {
         showStubIfListEmpty()
         initOnDataChangeObserver()
 
+        favouritesFilmsViewModel.getFavourites()
+
         return view
     }
 
@@ -88,6 +90,8 @@ class FavouriteFilmsListFragment : Fragment() {
 
                 override fun deleteClickListener(film: Film, position: Int) {
                     deleteItemActions(film, position)
+                    favouritesFilmsViewModel.unlikeFilm(film.serverName)
+                    favouritesFilmsViewModel.getFavourites()
                     showSnackBar(film, position, view)
                 }
             })
@@ -110,12 +114,13 @@ class FavouriteFilmsListFragment : Fragment() {
 
     private fun restoreItemActions(film: Film, position: Int) {
         favouritesFilmsViewModel.likeFilm(film.serverName)
+        favouritesFilmsViewModel.getFavourites()
         favouriteFilmsRecycler.adapter?.notifyItemRemoved(position)
         favouriteFilmsRecycler.adapter?.notifyItemChanged(position)
     }
 
     private fun initOnDataChangeObserver() {
-        favouritesFilmsViewModel.favouriteFilmsLiveData.observe(viewLifecycleOwner, Observer {
+        favouritesFilmsViewModel.favouritesLiveData.observe(viewLifecycleOwner, Observer {
             it?.let {
                 (favouriteFilmsRecycler.adapter as FavouriteFilmsAdapter).refreshDataList(it)
             }
@@ -123,7 +128,7 @@ class FavouriteFilmsListFragment : Fragment() {
     }
 
     private fun showStubIfListEmpty() {
-        favouritesFilmsViewModel.favouriteFilmsLiveData.observe(viewLifecycleOwner, Observer {
+        favouritesFilmsViewModel.favouritesLiveData.observe(viewLifecycleOwner, Observer {
             if (it.isEmpty()) {
                 emptyListTextView.visibility = View.VISIBLE
             } else {

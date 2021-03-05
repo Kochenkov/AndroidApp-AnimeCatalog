@@ -24,7 +24,10 @@ class FilmsViewModel : ViewModel() {
     val errorLiveData: LiveData<String>
         get()  = mutableErrorLiveData
 
-    fun getFilmsWithPagging(progressBar: ProgressBar) {
+    fun getFilmsWithPaging(progressBar: ProgressBar, fromOnCreateLaunch: Boolean = false) {
+        if (!fromOnCreateLaunch) {
+            currentPageSize += 10
+        }
         progressBar.visibility = View.VISIBLE
         repository.getFilmsFromApi(currentPageSize, object : Repository.GetFilmsFromApiCallback {
             override fun onSuccess(films: List<Film>) {
@@ -33,9 +36,6 @@ class FilmsViewModel : ViewModel() {
                 mutableFilmsLiveData.postValue(repository.getFilmsWithPagination(currentPageSize))
 
                 progressBar.visibility = View.INVISIBLE
-
-                currentPageSize += 10
-
             }
 
             override fun onFailure(str: String) {
@@ -44,15 +44,13 @@ class FilmsViewModel : ViewModel() {
                 mutableErrorLiveData.postValue(str)
 
                 progressBar.visibility = View.INVISIBLE
-
-                currentPageSize += 10
             }
         })
     }
 
-    fun getFilmsWithPagging(swipeRefresh: SwipeRefreshLayout) {
+    fun getFilmsWithPaging(swipeRefresh: SwipeRefreshLayout) {
         swipeRefresh.isRefreshing = true
-        currentPageSize = 0
+        currentPageSize = 10
         repository.getFilmsFromApi(currentPageSize, object : Repository.GetFilmsFromApiCallback {
             override fun onSuccess(films: List<Film>) {
 
@@ -60,7 +58,6 @@ class FilmsViewModel : ViewModel() {
                 mutableFilmsLiveData.postValue(repository.getFilmsWithPagination(currentPageSize))
 
                 swipeRefresh.isRefreshing = false
-
             }
 
             override fun onFailure(str: String) {
@@ -72,7 +69,6 @@ class FilmsViewModel : ViewModel() {
             }
         })
     }
-
 
     fun likeFilm(name: String) {
         repository.likeFilm(name)

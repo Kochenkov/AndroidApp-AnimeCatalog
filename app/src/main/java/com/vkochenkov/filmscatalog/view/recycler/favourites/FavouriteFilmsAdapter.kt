@@ -30,12 +30,8 @@ class FavouriteFilmsAdapter(private val clickListener: FavouriteFilmItemClickLis
         return itemsList.size
     }
 
-    fun setData(itemsList: List<Film>) {
-        this.itemsList = itemsList
-    }
-
     fun refreshDataList(itemsList: List<Film>) {
-        setData(itemsList)
+        this.itemsList = itemsList
         notifyDataSetChanged()
     }
 
