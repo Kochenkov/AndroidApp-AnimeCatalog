@@ -51,7 +51,7 @@ class FilmsListFragment : Fragment() {
         initOnDataChangeObserver()
         initOnErrorObserver()
 
-        filmsViewModel.getFilmsWithPaging(progressBar, true)
+        filmsViewModel.getFilmsWithPaging(progressBar, false)
 
         return view
     }
@@ -135,7 +135,7 @@ class FilmsListFragment : Fragment() {
     }
 
     private fun retryRequest() {
-        filmsViewModel.getFilmsWithPaging(progressBar)
+        filmsViewModel.getFilmsWithPaging(progressBar, false)
     }
 
     private fun initOnDataChangeObserver() {

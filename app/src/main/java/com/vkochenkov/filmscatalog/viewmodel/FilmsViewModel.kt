@@ -24,8 +24,8 @@ class FilmsViewModel : ViewModel() {
     val errorLiveData: LiveData<String>
         get()  = mutableErrorLiveData
 
-    fun getFilmsWithPaging(progressBar: ProgressBar, fromOnCreateLaunch: Boolean = false) {
-        if (!fromOnCreateLaunch) {
+    fun getFilmsWithPaging(progressBar: ProgressBar, shouldIncrementPageCount: Boolean = true) {
+        if (shouldIncrementPageCount) {
             currentPageSize += 10
         }
         progressBar.visibility = View.VISIBLE
