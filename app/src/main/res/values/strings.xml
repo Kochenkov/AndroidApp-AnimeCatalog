@@ -18,4 +18,6 @@
     <string name="was_deleted_str">was deleted</string>
     <string name="cancel_snackbar_str">cancel</string>
     <string name="retry_request_str">retry</string>
+    <string name="api_error_connection_str">Failed to connect to server. The application works offline.</string>
+    <string name="api_error_server_str">Failed to get data from server. Error code:</string>
 </resources>

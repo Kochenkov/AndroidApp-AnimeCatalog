@@ -12,9 +12,4 @@ object LocalDataStore {
      * uses for pagination
      */
     var currentPageSize = 0
-
-    /**
-     * films fragment first start indicator
-     */
-    var isFirstStart = true
 }

@@ -1,6 +1,7 @@
 package com.vkochenkov.filmscatalog.model
 
 import com.vkochenkov.filmscatalog.App
+import com.vkochenkov.filmscatalog.R
 import com.vkochenkov.filmscatalog.model.api.ApiService.Companion.PAGES_SIZE
 import com.vkochenkov.filmscatalog.model.api.ResponseFromApi
 import com.vkochenkov.filmscatalog.model.db.Film
@@ -12,6 +13,7 @@ class Repository {
 
     val dao by lazy { App.instance!!.database.filmsDao() }
     val api by lazy { App.instance?.apiService!! }
+    val appContext by lazy {App.instance?.applicationContext!!}
 
     fun getFilmsWithPagination(page: Int): List<Film>? {
         return dao.getFilmsWithPagination(page)
@@ -62,12 +64,12 @@ class Repository {
 
                     callback.onSuccess(filmsListFromApi)
                 } else {
-                    callback.onFailure("Не удалось загрузить данные. Код ошибки: ${response.code()}. Приложение работтает в оффлайн-режиме")
+                    callback.onFailure(appContext.getString(R.string.api_error_server_str) + " " + response.code())
                 }
             }
 
             override fun onFailure(call: Call<ResponseFromApi>, t: Throwable) {
-                callback.onFailure("Не удалось подключиться к серверу. Приложение работает в оффлайн-режиме.")
+                callback.onFailure(appContext.getString(R.string.api_error_connection_str))
             }
         })
     }
