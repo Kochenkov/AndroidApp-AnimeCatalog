@@ -20,5 +20,9 @@
     <string name="retry_request_str">повторить</string>
     <string name="api_error_connection_str">Не удалось подключиться к серверу. Приложение работает в оффлайн-режиме.</string>
     <string name="api_error_server_str">"Не удалось получить данные с сервера. Код ошибки:"</string>
+    <string name="release_start_date_str">Дата старта выпуска:</string>
+    <string name="average_rating_str">Средний рейтинг:</string>
+    <string name="age_rating_str">Возрастной рейтинг:</string>
+    <string name="episode_count_str">Число эпизодов:</string>
 
 </resources>

@@ -20,4 +20,8 @@
     <string name="retry_request_str">retry</string>
     <string name="api_error_connection_str">Failed to connect to server. The application works offline.</string>
     <string name="api_error_server_str">Failed to get data from server. Error code:</string>
+    <string name="release_start_date_str">Release start date:</string>
+    <string name="average_rating_str">Average rating:</string>
+    <string name="age_rating_str">Age rating:</string>
+    <string name="episode_count_str">Episode count:</string>
 </resources>

@@ -46,17 +46,16 @@ class Repository {
                     val filmsListFromApi = ArrayList<Film>()
 
                     for (i in response.body()!!.data.indices) {
-                        val serverName = response.body()!!.data.get(i).attributes.serverName
-                        val title = response.body()!!.data.get(i).attributes.title
-                        val description = response.body()!!.data.get(i).attributes.description
-                        val imageUrl = response.body()!!.data.get(i).attributes.posterImage.original
-
                         filmsListFromApi.add(
                             Film(
-                                serverName,
-                                title,
-                                description,
-                                imageUrl,
+                                response.body()!!.data.get(i).attributes.serverName,
+                                response.body()!!.data.get(i).attributes.title,
+                                response.body()!!.data.get(i).attributes.description,
+                                response.body()!!.data.get(i).attributes.posterImage.original,
+                                response.body()!!.data.get(i).attributes.startDate,
+                                response.body()!!.data.get(i).attributes.ageRating,
+                                response.body()!!.data.get(i).attributes.episodeCount,
+                                response.body()!!.data.get(i).attributes.averageRating,
                                 false
                             )
                         )

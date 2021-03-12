@@ -17,10 +17,15 @@ import com.vkochenkov.filmscatalog.model.db.Film
 
 class FilmInfoFragment : Fragment() {
 
+    private lateinit var film: Film
+
     private lateinit var imageView: ImageView
     private lateinit var toolbar: Toolbar
     private lateinit var descriptorView: TextView
-    private lateinit var film: Film
+    private lateinit var startDateValueView: TextView
+    private lateinit var averageRatingValueView: TextView
+    private lateinit var ageRatingValueView: TextView
+    private lateinit var episodeCountValueView: TextView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -67,7 +72,11 @@ class FilmInfoFragment : Fragment() {
     private fun initFields(view: View) {
         toolbar = view.findViewById(R.id.toolbar_film_info)
         imageView = view.findViewById(R.id.image_view)
-        descriptorView = view.findViewById(R.id.tv_description_film)
+        descriptorView = view.findViewById(R.id.tv_description_value)
+        startDateValueView = view.findViewById(R.id.tv_start_date_value)
+        averageRatingValueView = view.findViewById(R.id.tv_average_rating_value)
+        ageRatingValueView = view.findViewById(R.id.tv_age_rating_value)
+        episodeCountValueView = view.findViewById(R.id.tv_episode_count_value)
     }
 
     private fun getBundleWithFilmInfo() {
@@ -78,6 +87,11 @@ class FilmInfoFragment : Fragment() {
     private fun fillFieldsWithData() {
         toolbar.title = film.title
         descriptorView.text = film.description
+
+        startDateValueView.text = film.startDate
+        averageRatingValueView.text  = film.averageRating.toString()
+        ageRatingValueView.text= film.ageRating
+        episodeCountValueView.text = film.episodeCount.toString()
 
         context?.let {
             Glide.with(it)

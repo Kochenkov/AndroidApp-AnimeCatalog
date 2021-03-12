@@ -13,6 +13,10 @@ data class ResponseFromApi(
             @SerializedName("slug") val serverName: String,
             @SerializedName("canonicalTitle") val title: String,
             @SerializedName("description") val description: String,
+            @SerializedName("startDate") val startDate: String,
+            @SerializedName("ageRating") val ageRating: String,
+            @SerializedName("episodeCount") val episodeCount: Int,
+            @SerializedName("averageRating") val averageRating: Double
         ) {
             data class PosterImage(
                 @SerializedName("tiny") val tiny: String,
