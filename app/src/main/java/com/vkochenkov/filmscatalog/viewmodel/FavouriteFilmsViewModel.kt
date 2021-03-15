@@ -11,7 +11,7 @@ class FavouriteFilmsViewModel : ViewModel() {
 
     private var repository: Repository = App.instance!!.repository
 
-    var mutableFavouritesLiveData = MutableLiveData<List<Film>>()
+    private var mutableFavouritesLiveData = MutableLiveData<List<Film>>()
 
     val favouritesLiveData: LiveData<List<Film>>
         get() = mutableFavouritesLiveData

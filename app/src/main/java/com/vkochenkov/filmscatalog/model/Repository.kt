@@ -45,21 +45,21 @@ class Repository {
 
                     val filmsListFromApi = ArrayList<Film>()
 
-                    for (i in response.body()!!.data.indices) {
-                        filmsListFromApi.add(
-                            Film(
-                                response.body()!!.data.get(i).attributes.serverName,
-                                response.body()!!.data.get(i).attributes.title,
-                                response.body()!!.data.get(i).attributes.description,
-                                response.body()!!.data.get(i).attributes.posterImage.original,
-                                response.body()!!.data.get(i).attributes.startDate,
-                                response.body()!!.data.get(i).attributes.ageRating,
-                                response.body()!!.data.get(i).attributes.episodeCount,
-                                response.body()!!.data.get(i).attributes.averageRating,
-                                false
+                        response.body()!!.data.forEach {
+                            filmsListFromApi.add(
+                                Film(
+                                    it.attributes.serverName,
+                                    it.attributes.title,
+                                    it.attributes.description,
+                                    it.attributes.posterImage.original,
+                                    it.attributes.startDate,
+                                    it.attributes.ageRating,
+                                    it.attributes.episodeCount,
+                                    it.attributes.averageRating,
+                                    false
+                                )
                             )
-                        )
-                    }
+                        }
 
                     callback.onSuccess(filmsListFromApi)
                 } else {
