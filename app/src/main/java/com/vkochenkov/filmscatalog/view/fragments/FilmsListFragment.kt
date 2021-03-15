@@ -51,7 +51,8 @@ class FilmsListFragment : Fragment() {
         initOnDataChangeObserver()
         initOnErrorObserver()
 
-        filmsViewModel.getFilmsWithPaging(progressBar, false)
+        progressBar.visibility = View.VISIBLE
+        filmsViewModel.getFilmsWithPaging(false)
 
         return view
     }
@@ -71,7 +72,7 @@ class FilmsListFragment : Fragment() {
 
     private fun initSwipeToRefresh() {
         swipeRefresh.setOnRefreshListener(SwipeRefreshLayout.OnRefreshListener {
-            filmsViewModel.getFilmsWithPaging(swipeRefresh)
+            filmsViewModel.getFilmsWithoutPaging()
         })
     }
 
@@ -85,7 +86,8 @@ class FilmsListFragment : Fragment() {
                         (filmsRecycler.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition()
 
                     if (visibleItemCount + pastVisiblesItems >= totalItemCount) {
-                        filmsViewModel.getFilmsWithPaging(progressBar)
+                        progressBar.visibility = View.VISIBLE
+                        filmsViewModel.getFilmsWithPaging()
                     }
                 }
             }
@@ -135,13 +137,16 @@ class FilmsListFragment : Fragment() {
     }
 
     private fun retryRequest() {
-        filmsViewModel.getFilmsWithPaging(progressBar, false)
+        progressBar.visibility = View.VISIBLE
+        filmsViewModel.getFilmsWithPaging(false)
     }
 
     private fun initOnDataChangeObserver() {
         filmsViewModel.filmsLiveData.observe(viewLifecycleOwner, Observer {
             it?.let {
                 (filmsRecycler.adapter as FilmsAdapter).refreshDataList(it)
+                progressBar.visibility = View.INVISIBLE
+                swipeRefresh.isRefreshing = false
             }
         })
     }

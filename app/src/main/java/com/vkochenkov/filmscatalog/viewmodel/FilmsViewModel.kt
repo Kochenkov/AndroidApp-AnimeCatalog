@@ -24,34 +24,19 @@ class FilmsViewModel : ViewModel() {
     val errorLiveData: LiveData<String>
         get()  = mutableErrorLiveData
 
-    fun getFilmsWithPaging(progressBar: ProgressBar, shouldIncrementPageCount: Boolean = true) {
+    fun getFilmsWithPaging(shouldIncrementPageCount: Boolean = true) {
         if (shouldIncrementPageCount) {
             currentPageSize += 10
         }
-        progressBar.visibility = View.VISIBLE
-        repository.getFilmsFromApi(currentPageSize, object : Repository.GetFilmsFromApiCallback {
-            override fun onSuccess(films: List<Film>) {
-
-                repository.saveFilmsToDb(films)
-                mutableFilmsLiveData.postValue(repository.getFilmsWithPagination(currentPageSize))
-                mutableErrorLiveData.value = null
-
-                progressBar.visibility = View.INVISIBLE
-            }
-
-            override fun onFailure(str: String) {
-
-                mutableFilmsLiveData.postValue(repository.getFilmsWithPagination(currentPageSize))
-                mutableErrorLiveData.postValue(str)
-
-                progressBar.visibility = View.INVISIBLE
-            }
-        })
+        getFilmsFromApi()
     }
 
-    fun getFilmsWithPaging(swipeRefresh: SwipeRefreshLayout) {
-        swipeRefresh.isRefreshing = true
+    fun getFilmsWithoutPaging() {
         currentPageSize = 0
+        getFilmsFromApi()
+    }
+
+    private fun getFilmsFromApi() {
         repository.getFilmsFromApi(currentPageSize, object : Repository.GetFilmsFromApiCallback {
             override fun onSuccess(films: List<Film>) {
 
@@ -59,7 +44,6 @@ class FilmsViewModel : ViewModel() {
                 mutableFilmsLiveData.postValue(repository.getFilmsWithPagination(currentPageSize))
                 mutableErrorLiveData.value = null
 
-                swipeRefresh.isRefreshing = false
             }
 
             override fun onFailure(str: String) {
@@ -67,7 +51,6 @@ class FilmsViewModel : ViewModel() {
                 mutableFilmsLiveData.postValue(repository.getFilmsWithPagination(currentPageSize))
                 mutableErrorLiveData.postValue(str)
 
-                swipeRefresh.isRefreshing = false
             }
         })
     }

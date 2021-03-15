@@ -41,7 +41,6 @@ class FavouriteFilmsListFragment : Fragment() {
 
         initFields(view)
         initRecycler(view)
-        showStubIfListEmpty()
         initOnDataChangeObserver()
 
         favouritesFilmsViewModel.getFavourites()
@@ -123,16 +122,12 @@ class FavouriteFilmsListFragment : Fragment() {
         favouritesFilmsViewModel.favouritesLiveData.observe(viewLifecycleOwner, Observer {
             it?.let {
                 (favouriteFilmsRecycler.adapter as FavouriteFilmsAdapter).refreshDataList(it)
-            }
-        })
-    }
 
-    private fun showStubIfListEmpty() {
-        favouritesFilmsViewModel.favouritesLiveData.observe(viewLifecycleOwner, Observer {
-            if (it.isEmpty()) {
-                emptyListTextView.visibility = View.VISIBLE
-            } else {
-                emptyListTextView.visibility = View.GONE
+                if (it.isEmpty()) {
+                    emptyListTextView.visibility = View.VISIBLE
+                } else {
+                    emptyListTextView.visibility = View.GONE
+                }
             }
         })
     }
