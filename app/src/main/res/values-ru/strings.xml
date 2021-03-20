@@ -10,7 +10,7 @@
     <string name="dialog_no_exit_text">Нет</string>
     <string name="dialog_title_text">Вы уверены, что хотите выйти?</string>
     <string name="info_title_text">О приложении</string>
-    <string name="some_info_text">Тут будет какая-нибудь информация о приложении</string>
+    <string name="some_info_text">Привет и добро пожаловать в приложение "Аниме каталог"! Приложение использует Kitsu API для получения информации о тысячах различных аниме сериалов и фильмов. Вы можете выбрать понравившиеся аниме и добавить их в избранное, чтобы не забыть посмотреть в дальнейшем. </string>
     <string name="btn_share_text">" Поделиться приложением"</string>
     <string name="bottom_menu_home_text">Домой</string>
     <string name="bottom_menu_favourites_text">Избранное</string>

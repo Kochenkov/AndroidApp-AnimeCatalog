@@ -38,14 +38,15 @@ class FavouriteFilmsListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_favourite_films_list, container, false)
-
         initFields(view)
         initRecycler(view)
-        initOnDataChangeObserver()
-
-        favouritesFilmsViewModel.getFavourites()
-
         return view
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initOnDataChangeObserver()
+        favouritesFilmsViewModel.getFavourites()
     }
 
     override fun onResume() {
