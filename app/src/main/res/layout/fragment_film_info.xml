@@ -45,16 +45,127 @@
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <TextView
-            android:id="@+id/tv_description_film"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/main_margin"
-            android:text="@string/default_film_title"
-            android:textColor="@color/colorBlack"
-            android:textSize="@dimen/normal_text_size"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tv_start_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/main_margin"
+                android:layout_marginTop="@dimen/main_margin"
+                android:layout_marginEnd="@dimen/half_main_margin"
+                android:layout_marginBottom="@dimen/half_main_margin"
+                android:text="@string/release_start_date_str"
+                android:textColor="@color/colorBlack"
+                android:textSize="@dimen/normal_text_size"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_start_date_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/half_main_margin"
+                android:layout_marginTop="@dimen/main_margin"
+                android:layout_marginEnd="@dimen/half_main_margin"
+                android:layout_marginBottom="@dimen/half_main_margin"
+                android:textColor="@color/colorBlack"
+                android:textSize="@dimen/normal_text_size"
+                app:layout_constraintStart_toEndOf="@+id/tv_start_date"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_average_rating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/main_margin"
+                android:layout_marginTop="@dimen/half_main_margin"
+                android:layout_marginEnd="@dimen/half_main_margin"
+                android:layout_marginBottom="@dimen/half_main_margin"
+                android:text="@string/average_rating_str"
+                android:textColor="@color/colorBlack"
+                android:textSize="@dimen/normal_text_size"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_start_date" />
+
+            <TextView
+                android:id="@+id/tv_average_rating_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/half_main_margin"
+                android:textColor="@color/colorBlack"
+                android:textSize="@dimen/normal_text_size"
+                app:layout_constraintStart_toEndOf="@+id/tv_average_rating"
+                app:layout_constraintTop_toBottomOf="@id/tv_start_date" />
+
+            <TextView
+                android:id="@+id/tv_age_rating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/main_margin"
+                android:layout_marginTop="@dimen/half_main_margin"
+                android:layout_marginEnd="@dimen/half_main_margin"
+                android:layout_marginBottom="@dimen/half_main_margin"
+                android:text="@string/age_rating_str"
+                android:textColor="@color/colorBlack"
+                android:textSize="@dimen/normal_text_size"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_average_rating" />
+
+            <TextView
+                android:id="@+id/tv_age_rating_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/half_main_margin"
+                android:textColor="@color/colorBlack"
+                android:textSize="@dimen/normal_text_size"
+                app:layout_constraintStart_toEndOf="@+id/tv_age_rating"
+                app:layout_constraintTop_toBottomOf="@id/tv_average_rating" />
+
+            <TextView
+                android:id="@+id/tv_episode_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/main_margin"
+                android:layout_marginTop="@dimen/half_main_margin"
+                android:layout_marginEnd="@dimen/half_main_margin"
+                android:layout_marginBottom="@dimen/half_main_margin"
+                android:text="@string/episode_count_str"
+                android:textColor="@color/colorBlack"
+                android:textSize="@dimen/normal_text_size"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_age_rating" />
+
+            <TextView
+                android:id="@+id/tv_episode_count_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/half_main_margin"
+                android:textColor="@color/colorBlack"
+                android:textSize="@dimen/normal_text_size"
+                app:layout_constraintStart_toEndOf="@+id/tv_episode_count"
+                app:layout_constraintTop_toBottomOf="@id/tv_age_rating" />
+
+            <TextView
+                android:id="@+id/tv_description_value"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/main_margin"
+                android:text="@string/default_film_title"
+                android:textColor="@color/colorBlack"
+                android:textSize="@dimen/normal_text_size"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_episode_count" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
     </androidx.core.widget.NestedScrollView>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

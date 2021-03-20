@@ -24,15 +24,15 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/half_main_margin"
-        android:layout_marginTop="@dimen/main_margin"
+        android:layout_marginTop="@dimen/half_main_margin"
         android:layout_marginEnd="@dimen/half_main_margin"
+        android:ellipsize="end"
+        android:maxLines="3"
         android:textColor="@color/colorBlack"
         android:textSize="@dimen/large_text_size"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/item_film_image"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
         tools:text="@string/default_film_title" />
 
     <Button
