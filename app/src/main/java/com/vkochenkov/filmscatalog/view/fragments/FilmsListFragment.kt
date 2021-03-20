@@ -48,13 +48,16 @@ class FilmsListFragment : Fragment() {
         initRecyclerView(view)
         initRecyclerPagination()
         initSwipeToRefresh()
-        initOnDataChangeObserver()
-        initOnErrorObserver()
-
         progressBar.visibility = View.VISIBLE
-        filmsViewModel.getFilmsWithPaging(false)
 
         return view
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initOnDataChangeObserver()
+        initOnErrorObserver()
+        filmsViewModel.getFilmsWithPaging(false)
     }
 
     override fun onResume() {

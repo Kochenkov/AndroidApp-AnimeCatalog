@@ -10,7 +10,7 @@
     <string name="dialog_no_exit_text">No</string>
     <string name="dialog_title_text">Are you sure you want to get out?</string>
     <string name="info_title_text">App Info</string>
-    <string name="some_info_text">This will be some info about this app</string>
+    <string name="some_info_text">Hello and welcome to the Anime Catalog app! This app uses the Kitsu API to get information about thousands of different anime series and movies. You can choose your favorite anime and add them to your favorites so that you don\'t forget to watch them later.</string>
     <string name="btn_share_text">Share App</string>
     <string name="bottom_menu_home_text">Home</string>
     <string name="bottom_menu_favourites_text">Favourites</string>
