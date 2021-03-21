@@ -23,6 +23,7 @@ class FilmViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         Glide.with(itemView.context)
             .load(item.imageUrl)
+            .placeholder(R.drawable.im_default_film)
             .diskCacheStrategy(DiskCacheStrategy.ALL)
             .into(filmImage)
 

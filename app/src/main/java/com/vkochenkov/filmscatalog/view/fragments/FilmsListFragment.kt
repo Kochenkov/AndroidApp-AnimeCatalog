@@ -74,6 +74,7 @@ class FilmsListFragment : Fragment() {
     }
 
     private fun initSwipeToRefresh() {
+        swipeRefresh.setColorSchemeResources(R.color.colorAccent)
         swipeRefresh.setOnRefreshListener(SwipeRefreshLayout.OnRefreshListener {
             filmsViewModel.getFilmsWithoutPaging()
         })

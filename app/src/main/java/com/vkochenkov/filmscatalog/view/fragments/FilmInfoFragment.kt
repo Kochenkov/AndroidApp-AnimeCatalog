@@ -96,6 +96,7 @@ class FilmInfoFragment : Fragment() {
         context?.let {
             Glide.with(it)
                 .load(film.imageUrl)
+                .placeholder(R.drawable.im_default_film)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(imageView)
         }

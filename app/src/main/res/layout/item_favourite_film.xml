@@ -17,7 +17,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:src="@drawable/im_default_film" />
+        tools:background="@drawable/im_default_film" />
 
     <TextView
         android:id="@+id/item_favourite_film_title"
