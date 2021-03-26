@@ -24,5 +24,7 @@
     <string name="average_rating_str">Средний рейтинг:</string>
     <string name="age_rating_str">Возрастной рейтинг:</string>
     <string name="episode_count_str">Число эпизодов:</string>
+    <string name="vt_created_str">\u00A9 Created by Kochenkov</string>
+    <string name="tv_powered_str">Powered by Kitsu</string>
 
 </resources>

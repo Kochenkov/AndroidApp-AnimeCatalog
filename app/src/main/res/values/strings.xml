@@ -24,4 +24,6 @@
     <string name="average_rating_str">Average rating:</string>
     <string name="age_rating_str">Age rating:</string>
     <string name="episode_count_str">Episode count:</string>
+    <string name="tv_powered_str">Powered by Kitsu</string>
+    <string name="vt_created_str">\u00A9 Created by Kochenkov</string>
 </resources>
