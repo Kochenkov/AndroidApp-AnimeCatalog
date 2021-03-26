@@ -54,7 +54,6 @@ class MainActivity : AppCompatActivity() {
 
     private fun setBottomNavigationClickListener() {
         bottomNavView.setOnNavigationItemSelectedListener { item ->
-            supportFragmentManager.popBackStack()
             when (item.itemId) {
                 R.id.menu_home_item -> {
                     replaceFragment(fragment1)
@@ -71,9 +70,15 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun replaceFragment(fragment: Fragment) {
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.fragments_container, fragment)
-            .addToBackStack(null)
-            .commit()
+        val fragments = supportFragmentManager.fragments
+        val size = fragments.size
+
+        if (size==0 || fragments[size-1]::class != fragment::class) {
+            supportFragmentManager.popBackStack()
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.fragments_container, fragment)
+                .addToBackStack(null)
+                .commit()
+        }
     }
 }

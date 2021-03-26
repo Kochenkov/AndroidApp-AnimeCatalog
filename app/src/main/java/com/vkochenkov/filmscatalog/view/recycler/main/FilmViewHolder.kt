@@ -8,6 +8,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.vkochenkov.filmscatalog.App
 import com.vkochenkov.filmscatalog.R
 import com.vkochenkov.filmscatalog.model.LocalDataStore
 import com.vkochenkov.filmscatalog.model.db.Film
@@ -21,7 +22,7 @@ class FilmViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     fun bind(item: Film) {
         filmTitle.text = item.title
 
-        Glide.with(itemView.context)
+        Glide.with(App.instance!!.applicationContext)
             .load(item.imageUrl)
             .placeholder(R.drawable.im_default_film)
             .diskCacheStrategy(DiskCacheStrategy.ALL)

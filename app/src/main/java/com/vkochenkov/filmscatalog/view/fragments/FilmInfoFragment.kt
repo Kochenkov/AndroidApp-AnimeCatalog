@@ -11,9 +11,10 @@ import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.vkochenkov.filmscatalog.view.MainActivity.Companion.FILM
+import com.vkochenkov.filmscatalog.App
 import com.vkochenkov.filmscatalog.R
 import com.vkochenkov.filmscatalog.model.db.Film
+import com.vkochenkov.filmscatalog.view.MainActivity.Companion.FILM
 
 class FilmInfoFragment : Fragment() {
 
@@ -89,16 +90,14 @@ class FilmInfoFragment : Fragment() {
         descriptorView.text = film.description
 
         startDateValueView.text = film.startDate
-        averageRatingValueView.text  = film.averageRating.toString()
-        ageRatingValueView.text= film.ageRating
+        averageRatingValueView.text = film.averageRating.toString()
+        ageRatingValueView.text = film.ageRating
         episodeCountValueView.text = film.episodeCount.toString()
 
-        context?.let {
-            Glide.with(it)
-                .load(film.imageUrl)
-                .placeholder(R.drawable.im_default_film)
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .into(imageView)
-        }
+        Glide.with(App.instance!!.applicationContext)
+            .load(film.imageUrl)
+            .placeholder(R.drawable.im_default_film)
+            .diskCacheStrategy(DiskCacheStrategy.ALL)
+            .into(imageView)
     }
 }
