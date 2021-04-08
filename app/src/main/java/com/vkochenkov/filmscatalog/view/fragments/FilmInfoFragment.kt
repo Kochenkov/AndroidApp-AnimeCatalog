@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -15,6 +16,7 @@ import com.vkochenkov.filmscatalog.App
 import com.vkochenkov.filmscatalog.R
 import com.vkochenkov.filmscatalog.model.db.Film
 import com.vkochenkov.filmscatalog.view.MainActivity.Companion.FILM
+import com.vkochenkov.filmscatalog.view.dialogs.WatchLaterDialogFragment
 
 class FilmInfoFragment : Fragment() {
 
@@ -27,6 +29,8 @@ class FilmInfoFragment : Fragment() {
     private lateinit var averageRatingValueView: TextView
     private lateinit var ageRatingValueView: TextView
     private lateinit var episodeCountValueView: TextView
+    private lateinit var btnWatchLater: Button
+    private lateinit var btnCancelWatchLater: Button
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,6 +44,8 @@ class FilmInfoFragment : Fragment() {
         setToolbar()
         getBundleWithFilmInfo()
         fillFieldsWithData()
+        btnWatchLater.setOnClickListener(watchLaterBtnClickListener())
+        btnCancelWatchLater.setOnClickListener(watchLaterBtnClickListener())
 
         return view
     }
@@ -78,6 +84,8 @@ class FilmInfoFragment : Fragment() {
         averageRatingValueView = view.findViewById(R.id.tv_average_rating_value)
         ageRatingValueView = view.findViewById(R.id.tv_age_rating_value)
         episodeCountValueView = view.findViewById(R.id.tv_episode_count_value)
+        btnWatchLater = view.findViewById(R.id.btn_watch_later)
+        btnCancelWatchLater = view.findViewById(R.id.btn_cancel_watch_later)
     }
 
     private fun getBundleWithFilmInfo() {
@@ -99,5 +107,16 @@ class FilmInfoFragment : Fragment() {
             .placeholder(R.drawable.im_default_film)
             .diskCacheStrategy(DiskCacheStrategy.ALL)
             .into(imageView)
+    }
+
+    private fun watchLaterBtnClickListener() = View.OnClickListener {
+        //todo
+        val dialogFragment = WatchLaterDialogFragment(film)
+        dialogFragment.show(fragmentManager!!, null)
+    }
+
+    private fun cancelWatchLaterBtnClickListener() = View.OnClickListener {
+        //todo
+        //вью модель - отмена просмотра
     }
 }
