@@ -1,19 +1,12 @@
 package com.vkochenkov.filmscatalog.viewmodel
 
-import android.view.View
-import android.widget.ProgressBar
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import com.vkochenkov.filmscatalog.App
 import com.vkochenkov.filmscatalog.model.LocalDataStore.currentPageSize
 import com.vkochenkov.filmscatalog.model.db.Film
 import com.vkochenkov.filmscatalog.model.Repository
 
-class FilmsViewModel : ViewModel() {
-
-    private var repository: Repository = App.instance!!.repository
+class FilmsViewModel : CommonViewModel() {
 
     private var mutableFilmsLiveData = MutableLiveData<List<Film>>()
     private var mutableErrorLiveData = MutableLiveData<String>()
@@ -53,13 +46,5 @@ class FilmsViewModel : ViewModel() {
 
             }
         })
-    }
-
-    fun likeFilm(name: String) {
-        repository.likeFilm(name)
-    }
-
-    fun unlikeFilm(name: String) {
-        repository.unlikeFilm(name)
     }
 }
