@@ -1,9 +1,12 @@
 package com.vkochenkov.filmscatalog.viewmodel
 
+import android.os.Parcelable
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import kotlinx.android.parcel.Parcelize
 
-class NotificationViewModel : CommonViewModel() {
+@Parcelize
+class NotificationViewModel : CommonViewModel(), Parcelable {
 
     private var mutableNotifyFilmLiveData = MutableLiveData<Boolean>()
 

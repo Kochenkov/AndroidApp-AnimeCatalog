@@ -123,8 +123,9 @@ class FilmInfoFragment : Fragment() {
     }
 
     private fun watchLaterBtnClickListener() = View.OnClickListener {
-        //todo
-        val dialogFragment = WatchLaterDialogFragment(film, notificationInfoViewModel)
+        val dialogFragment = WatchLaterDialogFragment()
+        dialogFragment.film = film
+        dialogFragment.viewModel = notificationInfoViewModel
         dialogFragment.show(fragmentManager!!, null)
     }
 

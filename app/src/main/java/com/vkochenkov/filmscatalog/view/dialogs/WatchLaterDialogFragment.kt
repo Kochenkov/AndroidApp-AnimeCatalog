@@ -17,10 +17,20 @@ import androidx.fragment.app.DialogFragment
 import com.vkochenkov.filmscatalog.R
 import com.vkochenkov.filmscatalog.model.db.Film
 import com.vkochenkov.filmscatalog.receivers.FilmNotificationReceiver
+import com.vkochenkov.filmscatalog.view.MainActivity.Companion.FILM
 import com.vkochenkov.filmscatalog.viewmodel.NotificationViewModel
 import java.util.*
 
-class WatchLaterDialogFragment(val film: Film, val viewModel: NotificationViewModel): DialogFragment() {
+class WatchLaterDialogFragment : DialogFragment() {
+
+    var film: Film? = null
+        set(value) {
+            field = value
+        }
+    var viewModel: NotificationViewModel? = null
+        set(value) {
+            field = value
+        }
 
     private lateinit var datePicker: DatePicker
     private lateinit var timePicker: TimePicker
@@ -30,6 +40,10 @@ class WatchLaterDialogFragment(val film: Film, val viewModel: NotificationViewMo
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        if (savedInstanceState != null) {
+            film = savedInstanceState.getParcelable("film")
+            viewModel = savedInstanceState.getParcelable("viewModel")
+        }
         val view = inflater.inflate(R.layout.dialog_fragment_watch_later, container, false)
         timePicker = view.findViewById(R.id.time_picker)
         datePicker = view.findViewById(R.id.date_picker)
@@ -38,21 +52,27 @@ class WatchLaterDialogFragment(val film: Film, val viewModel: NotificationViewMo
         return view
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putParcelable("film", film)
+        outState.putParcelable("viewModel", viewModel)
+    }
+
     private fun setOnBtnClickListeners(view: View) {
-        view.findViewById<Button>(R.id.btn_create_notification).setOnClickListener{
+        view.findViewById<Button>(R.id.btn_create_notification).setOnClickListener {
 
-            val alarmManager = activity!!.getSystemService(AppCompatActivity.ALARM_SERVICE) as AlarmManager
+            val alarmManager =
+                activity!!.getSystemService(AppCompatActivity.ALARM_SERVICE) as AlarmManager
 
-            //todo в ресивер приходит пустой инттент, нужно понять почему. Возможно дело в контексте, с активити тоже не робит
             val intent = Intent(activity, FilmNotificationReceiver::class.java)
             val bundle = Bundle()
-            bundle.putParcelable("film", film)
-            bundle.putString("test", "ttt")
+            bundle.putParcelable(FILM, film)
             bundle.putInt("notificationId", 1)
 
             intent.putExtra("bundle", bundle)
 
-            val alarmIntent = PendingIntent.getBroadcast(activity, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT)
+            val alarmIntent =
+                PendingIntent.getBroadcast(activity, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT)
 
             val year = datePicker.year
             val month = datePicker.month
@@ -71,19 +91,21 @@ class WatchLaterDialogFragment(val film: Film, val viewModel: NotificationViewMo
 
             val alarmStartTime = startTime.timeInMillis
 
-            Log.d("notification", "alarm: "+ startTime.timeInMillis.toString())
-            Log.d("notification", "current millis: "+ System.currentTimeMillis().toString())
+            //todo
+            Log.d("notification", "alarm: " + startTime.timeInMillis.toString())
+            Log.d("notification", "current millis: " + System.currentTimeMillis().toString())
 
             alarmManager.set(AlarmManager.RTC_WAKEUP, alarmStartTime, alarmIntent)
 
+            //todo
             Toast.makeText(context, "message", Toast.LENGTH_LONG).show()
             dismiss()
 
-            viewModel.notifyFilm(film.serverName)
-            viewModel.isNotifyFilm(film.serverName)
+            viewModel?.notifyFilm(film!!.serverName)
+            viewModel?.isNotifyFilm(film!!.serverName)
         }
 
-        view.findViewById<Button>(R.id.btn_cancel_create_notif).setOnClickListener{
+        view.findViewById<Button>(R.id.btn_cancel_create_notif).setOnClickListener {
             dismiss()
         }
     }

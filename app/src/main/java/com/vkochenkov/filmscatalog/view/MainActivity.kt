@@ -5,9 +5,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.vkochenkov.filmscatalog.R
+import com.vkochenkov.filmscatalog.model.db.Film
 import com.vkochenkov.filmscatalog.view.dialogs.ExitDialog
 import com.vkochenkov.filmscatalog.view.fragments.AppInfoFragment
 import com.vkochenkov.filmscatalog.view.fragments.FavouriteFilmsListFragment
+import com.vkochenkov.filmscatalog.view.fragments.FilmInfoFragment
 import com.vkochenkov.filmscatalog.view.fragments.FilmsListFragment
 
 class MainActivity : AppCompatActivity() {
@@ -31,6 +33,20 @@ class MainActivity : AppCompatActivity() {
 
         if (supportFragmentManager.backStackEntryCount == 0) {
             replaceFragment(fragment1)
+        }
+
+        //todo нужно разобраться с бэкстеком и пересозданием активити
+        val bundle = intent.getBundleExtra("bundle")
+        val film = bundle?.getParcelable<Film>(FILM)
+        if (film != null) {
+            val filmInfoFragment = FilmInfoFragment()
+            filmInfoFragment.arguments = bundle
+            //todo зануление интента не работает - он все-равно приходит
+            intent = null
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.fragments_container, filmInfoFragment)
+                .addToBackStack("FilmInfoFragment")
+                .commit()
         }
     }
 
@@ -72,7 +88,7 @@ class MainActivity : AppCompatActivity() {
         val fragments = supportFragmentManager.fragments
         val size = fragments.size
 
-        if (size==0 || fragments[size-1]::class != fragment::class) {
+        if (size == 0 || fragments[size - 1]::class != fragment::class) {
             supportFragmentManager.popBackStack()
             supportFragmentManager.beginTransaction()
                 .replace(R.id.fragments_container, fragment)

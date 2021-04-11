@@ -8,12 +8,14 @@ import android.content.Context
 import android.content.Context.NOTIFICATION_SERVICE
 import android.content.Intent
 import android.os.Build
-import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationCompat.PRIORITY_DEFAULT
+import com.vkochenkov.filmscatalog.App
 import com.vkochenkov.filmscatalog.R
+import com.vkochenkov.filmscatalog.model.Repository
 import com.vkochenkov.filmscatalog.model.db.Film
 import com.vkochenkov.filmscatalog.view.MainActivity
+import com.vkochenkov.filmscatalog.view.MainActivity.Companion.FILM
 
 class FilmNotificationReceiver : BroadcastReceiver() {
 
@@ -23,15 +25,15 @@ class FilmNotificationReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
 
-        Log.d("notification", "onReceive")
-
         val bundle = intent.getBundleExtra("bundle")
         val notificationId = bundle?.getInt("notificationId")
-        val film = bundle?.getParcelable<Film>("film")
+        val film = bundle?.getParcelable<Film>(FILM)
 
-        //todo заменить на открытие соответствующего фрагмента
         val intentActivity = Intent(context, MainActivity::class.java)
-        val contentIntent = PendingIntent.getActivity(context, 0, intentActivity, 0)
+        //todo вынести в константы
+        intentActivity.putExtra("bundle", bundle)
+        val contentIntent =
+            PendingIntent.getActivity(context, 0, intentActivity, PendingIntent.FLAG_UPDATE_CURRENT)
 
         val notificationManager =
             context.getSystemService(NOTIFICATION_SERVICE) as NotificationManager
@@ -44,6 +46,9 @@ class FilmNotificationReceiver : BroadcastReceiver() {
 
             notificationManager.createNotificationChannel(channel)
         }
+
+        val repository: Repository = App.instance!!.repository
+        repository.unnotifyFilm(film!!.serverName)
 
         val notification = NotificationCompat.Builder(context, CHANNEL_ID)
             .setChannelId(CHANNEL_ID)
