@@ -10,6 +10,8 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.vkochenkov.filmscatalog.App
@@ -17,8 +19,13 @@ import com.vkochenkov.filmscatalog.R
 import com.vkochenkov.filmscatalog.model.db.Film
 import com.vkochenkov.filmscatalog.view.MainActivity.Companion.FILM
 import com.vkochenkov.filmscatalog.view.dialogs.WatchLaterDialogFragment
+import com.vkochenkov.filmscatalog.viewmodel.NotificationViewModel
 
 class FilmInfoFragment : Fragment() {
+
+    private val notificationInfoViewModel by lazy {
+        ViewModelProvider(this).get(NotificationViewModel::class.java)
+    }
 
     private lateinit var film: Film
 
@@ -48,6 +55,12 @@ class FilmInfoFragment : Fragment() {
         btnCancelWatchLater.setOnClickListener(watchLaterBtnClickListener())
 
         return view
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initOnNotifyChangeObserver()
+        notificationInfoViewModel.isNotifyFilm(film.serverName)
     }
 
     override fun onDestroy() {
@@ -111,12 +124,22 @@ class FilmInfoFragment : Fragment() {
 
     private fun watchLaterBtnClickListener() = View.OnClickListener {
         //todo
-        val dialogFragment = WatchLaterDialogFragment(film)
+        val dialogFragment = WatchLaterDialogFragment(film, notificationInfoViewModel)
         dialogFragment.show(fragmentManager!!, null)
     }
 
     private fun cancelWatchLaterBtnClickListener() = View.OnClickListener {
         //todo
         //вью модель - отмена просмотра
+    }
+
+    private fun initOnNotifyChangeObserver() {
+        notificationInfoViewModel.notifyFilmLiveData.observe(viewLifecycleOwner, Observer {
+            if (it) {
+                btnWatchLater.visibility = View.INVISIBLE
+            } else {
+                btnWatchLater.visibility = View.VISIBLE
+            }
+        })
     }
 }
