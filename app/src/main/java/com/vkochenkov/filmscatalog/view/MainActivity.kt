@@ -22,6 +22,7 @@ class MainActivity : AppCompatActivity() {
 
     companion object {
         const val FILM = "FILM"
+        const val BUNDLE = "BUNDLE"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,7 +37,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         //todo нужно разобраться с бэкстеком и пересозданием активити
-        val bundle = intent.getBundleExtra("bundle")
+        val bundle = intent.getBundleExtra(BUNDLE)
         val film = bundle?.getParcelable<Film>(FILM)
         if (film != null) {
             val filmInfoFragment = FilmInfoFragment()

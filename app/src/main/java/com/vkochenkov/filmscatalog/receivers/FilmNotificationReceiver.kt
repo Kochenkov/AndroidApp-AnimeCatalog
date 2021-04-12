@@ -15,25 +15,27 @@ import com.vkochenkov.filmscatalog.R
 import com.vkochenkov.filmscatalog.model.Repository
 import com.vkochenkov.filmscatalog.model.db.Film
 import com.vkochenkov.filmscatalog.view.MainActivity
+import com.vkochenkov.filmscatalog.view.MainActivity.Companion.BUNDLE
 import com.vkochenkov.filmscatalog.view.MainActivity.Companion.FILM
 
 class FilmNotificationReceiver : BroadcastReceiver() {
 
     companion object {
         val CHANNEL_ID = "SAMPLE_CHANNEL"
+        val NOTIFICATION_ID = "NOTIFICATION_ID"
     }
 
     override fun onReceive(context: Context, intent: Intent) {
 
-        val bundle = intent.getBundleExtra("bundle")
-        val notificationId = bundle?.getInt("notificationId")
+        val bundle = intent.getBundleExtra(BUNDLE)
+        val notificationId = bundle?.getInt(NOTIFICATION_ID)
         val film = bundle?.getParcelable<Film>(FILM)
 
         val intentActivity = Intent(context, MainActivity::class.java)
-        //todo вынести в константы
-        intentActivity.putExtra("bundle", bundle)
+        intentActivity.putExtra(BUNDLE, bundle)
+        //set unique request code for exact film
         val contentIntent =
-            PendingIntent.getActivity(context, 0, intentActivity, PendingIntent.FLAG_UPDATE_CURRENT)
+            PendingIntent.getActivity(context, notificationId!!.toInt(), intentActivity, PendingIntent.FLAG_UPDATE_CURRENT)
 
         val notificationManager =
             context.getSystemService(NOTIFICATION_SERVICE) as NotificationManager
@@ -53,8 +55,9 @@ class FilmNotificationReceiver : BroadcastReceiver() {
         val notification = NotificationCompat.Builder(context, CHANNEL_ID)
             .setChannelId(CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_totoro)
+                //todo вынести в строки
             .setContentTitle("Напоминание о просмотре")
-            .setContentText(film?.title)
+            .setContentText(film.title)
             .setContentIntent(contentIntent)
             .setPriority(PRIORITY_DEFAULT)
             .setAutoCancel(true)
