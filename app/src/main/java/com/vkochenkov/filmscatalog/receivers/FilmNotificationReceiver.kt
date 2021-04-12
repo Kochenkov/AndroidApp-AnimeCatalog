@@ -35,7 +35,7 @@ class FilmNotificationReceiver : BroadcastReceiver() {
         intentActivity.putExtra(BUNDLE, bundle)
         //set unique request code for exact film
         val contentIntent =
-            PendingIntent.getActivity(context, notificationId!!.toInt(), intentActivity, PendingIntent.FLAG_UPDATE_CURRENT)
+            PendingIntent.getActivity(context, notificationId!!.toInt(), intentActivity, PendingIntent.FLAG_CANCEL_CURRENT)
 
         val notificationManager =
             context.getSystemService(NOTIFICATION_SERVICE) as NotificationManager

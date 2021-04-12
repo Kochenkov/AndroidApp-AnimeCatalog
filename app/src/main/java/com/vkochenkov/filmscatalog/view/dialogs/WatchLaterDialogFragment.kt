@@ -82,7 +82,7 @@ class WatchLaterDialogFragment : DialogFragment() {
             intent.action = id.toString()
             //create pending intent for alarm manager
             val alarmIntent =
-                PendingIntent.getBroadcast(activity, 0, intent, 0)
+                PendingIntent.getBroadcast(activity, id, intent, 0)
 
             //get date from pickers
             val year = datePicker.year
