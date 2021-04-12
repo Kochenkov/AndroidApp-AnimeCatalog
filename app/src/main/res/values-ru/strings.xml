@@ -27,5 +27,6 @@
     <string name="vt_created_str">\u00A9 Created by Kochenkov</string>
     <string name="tv_powered_str">Powered by Kitsu</string>
     <string name="notification_title_str">Напоминание о просмотре</string>
+    <string name="notification_created_str">Уведомление создано</string>
 
 </resources>

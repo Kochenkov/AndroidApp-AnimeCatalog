@@ -102,7 +102,7 @@ class WatchLaterDialogFragment : DialogFragment() {
 
             val alarmStartTime = startTime.timeInMillis
 
-            //todo
+            //todo понять почему pm am работает не совсем так как нужно
             Log.d("notification", "alarm: " + startTime.timeInMillis.toString())
             Log.d("notification", "current millis: " + System.currentTimeMillis().toString())
 
@@ -112,8 +112,7 @@ class WatchLaterDialogFragment : DialogFragment() {
             viewModel?.notifyFilm(film!!.serverName)
             viewModel?.isNotifyFilm(film!!.serverName)
 
-            //todo
-            Toast.makeText(context, "Напоминание успешно создано", Toast.LENGTH_LONG).show()
+            Toast.makeText(context, context?.getText(R.string.notification_created_str), Toast.LENGTH_LONG).show()
             dismiss()
         }
 

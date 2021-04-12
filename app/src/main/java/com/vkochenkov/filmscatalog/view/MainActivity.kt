@@ -39,14 +39,14 @@ class MainActivity : AppCompatActivity() {
             replaceFragment(fragment1)
         }
 
-        // проверяем, впервые создана активити, или пересоздана (например при повороте экрана)
+        // check whether the activity was created for the first time, or recreated (for example, when you rotate the screen)
         if (savedInstanceState == null) {
             bundle = intent.getBundleExtra(BUNDLE)
         } else {
             bundle = null
         }
         val film = bundle?.getParcelable<Film>(FILM)
-        // если фильм будет не пустой (попадаем сюда из ресивера по нотификации), то открываем фрагмент с фильмом
+        // if the movie is not empty (we get here from the receiver by notification), then open the fragment with the movie
         if (film != null) {
             intent = null
             val filmInfoFragment = FilmInfoFragment()
@@ -58,7 +58,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    //сохраняем бандл при пересоздании активити, для блокирования многократного пересоздания фрагмента с фильмом
+    // save the bundle when recreating the activity, to block multiple recreations of the fragment with the movie
     override fun onSaveInstanceState(outState: Bundle, outPersistentState: PersistableBundle) {
         super.onSaveInstanceState(outState, outPersistentState)
         outState.putParcelable(BUNDLE, bundle)
