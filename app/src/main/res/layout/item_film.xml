@@ -52,8 +52,19 @@
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:padding="6dp"
+        android:src="@drawable/ic_heart_empty"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <ImageView
+        android:id="@+id/item_film_iv_watch_later"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:padding="6dp"
+        android:src="@drawable/ic_baseline_timer"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/item_film_like_btn"
         app:layout_constraintEnd_toEndOf="parent"
-        android:src="@drawable/ic_heart_empty" />
+        tools:visibility="visible" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

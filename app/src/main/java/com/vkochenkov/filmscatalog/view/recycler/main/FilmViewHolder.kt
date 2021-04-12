@@ -18,6 +18,7 @@ class FilmViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     val filmImage: ImageView = itemView.findViewById(R.id.item_film_image)
     val filmDetailsBtn: Button = itemView.findViewById(R.id.item_film_details_btn)
     val filmLikeBtn: ImageView = itemView.findViewById(R.id.item_film_like_btn)
+    val filmNotifyIcon: ImageView = itemView.findViewById(R.id.item_film_iv_watch_later)
 
     fun bind(item: Film) {
         filmTitle.text = item.title
@@ -38,6 +39,12 @@ class FilmViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             filmLikeBtn.setImageResource(R.drawable.ic_heart_fill)
         } else {
             filmLikeBtn.setImageResource(R.drawable.ic_heart_empty)
+        }
+
+        if (item.notify) {
+            filmNotifyIcon.visibility = View.VISIBLE
+        } else {
+            filmNotifyIcon.visibility = View.INVISIBLE
         }
     }
 }

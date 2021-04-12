@@ -34,7 +34,7 @@
         app:layout_constraintStart_toEndOf="@+id/item_favourite_film_image"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0"
-        tools:text="@string/default_film_title" />
+        tools:text="string/default_film_title" />
 
     <Button
         android:id="@+id/item_favourite_film_details_btn"
@@ -57,5 +57,16 @@
         android:src="@drawable/ic_delete"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
+
+    <ImageView
+        android:id="@+id/item_favourite_film_iv_watch_later"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:padding="6dp"
+        android:src="@drawable/ic_baseline_timer"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/item_favourite_film_delete_btn"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:visibility="visible" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
