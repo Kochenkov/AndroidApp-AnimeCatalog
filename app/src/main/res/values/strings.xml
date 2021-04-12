@@ -26,4 +26,5 @@
     <string name="episode_count_str">Episode count:</string>
     <string name="tv_powered_str">Powered by Kitsu</string>
     <string name="vt_created_str">\u00A9 Created by Kochenkov</string>
+    <string name="notification_title_str">Watch reminder</string>
 </resources>

@@ -22,6 +22,7 @@ class FilmNotificationReceiver : BroadcastReceiver() {
 
     companion object {
         val CHANNEL_ID = "SAMPLE_CHANNEL"
+        val CHANNEL_NAME = "MY_NOTIFICATION"
         val NOTIFICATION_ID = "NOTIFICATION_ID"
     }
 
@@ -35,14 +36,14 @@ class FilmNotificationReceiver : BroadcastReceiver() {
         intentActivity.putExtra(BUNDLE, bundle)
         //set unique request code for exact film
         val contentIntent =
-            PendingIntent.getActivity(context, notificationId!!.toInt(), intentActivity, PendingIntent.FLAG_CANCEL_CURRENT)
+            PendingIntent.getActivity(context, notificationId!!.toInt(), intentActivity, PendingIntent.FLAG_UPDATE_CURRENT)
 
         val notificationManager =
             context.getSystemService(NOTIFICATION_SERVICE) as NotificationManager
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             //for api 26 and above
-            val channelName = "My Notification"
+            val channelName = CHANNEL_NAME
             val importance = NotificationManager.IMPORTANCE_DEFAULT
             val channel = NotificationChannel(CHANNEL_ID, channelName, importance)
 
@@ -55,14 +56,13 @@ class FilmNotificationReceiver : BroadcastReceiver() {
         val notification = NotificationCompat.Builder(context, CHANNEL_ID)
             .setChannelId(CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_totoro)
-                //todo вынести в строки
-            .setContentTitle("Напоминание о просмотре")
+            .setContentTitle(context.getString(R.string.notification_title_str))
             .setContentText(film.title)
             .setContentIntent(contentIntent)
             .setPriority(PRIORITY_DEFAULT)
             .setAutoCancel(true)
             .build()
 
-        notificationManager.notify(notificationId!!, notification)
+        notificationManager.notify(notificationId, notification)
     }
 }

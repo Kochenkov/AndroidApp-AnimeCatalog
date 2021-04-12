@@ -1,6 +1,7 @@
 package com.vkochenkov.filmscatalog.view
 
 import android.os.Bundle
+import android.os.PersistableBundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -13,6 +14,8 @@ import com.vkochenkov.filmscatalog.view.fragments.FilmInfoFragment
 import com.vkochenkov.filmscatalog.view.fragments.FilmsListFragment
 
 class MainActivity : AppCompatActivity() {
+
+    var bundle: Bundle? = null
 
     lateinit var bottomNavView: BottomNavigationView
 
@@ -36,19 +39,29 @@ class MainActivity : AppCompatActivity() {
             replaceFragment(fragment1)
         }
 
-        //todo нужно разобраться с бэкстеком и пересозданием активити
-        val bundle = intent.getBundleExtra(BUNDLE)
+        // проверяем, впервые создана активити, или пересоздана (например при повороте экрана)
+        if (savedInstanceState == null) {
+            bundle = intent.getBundleExtra(BUNDLE)
+        } else {
+            bundle = null
+        }
         val film = bundle?.getParcelable<Film>(FILM)
+        // если фильм будет не пустой (попадаем сюда из ресивера по нотификации), то открываем фрагмент с фильмом
         if (film != null) {
+            intent = null
             val filmInfoFragment = FilmInfoFragment()
             filmInfoFragment.arguments = bundle
-            //todo зануление интента не работает - он все-равно приходит
-            intent = null
             supportFragmentManager.beginTransaction()
                 .replace(R.id.fragments_container, filmInfoFragment)
-                .addToBackStack("FilmInfoFragment")
+                .addToBackStack(null)
                 .commit()
         }
+    }
+
+    //сохраняем бандл при пересоздании активити, для блокирования многократного пересоздания фрагмента с фильмом
+    override fun onSaveInstanceState(outState: Bundle, outPersistentState: PersistableBundle) {
+        super.onSaveInstanceState(outState, outPersistentState)
+        outState.putParcelable(BUNDLE, bundle)
     }
 
     override fun onBackPressed() {
