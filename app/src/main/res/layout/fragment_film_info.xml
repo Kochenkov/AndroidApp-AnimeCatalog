@@ -182,15 +182,14 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_description_value" />
 
-            <Button
-                android:id="@+id/btn_cancel_watch_later"
+            <TextView
+                android:id="@+id/tv_notification_date"
+                android:visibility="gone"
+                tools:visibility="visible"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                android:drawableLeft="@drawable/ic_baseline_timer_off"
-                android:drawablePadding="@dimen/half_main_margin"
-                android:text="Отменить уведомление"
-                android:visibility="gone"
+                android:text="notifiction date"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_description_value" />

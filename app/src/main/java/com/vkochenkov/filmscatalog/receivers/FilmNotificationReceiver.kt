@@ -51,7 +51,7 @@ class FilmNotificationReceiver : BroadcastReceiver() {
         }
 
         val repository: Repository = App.instance!!.repository
-        repository.unnotifyFilm(film!!.serverName)
+        repository.clearNotificationFilm(film!!.serverName)
 
         val notification = NotificationCompat.Builder(context, CHANNEL_ID)
             .setChannelId(CHANNEL_ID)

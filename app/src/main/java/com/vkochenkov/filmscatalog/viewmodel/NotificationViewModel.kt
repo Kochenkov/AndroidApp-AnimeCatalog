@@ -8,20 +8,16 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 class NotificationViewModel : CommonViewModel(), Parcelable {
 
-    private var mutableNotifyFilmLiveData = MutableLiveData<Boolean>()
+    private var mutableNotifyFilmLiveData = MutableLiveData<Long>()
 
-    val notifyFilmLiveData: LiveData<Boolean>
+    val notifyFilmLiveData: LiveData<Long>
         get() = mutableNotifyFilmLiveData
 
     fun isNotifyFilm(name: String) {
-        mutableNotifyFilmLiveData.postValue(repository.isNotifyFilm(name))
+        mutableNotifyFilmLiveData.postValue(repository.getFilm(name).notificationDate)
     }
 
-    fun notifyFilm(name: String) {
-        repository.notifyFilm(name)
-    }
-
-    fun unnotifyFilm(name: String) {
-        repository.unnotifyFilm(name)
+    fun setNotificationFilm(name: String, date: Long) {
+        repository.setNotificationFilm(name, date)
     }
 }

@@ -35,7 +35,7 @@ class FavouriteFilmViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView
             filmTitle.setTextColor(ContextCompat.getColor(itemView.context, R.color.colorBlack))
         }
 
-        if (item.notify) {
+        if (item.notificationDate!=0L) {
             filmNotifyIcon.visibility = View.VISIBLE
         } else {
             filmNotifyIcon.visibility = View.INVISIBLE

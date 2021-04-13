@@ -109,7 +109,7 @@ class WatchLaterDialogFragment : DialogFragment() {
             //set alarm manager for open broadcast receiver after a time
             alarmManager.set(AlarmManager.RTC_WAKEUP, alarmStartTime, alarmIntent)
 
-            viewModel?.notifyFilm(film!!.serverName)
+            viewModel?.setNotificationFilm(film!!.serverName, alarmStartTime)
             viewModel?.isNotifyFilm(film!!.serverName)
 
             Toast.makeText(context, context?.getText(R.string.notification_created_str), Toast.LENGTH_LONG).show()

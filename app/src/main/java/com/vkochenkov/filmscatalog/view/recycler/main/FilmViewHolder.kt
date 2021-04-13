@@ -41,7 +41,7 @@ class FilmViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             filmLikeBtn.setImageResource(R.drawable.ic_heart_empty)
         }
 
-        if (item.notify) {
+        if (item.notificationDate!=0L) {
             filmNotifyIcon.visibility = View.VISIBLE
         } else {
             filmNotifyIcon.visibility = View.INVISIBLE

@@ -20,6 +20,7 @@ import com.vkochenkov.filmscatalog.model.db.Film
 import com.vkochenkov.filmscatalog.view.MainActivity.Companion.FILM
 import com.vkochenkov.filmscatalog.view.dialogs.WatchLaterDialogFragment
 import com.vkochenkov.filmscatalog.viewmodel.NotificationViewModel
+import org.w3c.dom.Text
 
 class FilmInfoFragment : Fragment() {
 
@@ -37,7 +38,7 @@ class FilmInfoFragment : Fragment() {
     private lateinit var ageRatingValueView: TextView
     private lateinit var episodeCountValueView: TextView
     private lateinit var btnWatchLater: Button
-    private lateinit var btnCancelWatchLater: Button
+    private lateinit var tvNotificationDate: TextView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -52,7 +53,6 @@ class FilmInfoFragment : Fragment() {
         getBundleWithFilmInfo()
         fillFieldsWithData()
         btnWatchLater.setOnClickListener(watchLaterBtnClickListener())
-        btnCancelWatchLater.setOnClickListener(watchLaterBtnClickListener())
 
         return view
     }
@@ -98,7 +98,7 @@ class FilmInfoFragment : Fragment() {
         ageRatingValueView = view.findViewById(R.id.tv_age_rating_value)
         episodeCountValueView = view.findViewById(R.id.tv_episode_count_value)
         btnWatchLater = view.findViewById(R.id.btn_watch_later)
-        btnCancelWatchLater = view.findViewById(R.id.btn_cancel_watch_later)
+        tvNotificationDate = view.findViewById(R.id.tv_notification_date)
     }
 
     private fun getBundleWithFilmInfo() {
@@ -129,17 +129,16 @@ class FilmInfoFragment : Fragment() {
         dialogFragment.show(fragmentManager!!, null)
     }
 
-    private fun cancelWatchLaterBtnClickListener() = View.OnClickListener {
-        //todo
-        //вью модель - отмена просмотра
-    }
-
     private fun initOnNotifyChangeObserver() {
         notificationInfoViewModel.notifyFilmLiveData.observe(viewLifecycleOwner, Observer {
-            if (it) {
+            if (it!=0L) {
                 btnWatchLater.visibility = View.INVISIBLE
+                //todo показывать вменяемое время
+                tvNotificationDate.text = it.toString()
+                tvNotificationDate.visibility = View.VISIBLE
             } else {
                 btnWatchLater.visibility = View.VISIBLE
+                tvNotificationDate.visibility = View.INVISIBLE
             }
         })
     }

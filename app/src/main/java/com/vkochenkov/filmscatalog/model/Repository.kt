@@ -57,7 +57,7 @@ class Repository {
                                     it.attributes.episodeCount,
                                     it.attributes.averageRating,
                                     false,
-                                    false
+                                    0L
                                 )
                             )
                         }
@@ -74,17 +74,16 @@ class Repository {
         })
     }
 
-    fun isNotifyFilm(name: String): Boolean {
-        val film = dao.getFilm(name)
-        return film.notify
+    fun getFilm(name: String): Film {
+        return dao.getFilm(name)
     }
 
-    fun notifyFilm(name: String) {
-        dao.setNotifyFilm(name)
+    fun setNotificationFilm(name: String, date: Long) {
+        dao.setNotificationFilm(name, date)
     }
 
-    fun unnotifyFilm(name: String) {
-        dao.setUnnotifyFilm(name)
+    fun clearNotificationFilm(name: String) {
+        dao.clearNotificationFilm(name)
     }
 
     interface GetFilmsFromApiCallback {

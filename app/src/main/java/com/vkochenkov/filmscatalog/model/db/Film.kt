@@ -18,5 +18,5 @@ data class Film(
     @ColumnInfo(name = "episodeCount") val episodeCount: Int,
     @ColumnInfo(name = "averageRating") val averageRating: Double,
     @ColumnInfo(name = "isLiked") var liked: Boolean,
-    @ColumnInfo(name = "isNotify") var notify: Boolean
+    @ColumnInfo(name = "notificationDate") var notificationDate: Long
 ): Parcelable

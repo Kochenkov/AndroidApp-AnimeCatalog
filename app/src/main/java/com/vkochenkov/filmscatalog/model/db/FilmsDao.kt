@@ -20,11 +20,11 @@ interface FilmsDao {
     @Query("UPDATE Films SET isLiked = 0 WHERE serverName = :name")
     fun setUnlikeFilm(name: String)
 
-    @Query("UPDATE Films SET isNotify = 1 WHERE serverName = :name")
-    fun setNotifyFilm(name: String)
+    @Query("UPDATE Films SET notificationDate = :date WHERE serverName = :name")
+    fun setNotificationFilm(name: String, date: Long)
 
-    @Query("UPDATE Films SET isNotify = 0 WHERE serverName = :name")
-    fun setUnnotifyFilm(name: String)
+    @Query("UPDATE Films SET notificationDate = 0 WHERE serverName = :name")
+    fun clearNotificationFilm(name: String)
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insertAllFilms(countryList: List<Film>)

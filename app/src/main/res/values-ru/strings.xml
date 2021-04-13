@@ -16,7 +16,7 @@
     <string name="bottom_menu_favourites_text">Избранное</string>
     <string name="bottom_menu_info_text">Инфо</string>
     <string name="was_deleted_str">был удален</string>
-    <string name="cancel_snackbar_str">отмена</string>
+    <string name="cancel_str">Отмена</string>
     <string name="retry_request_str">повторить</string>
     <string name="api_error_connection_str">Не удалось подключиться к серверу. Приложение работает в оффлайн-режиме.</string>
     <string name="api_error_server_str">"Не удалось получить данные с сервера. Код ошибки:"</string>
