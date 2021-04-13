@@ -9,16 +9,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/tv_watch_later"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/main_margin"
-            android:text="Выберите дату and time уведомления"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
         <DatePicker
             android:id="@+id/date_picker"
             android:layout_width="wrap_content"
@@ -26,16 +16,16 @@
             android:layout_margin="@dimen/half_main_margin"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_watch_later" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TimePicker
-            android:timePickerMode="spinner"
             android:id="@+id/time_picker"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/half_main_margin"
-            android:layout_marginTop="8dp"
+            android:timePickerMode="spinner"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.496"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/date_picker" />
 
@@ -44,9 +34,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/half_main_margin"
-            android:text="Create notification"
+            android:text="@string/create_notification_btn_str"
             app:layout_constraintBottom_toBottomOf="parent"
-
             app:layout_constraintEnd_toStartOf="@+id/btn_cancel_create_notif"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/time_picker" />
