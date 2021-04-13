@@ -28,4 +28,6 @@
     <string name="vt_created_str">\u00A9 Created by Kochenkov</string>
     <string name="notification_title_str">Watch reminder</string>
     <string name="notification_created_str">Notification created</string>
+    <string name="create_notification_btn_str">Create notification</string>
+    <string name="notification_date_tv_str">"Notification will appear: "</string>
 </resources>

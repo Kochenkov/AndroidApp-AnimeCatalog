@@ -28,5 +28,7 @@
     <string name="tv_powered_str">Powered by Kitsu</string>
     <string name="notification_title_str">Напоминание о просмотре</string>
     <string name="notification_created_str">Уведомление создано</string>
+    <string name="create_notification_btn_str">Создать уведомление</string>
+    <string name="notification_date_tv_str">"Уведомление появится: "</string>
 
 </resources>

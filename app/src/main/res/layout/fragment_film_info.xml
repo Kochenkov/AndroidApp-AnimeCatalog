@@ -173,9 +173,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
-                android:drawableLeft="@drawable/ic_baseline_timer"
+                android:drawableLeft="@drawable/ic_baseline_alarm"
                 android:drawablePadding="@dimen/half_main_margin"
-                android:text="Напомнить посмотреть позже"
+                android:text="@string/create_notification_btn_str"
                 android:visibility="visible"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -183,16 +183,30 @@
                 app:layout_constraintTop_toBottomOf="@+id/tv_description_value" />
 
             <TextView
-                android:id="@+id/tv_notification_date"
-                android:visibility="gone"
-                tools:visibility="visible"
+                android:id="@+id/tv_notification_date_str"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="notifiction date"
+                android:layout_marginTop="@dimen/main_margin"
+                android:text="@string/notification_date_tv_str"
+                android:visibility="gone"
+                app:layout_constraintBottom_toTopOf="@+id/tv_notification_date"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_description_value"
+                tools:visibility="visible" />
+
+            <TextView
+                android:id="@+id/tv_notification_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/main_margin"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_description_value" />
+                app:layout_constraintTop_toBottomOf="@+id/tv_notification_date_str"
+                tools:text="notifiction date"
+                tools:visibility="visible" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

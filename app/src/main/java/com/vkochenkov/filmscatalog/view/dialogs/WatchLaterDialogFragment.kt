@@ -3,8 +3,8 @@ package com.vkochenkov.filmscatalog.view.dialogs
 import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -51,8 +51,11 @@ class WatchLaterDialogFragment : DialogFragment() {
             viewModel = savedInstanceState.getParcelable(VIEW_MODEL)
         }
         val view = inflater.inflate(R.layout.dialog_fragment_watch_later, container, false)
-        timePicker = view.findViewById(R.id.time_picker)
+
         datePicker = view.findViewById(R.id.date_picker)
+        timePicker = view.findViewById(R.id.time_picker)
+        timePicker.setIs24HourView(true)
+
         setOnBtnClickListeners(view)
 
         return view
@@ -88,23 +91,26 @@ class WatchLaterDialogFragment : DialogFragment() {
             val year = datePicker.year
             val month = datePicker.month
             val day = datePicker.dayOfMonth
-            val hour = timePicker.currentHour
-            val minutes = timePicker.currentMinute
+            var hour: Int?
+            val minutes: Int?
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                hour = timePicker.hour
+                minutes = timePicker.minute
+            } else {
+                hour = timePicker.currentHour
+                minutes = timePicker.currentMinute
+            }
 
             //create instance of calendar and set date to it
             val startTime = Calendar.getInstance()
             startTime.set(Calendar.YEAR, year)
             startTime.set(Calendar.MONTH, month)
             startTime.set(Calendar.DAY_OF_MONTH, day)
-            startTime.set(Calendar.HOUR, hour)
+            startTime.set(Calendar.HOUR_OF_DAY, hour)
             startTime.set(Calendar.MINUTE, minutes)
             startTime.set(Calendar.SECOND, 0)
 
             val alarmStartTime = startTime.timeInMillis
-
-            //todo понять почему pm am работает не совсем так как нужно
-            Log.d("notification", "alarm: " + startTime.timeInMillis.toString())
-            Log.d("notification", "current millis: " + System.currentTimeMillis().toString())
 
             //set alarm manager for open broadcast receiver after a time
             alarmManager.set(AlarmManager.RTC_WAKEUP, alarmStartTime, alarmIntent)
@@ -112,7 +118,11 @@ class WatchLaterDialogFragment : DialogFragment() {
             viewModel?.setNotificationFilm(film!!.serverName, alarmStartTime)
             viewModel?.isNotifyFilm(film!!.serverName)
 
-            Toast.makeText(context, context?.getText(R.string.notification_created_str), Toast.LENGTH_LONG).show()
+            Toast.makeText(
+                context,
+                context?.getText(R.string.notification_created_str),
+                Toast.LENGTH_LONG
+            ).show()
             dismiss()
         }
 

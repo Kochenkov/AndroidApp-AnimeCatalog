@@ -20,7 +20,7 @@ import com.vkochenkov.filmscatalog.model.db.Film
 import com.vkochenkov.filmscatalog.view.MainActivity.Companion.FILM
 import com.vkochenkov.filmscatalog.view.dialogs.WatchLaterDialogFragment
 import com.vkochenkov.filmscatalog.viewmodel.NotificationViewModel
-import org.w3c.dom.Text
+import java.text.SimpleDateFormat
 
 class FilmInfoFragment : Fragment() {
 
@@ -39,6 +39,8 @@ class FilmInfoFragment : Fragment() {
     private lateinit var episodeCountValueView: TextView
     private lateinit var btnWatchLater: Button
     private lateinit var tvNotificationDate: TextView
+    private lateinit var tvNotificationDateText: TextView
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -99,6 +101,7 @@ class FilmInfoFragment : Fragment() {
         episodeCountValueView = view.findViewById(R.id.tv_episode_count_value)
         btnWatchLater = view.findViewById(R.id.btn_watch_later)
         tvNotificationDate = view.findViewById(R.id.tv_notification_date)
+        tvNotificationDateText = view.findViewById(R.id.tv_notification_date_str)
     }
 
     private fun getBundleWithFilmInfo() {
@@ -132,13 +135,15 @@ class FilmInfoFragment : Fragment() {
     private fun initOnNotifyChangeObserver() {
         notificationInfoViewModel.notifyFilmLiveData.observe(viewLifecycleOwner, Observer {
             if (it!=0L) {
+                val dataFormat = SimpleDateFormat("dd MMM yyyy hh.mm a")
                 btnWatchLater.visibility = View.INVISIBLE
-                //todo показывать вменяемое время
-                tvNotificationDate.text = it.toString()
+                tvNotificationDate.text = dataFormat.format(it)
                 tvNotificationDate.visibility = View.VISIBLE
+                tvNotificationDateText.visibility = View.VISIBLE
             } else {
                 btnWatchLater.visibility = View.VISIBLE
                 tvNotificationDate.visibility = View.INVISIBLE
+                tvNotificationDateText.visibility = View.INVISIBLE
             }
         })
     }
