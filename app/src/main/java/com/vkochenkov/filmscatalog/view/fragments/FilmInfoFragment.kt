@@ -134,7 +134,7 @@ class FilmInfoFragment : Fragment() {
 
     private fun initOnNotifyChangeObserver() {
         notificationInfoViewModel.notifyFilmLiveData.observe(viewLifecycleOwner, Observer {
-            if (it!=0L) {
+            if (it != 0L) {
                 val dataFormat = SimpleDateFormat("dd MMM yyyy hh.mm a")
                 btnWatchLater.visibility = View.INVISIBLE
                 tvNotificationDate.text = dataFormat.format(it)

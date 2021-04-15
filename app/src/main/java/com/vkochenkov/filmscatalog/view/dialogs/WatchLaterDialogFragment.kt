@@ -53,6 +53,7 @@ class WatchLaterDialogFragment : DialogFragment() {
         val view = inflater.inflate(R.layout.dialog_fragment_watch_later, container, false)
 
         datePicker = view.findViewById(R.id.date_picker)
+        datePicker.minDate = Calendar.getInstance().timeInMillis
         timePicker = view.findViewById(R.id.time_picker)
         timePicker.setIs24HourView(true)
 
@@ -91,7 +92,7 @@ class WatchLaterDialogFragment : DialogFragment() {
             val year = datePicker.year
             val month = datePicker.month
             val day = datePicker.dayOfMonth
-            var hour: Int?
+            val hour: Int?
             val minutes: Int?
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 hour = timePicker.hour
