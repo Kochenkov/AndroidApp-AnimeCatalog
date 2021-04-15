@@ -75,6 +75,7 @@ class WatchLaterDialogFragment : DialogFragment() {
 
             //create intent for broadcast receiver
             val intent = Intent(activity, FilmNotificationReceiver::class.java)
+            intent.addFlags(Intent.FLAG_RECEIVER_FOREGROUND)
             //create bundle and set data to it
             val bundle = Bundle()
             bundle.putParcelable(FILM, film)
@@ -84,8 +85,7 @@ class WatchLaterDialogFragment : DialogFragment() {
             //create different action for receive all notifications
             intent.action = id.toString()
             //create pending intent for alarm manager
-            val alarmIntent =
-                PendingIntent.getBroadcast(activity, id, intent, 0)
+            val alarmIntent = PendingIntent.getBroadcast(activity, id, intent, 0)
 
             //get date from pickers
             val year = datePicker.year
