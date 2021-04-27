@@ -15,7 +15,7 @@ data class Film(
     @ColumnInfo(name = "description") val description: String,
     @ColumnInfo(name = "imageUrl") val imageUrl: String,
     @ColumnInfo(name = "startDate") val startDate: String,
-    @ColumnInfo(name = "ageRating") val ageRating: String,
+    @ColumnInfo(name = "ageRating") val ageRating: String?,
     @ColumnInfo(name = "episodeCount") val episodeCount: Int,
     @ColumnInfo(name = "averageRating") val averageRating: Double,
 
