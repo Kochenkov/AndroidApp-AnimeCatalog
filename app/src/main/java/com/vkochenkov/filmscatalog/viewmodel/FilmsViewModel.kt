@@ -1,11 +1,8 @@
 package com.vkochenkov.filmscatalog.viewmodel
 
-import android.view.View
-import android.widget.ProgressBar
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.vkochenkov.filmscatalog.App
 import com.vkochenkov.filmscatalog.model.LocalDataStore.currentPageSize
 import com.vkochenkov.filmscatalog.model.db.Film
@@ -39,7 +36,6 @@ class FilmsViewModel : ViewModel() {
     private fun getFilmsFromApi() {
         repository.getFilmsFromApi(currentPageSize, object : Repository.GetFilmsFromApiCallback {
             override fun onSuccess(films: List<Film>) {
-
                 repository.saveFilmsToDb(films)
                 mutableFilmsLiveData.postValue(repository.getFilmsWithPagination(currentPageSize))
                 mutableErrorLiveData.value = null
@@ -47,7 +43,6 @@ class FilmsViewModel : ViewModel() {
             }
 
             override fun onFailure(str: String) {
-
                 mutableFilmsLiveData.postValue(repository.getFilmsWithPagination(currentPageSize))
                 mutableErrorLiveData.postValue(str)
 

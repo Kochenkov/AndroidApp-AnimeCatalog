@@ -12,6 +12,7 @@ import com.vkochenkov.filmscatalog.model.db.Film
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 
 class App : Application() {
@@ -49,6 +50,7 @@ class App : Application() {
             .client(okHttpClient)
             .baseUrl(BASE_URL)
             .addConverterFactory(gsonConverterFactory)
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .build()
             .create(ApiService::class.java)
     }
