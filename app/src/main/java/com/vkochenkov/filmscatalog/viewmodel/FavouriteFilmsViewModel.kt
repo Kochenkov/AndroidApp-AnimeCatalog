@@ -17,7 +17,11 @@ class FavouriteFilmsViewModel : ViewModel() {
         get() = mutableFavouritesLiveData
 
     fun getFavourites() {
-        mutableFavouritesLiveData.postValue(repository.getFavourites())
+        repository.getFavourites(object : Repository.GetFilmsFromDatabaseCallback {
+            override fun onSuccess(films: List<Film>) {
+                mutableFavouritesLiveData.postValue(films)
+            }
+        })
     }
 
     fun likeFilm(name: String) {

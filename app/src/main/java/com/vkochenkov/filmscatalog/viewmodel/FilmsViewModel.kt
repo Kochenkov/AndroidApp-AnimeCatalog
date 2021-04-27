@@ -37,15 +37,22 @@ class FilmsViewModel : ViewModel() {
         repository.getFilmsFromApi(currentPageSize, object : Repository.GetFilmsFromApiCallback {
             override fun onSuccess(films: List<Film>) {
                 repository.saveFilmsToDb(films)
-                mutableFilmsLiveData.postValue(repository.getFilmsWithPagination(currentPageSize))
+                repository.getFilmsWithPagination(currentPageSize, object : Repository.GetFilmsFromDatabaseCallback {
+                    override fun onSuccess(films: List<Film>) {
+                        mutableFilmsLiveData.postValue(films)
+                    }
+                })
                 mutableErrorLiveData.value = null
 
             }
 
             override fun onFailure(str: String) {
-                mutableFilmsLiveData.postValue(repository.getFilmsWithPagination(currentPageSize))
+                repository.getFilmsWithPagination(currentPageSize, object : Repository.GetFilmsFromDatabaseCallback {
+                    override fun onSuccess(films: List<Film>) {
+                        mutableFilmsLiveData.postValue(films)
+                    }
+                })
                 mutableErrorLiveData.postValue(str)
-
             }
         })
     }

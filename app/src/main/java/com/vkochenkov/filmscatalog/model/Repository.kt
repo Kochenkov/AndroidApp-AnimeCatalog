@@ -5,6 +5,7 @@ import com.vkochenkov.filmscatalog.R
 import com.vkochenkov.filmscatalog.model.api.ApiService.Companion.PAGES_SIZE
 import com.vkochenkov.filmscatalog.model.api.ResponseFromApi
 import com.vkochenkov.filmscatalog.model.db.Film
+import io.reactivex.MaybeObserver
 import io.reactivex.SingleObserver
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -16,12 +17,18 @@ class Repository {
     val api by lazy { App.instance?.apiService!! }
     val appContext by lazy { App.instance?.applicationContext!! }
 
-    fun getFilmsWithPagination(page: Int): List<Film>? {
-        return dao.getFilmsWithPagination(page)
+    fun getFilmsWithPagination(page: Int, callback: GetFilmsFromDatabaseCallback) {
+        dao.getFilmsWithPagination(page)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(maybeObserver(callback))
     }
 
-    fun getFavourites(): List<Film> {
-        return dao.getFavourites()
+    fun getFavourites(callback: GetFilmsFromDatabaseCallback) {
+        dao.getFavourites()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(maybeObserver(callback))
     }
 
     fun likeFilm(name: String) {
@@ -74,4 +81,19 @@ class Repository {
         fun onSuccess(films: List<Film>)
         fun onFailure(str: String)
     }
+
+    interface GetFilmsFromDatabaseCallback {
+        fun onSuccess(films: List<Film>)
+    }
+
+    private fun maybeObserver(callback: GetFilmsFromDatabaseCallback) =
+        object : MaybeObserver<List<Film>> {
+            override fun onSuccess(data: List<Film>) {
+                callback.onSuccess(data)
+            }
+
+            override fun onError(t: Throwable) {}
+            override fun onSubscribe(d: Disposable) {}
+            override fun onComplete() {}
+        }
 }
