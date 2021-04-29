@@ -15,23 +15,32 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
+import com.vkochenkov.filmscatalog.App
 import com.vkochenkov.filmscatalog.R
+import com.vkochenkov.filmscatalog.di.ViewModelFactory
 import com.vkochenkov.filmscatalog.model.LocalDataStore
+import com.vkochenkov.filmscatalog.model.Repository
 import com.vkochenkov.filmscatalog.model.db.Film
 import com.vkochenkov.filmscatalog.view.MainActivity
 import com.vkochenkov.filmscatalog.view.recycler.favourites.FavouriteFilmItemClickListener
 import com.vkochenkov.filmscatalog.view.recycler.favourites.FavouriteFilmsAdapter
 import com.vkochenkov.filmscatalog.viewmodel.FavouriteFilmsViewModel
+import javax.inject.Inject
 
 class FavouriteFilmsListFragment : Fragment() {
 
-    private val favouritesFilmsViewModel by lazy {
-        ViewModelProvider(this).get(FavouriteFilmsViewModel::class.java)
-    }
+    @Inject
+    lateinit var repository: Repository
+
+    private lateinit var favouritesFilmsViewModel: FavouriteFilmsViewModel
 
     private lateinit var favouriteFilmsRecycler: RecyclerView
     private lateinit var emptyListTextView: TextView
     private lateinit var mainToolbar: Toolbar
+
+    init {
+        App.appComponent.inject(this)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -68,6 +77,9 @@ class FavouriteFilmsListFragment : Fragment() {
     }
 
     private fun initFields(view: View) {
+        val factory = ViewModelFactory(repository)
+        favouritesFilmsViewModel = ViewModelProvider(this, factory).get(FavouriteFilmsViewModel::class.java)
+
         favouriteFilmsRecycler = view.findViewById(R.id.favourite_films_list)
         emptyListTextView = view.findViewById(R.id.empty_favourites_list_text)
         mainToolbar = (activity as AppCompatActivity).findViewById(R.id.main_toolbar)

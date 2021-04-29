@@ -22,7 +22,7 @@ class FilmViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     fun bind(item: Film) {
         filmTitle.text = item.title
 
-        Glide.with(App.instance!!.applicationContext)
+        Glide.with(itemView.context.applicationContext)
             .load(item.imageUrl)
             .placeholder(R.drawable.im_default_film)
             .diskCacheStrategy(DiskCacheStrategy.ALL)

@@ -1,21 +1,32 @@
 package com.vkochenkov.filmscatalog.model
 
+import android.app.Application
 import com.vkochenkov.filmscatalog.App
 import com.vkochenkov.filmscatalog.R
+import com.vkochenkov.filmscatalog.model.api.ApiService
 import com.vkochenkov.filmscatalog.model.api.ApiService.Companion.PAGES_SIZE
 import com.vkochenkov.filmscatalog.model.api.ResponseFromApi
 import com.vkochenkov.filmscatalog.model.db.Film
+import com.vkochenkov.filmscatalog.model.db.FilmsDao
 import io.reactivex.MaybeObserver
 import io.reactivex.SingleObserver
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
+import javax.inject.Inject
 
 class Repository {
 
-    val dao by lazy { App.instance!!.database.filmsDao() }
-    val api by lazy { App.instance?.apiService!! }
-    val appContext by lazy { App.instance?.applicationContext!! }
+    @Inject
+    lateinit var dao: FilmsDao
+    @Inject
+    lateinit var api: ApiService
+    @Inject
+    lateinit var appContext: Application
+
+    init {
+        App.appComponent.inject(this)
+    }
 
     fun getFilmsWithPagination(page: Int, callback: GetFilmsFromDatabaseCallback) {
         dao.getFilmsWithPagination(page)

@@ -94,7 +94,7 @@ class FilmInfoFragment : Fragment() {
         ageRatingValueView.text = film.ageRating
         episodeCountValueView.text = film.episodeCount.toString()
 
-        Glide.with(App.instance!!.applicationContext)
+        Glide.with(context!!.applicationContext)
             .load(film.imageUrl)
             .placeholder(R.drawable.im_default_film)
             .diskCacheStrategy(DiskCacheStrategy.ALL)

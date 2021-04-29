@@ -3,14 +3,12 @@ package com.vkochenkov.filmscatalog.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.vkochenkov.filmscatalog.App
 import com.vkochenkov.filmscatalog.model.LocalDataStore.currentPageSize
 import com.vkochenkov.filmscatalog.model.db.Film
 import com.vkochenkov.filmscatalog.model.Repository
+import javax.inject.Inject
 
-class FilmsViewModel : ViewModel() {
-
-    private var repository: Repository = App.instance!!.repository
+class FilmsViewModel @Inject constructor(val repository: Repository) : ViewModel() {
 
     private var mutableFilmsLiveData = MutableLiveData<List<Film>>()
     private var mutableErrorLiveData = MutableLiveData<String>()

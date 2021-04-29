@@ -1,68 +1,27 @@
 package com.vkochenkov.filmscatalog
 
 import android.app.Application
-import android.widget.Toast
-import androidx.room.Room
-import com.vkochenkov.filmscatalog.model.LocalDataStore.currentPageSize
-import com.vkochenkov.filmscatalog.model.Repository
-import com.vkochenkov.filmscatalog.model.api.ApiService
-import com.vkochenkov.filmscatalog.model.api.ApiService.Companion.BASE_URL
-import com.vkochenkov.filmscatalog.model.db.FilmsDatabase
-import com.vkochenkov.filmscatalog.model.db.Film
-import okhttp3.OkHttpClient
-import okhttp3.logging.HttpLoggingInterceptor
-import retrofit2.Retrofit
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
-import retrofit2.converter.gson.GsonConverterFactory
+import com.vkochenkov.filmscatalog.di.component.AppComponent
+import com.vkochenkov.filmscatalog.di.component.DaggerAppComponent
+import com.vkochenkov.filmscatalog.di.module.*
 
 class App : Application() {
 
     companion object {
-        var instance: App? = null
+        lateinit var appComponent: AppComponent
     }
-
-    lateinit var apiService: ApiService
-    lateinit var database: FilmsDatabase
-    lateinit var repository: Repository
 
     override fun onCreate() {
         super.onCreate()
-
-        instance = this
-
-        repository = Repository()
-        initRetrofit()
-        initDatabase()
+        initializeDagger()
     }
 
-    private fun initRetrofit() {
-
-        val logging = HttpLoggingInterceptor()
-        logging.level = HttpLoggingInterceptor.Level.HEADERS
-
-        val okHttpClient = OkHttpClient.Builder()
-            .addInterceptor(logging)
-            .build()
-
-        val gsonConverterFactory = GsonConverterFactory.create()
-
-        apiService = Retrofit.Builder()
-            .client(okHttpClient)
-            .baseUrl(BASE_URL)
-            .addConverterFactory(gsonConverterFactory)
-            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-            .build()
-            .create(ApiService::class.java)
-    }
-
-    private fun initDatabase() {
-        database = Room.databaseBuilder(
-            applicationContext,
-            FilmsDatabase::class.java,
-            "films_db"
-        )
-            .fallbackToDestructiveMigration()
-            .allowMainThreadQueries()
+    private fun initializeDagger() {
+        appComponent = DaggerAppComponent.builder()
+            .appModule(AppModule(this))
+            .networkModule(NetworkModule())
+            .databaseModule(DatabaseModule())
+            .repositoryModule(RepositoryModule())
             .build()
     }
 }

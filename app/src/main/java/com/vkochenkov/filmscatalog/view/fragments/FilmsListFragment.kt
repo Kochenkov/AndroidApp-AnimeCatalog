@@ -17,26 +17,32 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.android.material.snackbar.Snackbar
+import com.vkochenkov.filmscatalog.App
 import com.vkochenkov.filmscatalog.R
+import com.vkochenkov.filmscatalog.di.ViewModelFactory
 import com.vkochenkov.filmscatalog.model.LocalDataStore
+import com.vkochenkov.filmscatalog.model.Repository
 import com.vkochenkov.filmscatalog.model.db.Film
 import com.vkochenkov.filmscatalog.view.MainActivity.Companion.FILM
 import com.vkochenkov.filmscatalog.view.recycler.main.FilmItemClickListener
 import com.vkochenkov.filmscatalog.view.recycler.main.FilmsAdapter
 import com.vkochenkov.filmscatalog.viewmodel.FilmsViewModel
-
+import javax.inject.Inject
 
 class FilmsListFragment : Fragment() {
 
-    private val filmsViewModel by lazy {
-        ViewModelProvider(this).get(FilmsViewModel::class.java)
-    }
+    @Inject lateinit var repository: Repository
+
+    private lateinit var filmsViewModel: FilmsViewModel
 
     private lateinit var filmsRecycler: RecyclerView
     private lateinit var mainToolbar: Toolbar
-
     private lateinit var swipeRefresh: SwipeRefreshLayout
     private lateinit var progressBar: ProgressBar
+
+    init {
+        App.appComponent.inject(this)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -67,6 +73,9 @@ class FilmsListFragment : Fragment() {
     }
 
     private fun initFields(view: View) {
+        val factory = ViewModelFactory(repository)
+        filmsViewModel = ViewModelProvider(this, factory).get(FilmsViewModel::class.java)
+
         filmsRecycler = view.findViewById(R.id.films_list)
         mainToolbar = (activity as AppCompatActivity).findViewById(R.id.main_toolbar)
         progressBar = view.findViewById(R.id.films_progress_bar)

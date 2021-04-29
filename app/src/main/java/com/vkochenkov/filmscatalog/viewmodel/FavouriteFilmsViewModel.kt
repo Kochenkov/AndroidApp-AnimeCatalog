@@ -3,13 +3,11 @@ package com.vkochenkov.filmscatalog.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.vkochenkov.filmscatalog.App
 import com.vkochenkov.filmscatalog.model.Repository
 import com.vkochenkov.filmscatalog.model.db.Film
+import javax.inject.Inject
 
-class FavouriteFilmsViewModel : ViewModel() {
-
-    private var repository: Repository = App.instance!!.repository
+class FavouriteFilmsViewModel @Inject constructor(val repository: Repository) : ViewModel() {
 
     private var mutableFavouritesLiveData = MutableLiveData<List<Film>>()
 
