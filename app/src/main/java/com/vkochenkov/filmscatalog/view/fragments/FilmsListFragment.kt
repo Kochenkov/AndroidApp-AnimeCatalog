@@ -33,7 +33,9 @@ class FilmsListFragment : Fragment() {
 
     @Inject lateinit var repository: Repository
 
-    private lateinit var filmsViewModel: FilmsViewModel
+    private val filmsViewModel: FilmsViewModel by lazy {
+        ViewModelProvider(this, ViewModelFactory(repository)).get(FilmsViewModel::class.java)
+    }
 
     private lateinit var filmsRecycler: RecyclerView
     private lateinit var mainToolbar: Toolbar
@@ -73,9 +75,6 @@ class FilmsListFragment : Fragment() {
     }
 
     private fun initFields(view: View) {
-        val factory = ViewModelFactory(repository)
-        filmsViewModel = ViewModelProvider(this, factory).get(FilmsViewModel::class.java)
-
         filmsRecycler = view.findViewById(R.id.films_list)
         mainToolbar = (activity as AppCompatActivity).findViewById(R.id.main_toolbar)
         progressBar = view.findViewById(R.id.films_progress_bar)

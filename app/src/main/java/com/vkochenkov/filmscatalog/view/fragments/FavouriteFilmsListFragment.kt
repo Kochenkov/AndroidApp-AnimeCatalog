@@ -32,7 +32,9 @@ class FavouriteFilmsListFragment : Fragment() {
     @Inject
     lateinit var repository: Repository
 
-    private lateinit var favouritesFilmsViewModel: FavouriteFilmsViewModel
+    private val favouritesFilmsViewModel by lazy {
+        ViewModelProvider(this, ViewModelFactory(repository)).get(FavouriteFilmsViewModel::class.java)
+    }
 
     private lateinit var favouriteFilmsRecycler: RecyclerView
     private lateinit var emptyListTextView: TextView
@@ -77,9 +79,6 @@ class FavouriteFilmsListFragment : Fragment() {
     }
 
     private fun initFields(view: View) {
-        val factory = ViewModelFactory(repository)
-        favouritesFilmsViewModel = ViewModelProvider(this, factory).get(FavouriteFilmsViewModel::class.java)
-
         favouriteFilmsRecycler = view.findViewById(R.id.favourite_films_list)
         emptyListTextView = view.findViewById(R.id.empty_favourites_list_text)
         mainToolbar = (activity as AppCompatActivity).findViewById(R.id.main_toolbar)
