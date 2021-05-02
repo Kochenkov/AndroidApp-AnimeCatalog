@@ -24,11 +24,11 @@ class Repository {
     }
 
     fun likeFilm(name: String) {
-        dao.setLikedFilm(name)
+        dao.setLikeFilm(name)
     }
 
     fun unlikeFilm(name: String) {
-        dao.setUnlikedFilm(name)
+        dao.setUnlikeFilm(name)
     }
 
     fun saveFilmsToDb(films: List<Film>) {
@@ -56,7 +56,8 @@ class Repository {
                                     it.attributes.ageRating,
                                     it.attributes.episodeCount,
                                     it.attributes.averageRating,
-                                    false
+                                    false,
+                                    0L
                                 )
                             )
                         }
@@ -71,6 +72,18 @@ class Repository {
                 callback.onFailure(appContext.getString(R.string.api_error_connection_str))
             }
         })
+    }
+
+    fun getFilm(name: String): Film {
+        return dao.getFilm(name)
+    }
+
+    fun setNotificationFilm(name: String, date: Long) {
+        dao.setNotificationFilm(name, date)
+    }
+
+    fun clearNotificationFilm(name: String) {
+        dao.clearNotificationFilm(name)
     }
 
     interface GetFilmsFromApiCallback {

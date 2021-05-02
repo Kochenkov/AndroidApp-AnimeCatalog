@@ -16,7 +16,7 @@
     <string name="bottom_menu_favourites_text">Favourites</string>
     <string name="bottom_menu_info_text">Info</string>
     <string name="was_deleted_str">was deleted</string>
-    <string name="cancel_snackbar_str">cancel</string>
+    <string name="cancel_str">Cancel</string>
     <string name="retry_request_str">retry</string>
     <string name="api_error_connection_str">Failed to connect to server. The application works offline.</string>
     <string name="api_error_server_str">Failed to get data from server. Error code:</string>
@@ -26,4 +26,8 @@
     <string name="episode_count_str">Episode count:</string>
     <string name="tv_powered_str">Powered by Kitsu</string>
     <string name="vt_created_str">\u00A9 Created by Kochenkov</string>
+    <string name="notification_title_str">Watch reminder</string>
+    <string name="notification_created_str">Notification created</string>
+    <string name="create_notification_btn_str">Create notification</string>
+    <string name="notification_date_tv_str">"Notification will appear: "</string>
 </resources>

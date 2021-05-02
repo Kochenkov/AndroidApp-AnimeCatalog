@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1082071707134",
+    "project_id": "anime-catalog-2fe4a",
+    "storage_bucket": "anime-catalog-2fe4a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1082071707134:android:d5e82fb8de101aa5aa24af",
+        "android_client_info": {
+          "package_name": "com.vkochenkov.animecatalog"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1082071707134-pgr4ebvi3papff639qqt4kqs5j766dio.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAfgeGB0C7M6mnwQM3BmK3eIpMiHqYIGlI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1082071707134-pgr4ebvi3papff639qqt4kqs5j766dio.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
