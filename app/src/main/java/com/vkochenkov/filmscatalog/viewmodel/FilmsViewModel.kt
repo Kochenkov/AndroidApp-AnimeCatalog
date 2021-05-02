@@ -9,6 +9,7 @@ import com.vkochenkov.filmscatalog.model.Repository
 import javax.inject.Inject
 
 class FilmsViewModel @Inject constructor(val repository: Repository) : ViewModel() {
+class FilmsViewModel : CommonViewModel() {
 
     private var mutableFilmsLiveData = MutableLiveData<List<Film>>()
     private var mutableErrorLiveData = MutableLiveData<String>()
@@ -51,6 +52,7 @@ class FilmsViewModel @Inject constructor(val repository: Repository) : ViewModel
                     }
                 })
                 mutableErrorLiveData.postValue(str)
+
             }
         })
     }

@@ -8,6 +8,7 @@ import com.vkochenkov.filmscatalog.model.db.Film
 import javax.inject.Inject
 
 class FavouriteFilmsViewModel @Inject constructor(val repository: Repository) : ViewModel() {
+class FavouriteFilmsViewModel : CommonViewModel() {
 
     private var mutableFavouritesLiveData = MutableLiveData<List<Film>>()
 

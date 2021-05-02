@@ -12,11 +12,20 @@ interface FilmsDao {
     @Query("SELECT * FROM Films WHERE isLiked = 1")
     fun getFavourites(): Maybe<List<Film>>
 
+    @Query("SELECT * FROM Films WHERE serverName = :name")
+    fun getFilm(name: String): Film
+
     @Query("UPDATE Films SET isLiked = 1 WHERE serverName = :name")
-    fun setLikedFilm(name: String)
+    fun setLikeFilm(name: String)
 
     @Query("UPDATE Films SET isLiked = 0 WHERE serverName = :name")
-    fun setUnlikedFilm(name: String)
+    fun setUnlikeFilm(name: String)
+
+    @Query("UPDATE Films SET notificationDate = :date WHERE serverName = :name")
+    fun setNotificationFilm(name: String, date: Long)
+
+    @Query("UPDATE Films SET notificationDate = 0 WHERE serverName = :name")
+    fun clearNotificationFilm(name: String)
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insertAllFilms(countryList: List<Film>)

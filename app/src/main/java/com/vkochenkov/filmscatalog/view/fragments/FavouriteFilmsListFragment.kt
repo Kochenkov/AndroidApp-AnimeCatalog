@@ -111,7 +111,7 @@ class FavouriteFilmsListFragment : Fragment() {
     private fun showSnackBar(film: Film, position: Int, view: View) {
         val str = "${film.title} ${context?.getString(R.string.was_deleted_str)}"
         val snackbar = Snackbar.make(view, str, Snackbar.LENGTH_SHORT)
-        snackbar.setAction(context?.getString(R.string.cancel_snackbar_str)) {
+        snackbar.setAction(context?.getString(R.string.cancel_str)) {
             restoreItemActions(film, position)
         }
         snackbar.show()
