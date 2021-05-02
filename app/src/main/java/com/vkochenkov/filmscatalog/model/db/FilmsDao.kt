@@ -13,7 +13,7 @@ interface FilmsDao {
     fun getFavourites(): Maybe<List<Film>>
 
     @Query("SELECT * FROM Films WHERE serverName = :name")
-    fun getFilm(name: String): Film
+    fun getFilm(name: String): Maybe<Film>
 
     @Query("UPDATE Films SET isLiked = 1 WHERE serverName = :name")
     fun setLikeFilm(name: String)

@@ -89,8 +89,11 @@ class Repository {
             })
     }
 
-    fun getFilm(name: String): Film {
-        return dao.getFilm(name)
+    fun getFilm(name: String, callback: GetFilmFromDatabaseCallback) {
+        dao.getFilm(name)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(maybeObserver(callback))
     }
 
     fun setNotificationFilm(name: String, date: Long) {
@@ -110,12 +113,25 @@ class Repository {
         fun onSuccess(films: List<Film>)
     }
 
+    interface GetFilmFromDatabaseCallback {
+        fun onSuccess(film: Film)
+    }
+
     private fun maybeObserver(callback: GetFilmsFromDatabaseCallback) =
         object : MaybeObserver<List<Film>> {
             override fun onSuccess(data: List<Film>) {
                 callback.onSuccess(data)
             }
+            override fun onError(t: Throwable) {}
+            override fun onSubscribe(d: Disposable) {}
+            override fun onComplete() {}
+        }
 
+    private fun maybeObserver(callback: GetFilmFromDatabaseCallback) =
+        object : MaybeObserver<Film> {
+            override fun onSuccess(data: Film) {
+                callback.onSuccess(data)
+            }
             override fun onError(t: Throwable) {}
             override fun onSubscribe(d: Disposable) {}
             override fun onComplete() {}

@@ -2,14 +2,12 @@ package com.vkochenkov.filmscatalog.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import com.vkochenkov.filmscatalog.model.LocalDataStore.currentPageSize
 import com.vkochenkov.filmscatalog.model.db.Film
 import com.vkochenkov.filmscatalog.model.Repository
 import javax.inject.Inject
 
-class FilmsViewModel @Inject constructor(val repository: Repository) : ViewModel() {
-class FilmsViewModel : CommonViewModel() {
+class FilmsViewModel @Inject constructor(override val repository: Repository) : CommonViewModel(repository) {
 
     private var mutableFilmsLiveData = MutableLiveData<List<Film>>()
     private var mutableErrorLiveData = MutableLiveData<String>()
@@ -52,16 +50,7 @@ class FilmsViewModel : CommonViewModel() {
                     }
                 })
                 mutableErrorLiveData.postValue(str)
-
             }
         })
-    }
-
-    fun likeFilm(name: String) {
-        repository.likeFilm(name)
-    }
-
-    fun unlikeFilm(name: String) {
-        repository.unlikeFilm(name)
     }
 }

@@ -16,16 +16,22 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.vkochenkov.filmscatalog.App
 import com.vkochenkov.filmscatalog.R
+import com.vkochenkov.filmscatalog.di.ViewModelFactory
+import com.vkochenkov.filmscatalog.model.Repository
 import com.vkochenkov.filmscatalog.model.db.Film
 import com.vkochenkov.filmscatalog.view.MainActivity.Companion.FILM
 import com.vkochenkov.filmscatalog.view.dialogs.WatchLaterDialogFragment
 import com.vkochenkov.filmscatalog.viewmodel.NotificationViewModel
 import java.text.SimpleDateFormat
+import javax.inject.Inject
 
 class FilmInfoFragment : Fragment() {
 
-    private val notificationInfoViewModel by lazy {
-        ViewModelProvider(this).get(NotificationViewModel::class.java)
+    @Inject
+    lateinit var repository: Repository
+
+    private val notificationInfoViewModel: NotificationViewModel by lazy {
+        ViewModelProvider(this, ViewModelFactory(repository)).get(NotificationViewModel::class.java)
     }
 
     private lateinit var film: Film
@@ -41,6 +47,9 @@ class FilmInfoFragment : Fragment() {
     private lateinit var tvNotificationDate: TextView
     private lateinit var tvNotificationDateText: TextView
 
+    init {
+        App.appComponent.inject(this)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

@@ -1,12 +1,12 @@
 package com.vkochenkov.filmscatalog.viewmodel
 
-import android.os.Parcelable
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import kotlinx.android.parcel.Parcelize
+import com.vkochenkov.filmscatalog.model.Repository
+import com.vkochenkov.filmscatalog.model.db.Film
+import javax.inject.Inject
 
-@Parcelize
-class NotificationViewModel : CommonViewModel(), Parcelable {
+class NotificationViewModel @Inject constructor(override val repository: Repository) : CommonViewModel(repository) {
 
     private var mutableNotifyFilmLiveData = MutableLiveData<Long>()
 
@@ -14,7 +14,11 @@ class NotificationViewModel : CommonViewModel(), Parcelable {
         get() = mutableNotifyFilmLiveData
 
     fun isNotifyFilm(name: String) {
-        mutableNotifyFilmLiveData.postValue(repository.getFilm(name).notificationDate)
+        repository.getFilm(name, object : Repository.GetFilmFromDatabaseCallback{
+            override fun onSuccess(film: Film) {
+                mutableNotifyFilmLiveData.postValue(film.notificationDate)
+            }
+        })
     }
 
     fun setNotificationFilm(name: String, date: Long) {
