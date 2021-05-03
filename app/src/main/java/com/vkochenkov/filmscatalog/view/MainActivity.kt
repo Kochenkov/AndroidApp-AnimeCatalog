@@ -1,21 +1,25 @@
 package com.vkochenkov.filmscatalog.view
 
+import android.content.Intent
 import android.os.Bundle
-import android.os.PersistableBundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.vkochenkov.filmscatalog.App
 import com.vkochenkov.filmscatalog.R
+import com.vkochenkov.filmscatalog.model.Repository
 import com.vkochenkov.filmscatalog.model.db.Film
 import com.vkochenkov.filmscatalog.view.dialogs.ExitDialog
 import com.vkochenkov.filmscatalog.view.fragments.AppInfoFragment
 import com.vkochenkov.filmscatalog.view.fragments.FavouriteFilmsListFragment
 import com.vkochenkov.filmscatalog.view.fragments.FilmInfoFragment
 import com.vkochenkov.filmscatalog.view.fragments.FilmsListFragment
+import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
 
-    var bundle: Bundle? = null
+    @Inject
+    lateinit var repository: Repository
 
     lateinit var bottomNavView: BottomNavigationView
 
@@ -23,9 +27,20 @@ class MainActivity : AppCompatActivity() {
     val fragment2 = FavouriteFilmsListFragment()
     val fragment3 = AppInfoFragment()
 
+    init {
+        App.appComponent.inject(this)
+    }
+
     companion object {
         const val FILM = "FILM"
+        const val FILM_NAME = "FILM_NAME"
         const val BUNDLE = "BUNDLE"
+    }
+
+    //исполняется, если приложение открыто, или свернуто, и была открыта нотификация
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        checkIntentForOpenFilm(intent)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,29 +54,10 @@ class MainActivity : AppCompatActivity() {
             replaceFragment(fragment1)
         }
 
-        // check whether the activity was created for the first time, or recreated (for example, when you rotate the screen)
+        //проверяем, что бы не открывать снова фильм из интента при пересоздании активити
         if (savedInstanceState == null) {
-            bundle = intent.getBundleExtra(BUNDLE)
-        } else {
-            bundle = null
+            checkIntentForOpenFilm(intent)
         }
-        val film = bundle?.getParcelable<Film>(FILM)
-        // if the movie is not empty (we get here from the receiver by notification), then open the fragment with the movie
-        if (film != null) {
-            intent = null
-            val filmInfoFragment = FilmInfoFragment()
-            filmInfoFragment.arguments = bundle
-            supportFragmentManager.beginTransaction()
-                .replace(R.id.fragments_container, filmInfoFragment)
-                .addToBackStack(null)
-                .commit()
-        }
-    }
-
-    // save the bundle when recreating the activity, to block multiple recreations of the fragment with the movie
-    override fun onSaveInstanceState(outState: Bundle, outPersistentState: PersistableBundle) {
-        super.onSaveInstanceState(outState, outPersistentState)
-        outState.putParcelable(BUNDLE, bundle)
     }
 
     override fun onBackPressed() {
@@ -70,6 +66,36 @@ class MainActivity : AppCompatActivity() {
         } else {
             showExitDialog()
         }
+    }
+
+    private fun checkIntentForOpenFilm(intent: Intent?) {
+        //в бандл приходят данные из alarmManager
+        val bundle = intent?.getBundleExtra(BUNDLE)
+        //если пришел пуш из FCM, с названием фильма (отправляем именно название, а не айди, тк айди не статичный)
+        val filmName = intent?.getStringExtra(FILM_NAME)
+        if (bundle != null) {
+            val film = bundle.getParcelable<Film>(FILM)
+            if (film != null) {
+                openFilmInfoFragment(bundle)
+            }
+        } else if (filmName != null) {
+            repository.getFilm(filmName, object : Repository.GetFilmFromDatabaseCallback {
+                override fun onSuccess(film: Film) {
+                    val bundle = Bundle()
+                    bundle.putParcelable(FILM, film)
+                    openFilmInfoFragment(bundle)
+                }
+            })
+        }
+    }
+
+    private fun openFilmInfoFragment(bundle: Bundle?) {
+        val filmInfoFragment = FilmInfoFragment()
+        filmInfoFragment.arguments = bundle
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.fragments_container, filmInfoFragment)
+            .addToBackStack(null)
+            .commit()
     }
 
     private fun showExitDialog() {
