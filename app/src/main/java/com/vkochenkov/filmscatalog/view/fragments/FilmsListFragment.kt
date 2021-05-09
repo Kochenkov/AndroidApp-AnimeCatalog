@@ -1,5 +1,6 @@
 package com.vkochenkov.filmscatalog.view.fragments
 
+import android.content.Context
 import android.content.res.Configuration
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -31,10 +32,11 @@ import javax.inject.Inject
 
 class FilmsListFragment : Fragment() {
 
-    @Inject lateinit var repository: Repository
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
 
     private val filmsViewModel: FilmsViewModel by lazy {
-        ViewModelProvider(this, ViewModelFactory(repository)).get(FilmsViewModel::class.java)
+        ViewModelProvider(this, viewModelFactory).get(FilmsViewModel::class.java)
     }
 
     private lateinit var filmsRecycler: RecyclerView
@@ -42,7 +44,8 @@ class FilmsListFragment : Fragment() {
     private lateinit var swipeRefresh: SwipeRefreshLayout
     private lateinit var progressBar: ProgressBar
 
-    init {
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
         App.appComponent.inject(this)
     }
 

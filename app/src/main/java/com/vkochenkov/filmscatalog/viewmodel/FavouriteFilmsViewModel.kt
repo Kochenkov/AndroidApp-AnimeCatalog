@@ -10,8 +10,7 @@ class FavouriteFilmsViewModel @Inject constructor(override val repository: Repos
 
     private var mutableFavouritesLiveData = MutableLiveData<List<Film>>()
 
-    val favouritesLiveData: LiveData<List<Film>>
-        get() = mutableFavouritesLiveData
+    val favouritesLiveData: LiveData<List<Film>> = mutableFavouritesLiveData
 
     fun getFavourites() {
         repository.getFavourites(object : Repository.GetFilmsFromDatabaseCallback {

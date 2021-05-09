@@ -6,8 +6,10 @@ import com.vkochenkov.filmscatalog.model.Repository
 import com.vkochenkov.filmscatalog.viewmodel.FavouriteFilmsViewModel
 import com.vkochenkov.filmscatalog.viewmodel.FilmsViewModel
 import com.vkochenkov.filmscatalog.viewmodel.NotificationViewModel
+import javax.inject.Inject
 
-class ViewModelFactory(private val repository: Repository) : ViewModelProvider.Factory {
+class ViewModelFactory @Inject constructor(private val repository: Repository) :
+    ViewModelProvider.Factory {
 
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         return when {

@@ -1,5 +1,6 @@
 package com.vkochenkov.filmscatalog.view.fragments
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -28,10 +29,10 @@ import javax.inject.Inject
 class FilmInfoFragment : Fragment() {
 
     @Inject
-    lateinit var repository: Repository
+    lateinit var viewModelFactory: ViewModelFactory
 
     private val notificationInfoViewModel: NotificationViewModel by lazy {
-        ViewModelProvider(this, ViewModelFactory(repository)).get(NotificationViewModel::class.java)
+        ViewModelProvider(this, viewModelFactory).get(NotificationViewModel::class.java)
     }
 
     private lateinit var film: Film
@@ -47,7 +48,8 @@ class FilmInfoFragment : Fragment() {
     private lateinit var tvNotificationDate: TextView
     private lateinit var tvNotificationDateText: TextView
 
-    init {
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
         App.appComponent.inject(this)
     }
 

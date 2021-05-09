@@ -12,11 +12,8 @@ class FilmsViewModel @Inject constructor(override val repository: Repository) : 
     private var mutableFilmsLiveData = MutableLiveData<List<Film>>()
     private var mutableErrorLiveData = MutableLiveData<String>()
 
-    val filmsLiveData: LiveData<List<Film>>
-        get()  = mutableFilmsLiveData
-
-    val errorLiveData: LiveData<String>
-        get()  = mutableErrorLiveData
+    val filmsLiveData: LiveData<List<Film>> = mutableFilmsLiveData
+    val errorLiveData: LiveData<String> = mutableErrorLiveData
 
     fun getFilmsWithPaging(shouldIncrementPageCount: Boolean = true) {
         if (shouldIncrementPageCount) {

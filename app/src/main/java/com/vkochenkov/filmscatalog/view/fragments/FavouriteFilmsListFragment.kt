@@ -1,5 +1,6 @@
 package com.vkochenkov.filmscatalog.view.fragments
 
+import android.content.Context
 import android.content.res.Configuration
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -30,17 +31,18 @@ import javax.inject.Inject
 class FavouriteFilmsListFragment : Fragment() {
 
     @Inject
-    lateinit var repository: Repository
+    lateinit var viewModelFactory: ViewModelFactory
 
     private val favouritesFilmsViewModel by lazy {
-        ViewModelProvider(this, ViewModelFactory(repository)).get(FavouriteFilmsViewModel::class.java)
+        ViewModelProvider(this, viewModelFactory).get(FavouriteFilmsViewModel::class.java)
     }
 
     private lateinit var favouriteFilmsRecycler: RecyclerView
     private lateinit var emptyListTextView: TextView
     private lateinit var mainToolbar: Toolbar
 
-    init {
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
         App.appComponent.inject(this)
     }
 

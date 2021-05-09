@@ -10,8 +10,7 @@ class NotificationViewModel @Inject constructor(override val repository: Reposit
 
     private var mutableNotifyFilmLiveData = MutableLiveData<Long>()
 
-    val notifyFilmLiveData: LiveData<Long>
-        get() = mutableNotifyFilmLiveData
+    val notifyFilmLiveData: LiveData<Long> = mutableNotifyFilmLiveData
 
     fun isNotifyFilm(name: String) {
         repository.getFilm(name, object : Repository.GetFilmFromDatabaseCallback{
