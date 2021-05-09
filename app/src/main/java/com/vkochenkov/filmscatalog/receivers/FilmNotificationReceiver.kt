@@ -17,6 +17,7 @@ import com.vkochenkov.filmscatalog.model.db.Film
 import com.vkochenkov.filmscatalog.view.MainActivity
 import com.vkochenkov.filmscatalog.view.MainActivity.Companion.BUNDLE
 import com.vkochenkov.filmscatalog.view.MainActivity.Companion.FILM
+import javax.inject.Inject
 
 class FilmNotificationReceiver : BroadcastReceiver() {
 
@@ -25,6 +26,13 @@ class FilmNotificationReceiver : BroadcastReceiver() {
         val CHANNEL_NAME = "MY_NOTIFICATION"
         val NOTIFICATION_ID = "NOTIFICATION_ID"
     }
+
+    init {
+        App.appComponent.inject(this)
+    }
+
+    @Inject
+    lateinit var repository: Repository
 
     override fun onReceive(context: Context, intent: Intent) {
 
@@ -50,7 +58,6 @@ class FilmNotificationReceiver : BroadcastReceiver() {
             notificationManager.createNotificationChannel(channel)
         }
 
-        val repository: Repository = App.instance!!.repository
         repository.clearNotificationFilm(film!!.serverName)
 
         val notification = NotificationCompat.Builder(context, CHANNEL_ID)

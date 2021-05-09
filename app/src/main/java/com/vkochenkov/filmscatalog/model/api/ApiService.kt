@@ -1,6 +1,6 @@
 package com.vkochenkov.filmscatalog.model.api
 
-import retrofit2.Call
+import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Query
 
@@ -14,5 +14,5 @@ interface ApiService {
     @GET("anime")
     fun getAnimeListWithPages(@Query("page[limit]") items: Int,
                               @Query("page[offset]") sincePage: Int
-    ): Call<ResponseFromApi>
+    ): Single<ResponseFromApi>
 }

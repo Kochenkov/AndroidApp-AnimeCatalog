@@ -4,15 +4,16 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import io.reactivex.Maybe
 
 @Dao
 interface FilmsDao {
 
     @Query("SELECT * FROM Films WHERE isLiked = 1")
-    fun getFavourites() : List<Film>
+    fun getFavourites(): Maybe<List<Film>>
 
     @Query("SELECT * FROM Films WHERE serverName = :name")
-    fun getFilm(name: String): Film
+    fun getFilm(name: String): Maybe<Film>
 
     @Query("UPDATE Films SET isLiked = 1 WHERE serverName = :name")
     fun setLikeFilm(name: String)
@@ -30,5 +31,5 @@ interface FilmsDao {
     fun insertAllFilms(countryList: List<Film>)
 
     @Query("SELECT * FROM Films LIMIT :pages+10")
-    fun getFilmsWithPagination(pages: Int): List<Film>
+    fun getFilmsWithPagination(pages: Int): Maybe<List<Film>>
 }

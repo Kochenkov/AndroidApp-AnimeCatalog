@@ -1,5 +1,6 @@
 package com.vkochenkov.filmscatalog.view.fragments
 
+import android.content.Context
 import android.content.res.Configuration
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -17,26 +18,36 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.android.material.snackbar.Snackbar
+import com.vkochenkov.filmscatalog.App
 import com.vkochenkov.filmscatalog.R
+import com.vkochenkov.filmscatalog.di.ViewModelFactory
 import com.vkochenkov.filmscatalog.model.LocalDataStore
+import com.vkochenkov.filmscatalog.model.Repository
 import com.vkochenkov.filmscatalog.model.db.Film
 import com.vkochenkov.filmscatalog.view.MainActivity.Companion.FILM
 import com.vkochenkov.filmscatalog.view.recycler.main.FilmItemClickListener
 import com.vkochenkov.filmscatalog.view.recycler.main.FilmsAdapter
 import com.vkochenkov.filmscatalog.viewmodel.FilmsViewModel
-
+import javax.inject.Inject
 
 class FilmsListFragment : Fragment() {
 
-    private val filmsViewModel by lazy {
-        ViewModelProvider(this).get(FilmsViewModel::class.java)
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
+
+    private val filmsViewModel: FilmsViewModel by lazy {
+        ViewModelProvider(this, viewModelFactory).get(FilmsViewModel::class.java)
     }
 
     private lateinit var filmsRecycler: RecyclerView
     private lateinit var mainToolbar: Toolbar
-
     private lateinit var swipeRefresh: SwipeRefreshLayout
     private lateinit var progressBar: ProgressBar
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        App.appComponent.inject(this)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

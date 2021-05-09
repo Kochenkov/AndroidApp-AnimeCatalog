@@ -25,10 +25,6 @@ import java.util.*
 
 class WatchLaterDialogFragment : DialogFragment() {
 
-    companion object {
-        val VIEW_MODEL = "VIEW_MODEL"
-    }
-
     var film: Film? = null
         set(value) {
             field = value
@@ -41,15 +37,16 @@ class WatchLaterDialogFragment : DialogFragment() {
     private lateinit var datePicker: DatePicker
     private lateinit var timePicker: TimePicker
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        retainInstance = true
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        if (savedInstanceState != null) {
-            film = savedInstanceState.getParcelable(FILM)
-            viewModel = savedInstanceState.getParcelable(VIEW_MODEL)
-        }
         val view = inflater.inflate(R.layout.dialog_fragment_watch_later, container, false)
 
         datePicker = view.findViewById(R.id.date_picker)
@@ -60,12 +57,6 @@ class WatchLaterDialogFragment : DialogFragment() {
         setOnBtnClickListeners(view)
 
         return view
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        outState.putParcelable(FILM, film)
-        outState.putParcelable(VIEW_MODEL, viewModel)
     }
 
     private fun setOnBtnClickListeners(view: View) {
