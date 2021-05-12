@@ -36,7 +36,7 @@ class FavouriteFilmsAdapter(private val clickListener: FavouriteFilmItemClickLis
     }
 
     private fun setOnClickListenerForDetailsBtn(holder: FavouriteFilmViewHolder, filmItem: Film) {
-        holder.filmDetailsBtn.setOnClickListener {
+        holder.itemView.setOnClickListener {
             clickListener.detailsClickListener(filmItem)
         }
     }

@@ -33,7 +33,7 @@ class FilmsAdapter(private val clickListener: FilmItemClickListener) :
     }
 
     private fun setOnClickListenerForDetailsBtn(holder: FilmViewHolder, filmItem: Film) {
-        holder.filmDetailsBtn.setOnClickListener {
+        holder.itemView.setOnClickListener {
             clickListener.detailsClickListener(filmItem)
         }
     }

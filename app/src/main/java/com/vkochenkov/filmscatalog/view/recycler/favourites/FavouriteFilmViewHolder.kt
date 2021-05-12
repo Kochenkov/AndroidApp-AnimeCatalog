@@ -1,7 +1,6 @@
 package com.vkochenkov.filmscatalog.view.recycler.favourites
 
 import android.view.View
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
@@ -15,7 +14,6 @@ import com.vkochenkov.filmscatalog.model.db.Film
 class FavouriteFilmViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     val filmTitle: TextView = itemView.findViewById(R.id.item_favourite_film_title)
     val filmImage: ImageView = itemView.findViewById(R.id.item_favourite_film_image)
-    val filmDetailsBtn: Button = itemView.findViewById(R.id.item_favourite_film_details_btn)
     val filmDeleteBtn: ImageView = itemView.findViewById(R.id.item_favourite_film_delete_btn)
     val filmNotifyIcon: ImageView = itemView.findViewById(R.id.item_favourite_film_iv_watch_later)
 
@@ -34,7 +32,7 @@ class FavouriteFilmViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView
             filmTitle.setTextColor(ContextCompat.getColor(itemView.context, R.color.colorBlack))
         }
 
-        if (item.notificationDate!=0L) {
+        if (item.notificationDate != 0L) {
             filmNotifyIcon.visibility = View.VISIBLE
         } else {
             filmNotifyIcon.visibility = View.INVISIBLE
