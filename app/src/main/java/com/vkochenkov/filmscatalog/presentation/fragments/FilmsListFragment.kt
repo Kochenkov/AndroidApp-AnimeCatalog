@@ -1,4 +1,4 @@
-package com.vkochenkov.filmscatalog.view.fragments
+package com.vkochenkov.filmscatalog.presentation.fragments
 
 import android.content.Context
 import android.content.res.Configuration
@@ -22,11 +22,10 @@ import com.vkochenkov.filmscatalog.App
 import com.vkochenkov.filmscatalog.R
 import com.vkochenkov.filmscatalog.di.ViewModelFactory
 import com.vkochenkov.filmscatalog.model.LocalDataStore
-import com.vkochenkov.filmscatalog.model.Repository
 import com.vkochenkov.filmscatalog.model.db.Film
-import com.vkochenkov.filmscatalog.view.MainActivity.Companion.FILM
-import com.vkochenkov.filmscatalog.view.recycler.main.FilmItemClickListener
-import com.vkochenkov.filmscatalog.view.recycler.main.FilmsAdapter
+import com.vkochenkov.filmscatalog.presentation.activity.MainActivity.Companion.FILM
+import com.vkochenkov.filmscatalog.presentation.clicklisteners.FilmItemClickListener
+import com.vkochenkov.filmscatalog.presentation.adapters.FilmsAdapter
 import com.vkochenkov.filmscatalog.viewmodel.FilmsViewModel
 import javax.inject.Inject
 
@@ -117,7 +116,8 @@ class FilmsListFragment : Fragment() {
         }
 
         filmsRecycler.adapter =
-            FilmsAdapter(object : FilmItemClickListener {
+            FilmsAdapter(object :
+                FilmItemClickListener {
                 override fun detailsClickListener(film: Film) {
 
                     LocalDataStore.currentSelectedFilm = film

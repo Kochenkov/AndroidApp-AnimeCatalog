@@ -1,4 +1,4 @@
-package com.vkochenkov.filmscatalog.view.recycler.favourites
+package com.vkochenkov.filmscatalog.presentation.viewholders
 
 import android.view.View
 import android.widget.ImageView
@@ -11,11 +11,11 @@ import com.vkochenkov.filmscatalog.R
 import com.vkochenkov.filmscatalog.model.LocalDataStore
 import com.vkochenkov.filmscatalog.model.db.Film
 
-class FavouriteFilmViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-    val filmTitle: TextView = itemView.findViewById(R.id.item_favourite_film_title)
-    val filmImage: ImageView = itemView.findViewById(R.id.item_favourite_film_image)
-    val filmDeleteBtn: ImageView = itemView.findViewById(R.id.item_favourite_film_delete_btn)
-    val filmNotifyIcon: ImageView = itemView.findViewById(R.id.item_favourite_film_iv_watch_later)
+class FilmViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    val filmTitle: TextView = itemView.findViewById(R.id.item_film_title)
+    val filmImage: ImageView = itemView.findViewById(R.id.item_film_image)
+    val filmLikeBtn: ImageView = itemView.findViewById(R.id.item_film_like_btn)
+    val filmNotifyIcon: ImageView = itemView.findViewById(R.id.item_film_iv_watch_later)
 
     fun bind(item: Film) {
         filmTitle.text = item.title
@@ -30,6 +30,12 @@ class FavouriteFilmViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView
             filmTitle.setTextColor(ContextCompat.getColor(itemView.context, R.color.colorAccent))
         } else {
             filmTitle.setTextColor(ContextCompat.getColor(itemView.context, R.color.colorBlack))
+        }
+
+        if (item.liked) {
+            filmLikeBtn.setImageResource(R.drawable.ic_heart_fill)
+        } else {
+            filmLikeBtn.setImageResource(R.drawable.ic_heart_empty)
         }
 
         if (item.notificationDate != 0L) {

@@ -1,10 +1,12 @@
-package com.vkochenkov.filmscatalog.view.recycler.main
+package com.vkochenkov.filmscatalog.presentation.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.vkochenkov.filmscatalog.R
 import com.vkochenkov.filmscatalog.model.db.Film
+import com.vkochenkov.filmscatalog.presentation.clicklisteners.FilmItemClickListener
+import com.vkochenkov.filmscatalog.presentation.viewholders.FilmViewHolder
 
 class FilmsAdapter(private val clickListener: FilmItemClickListener) :
     RecyclerView.Adapter<FilmViewHolder>() {
@@ -13,7 +15,9 @@ class FilmsAdapter(private val clickListener: FilmItemClickListener) :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FilmViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_film, parent, false)
-        return FilmViewHolder(view)
+        return FilmViewHolder(
+            view
+        )
     }
 
     override fun onBindViewHolder(holder: FilmViewHolder, position: Int) {
@@ -46,5 +50,12 @@ class FilmsAdapter(private val clickListener: FilmItemClickListener) :
         holder.filmLikeBtn.setOnClickListener {
             clickListener.likeClickListener(filmItem, position)
         }
+    }
+
+    interface FilmItemClickListener {
+
+        fun detailsClickListener(film: Film)
+
+        fun likeClickListener(film: Film, position: Int)
     }
 }

@@ -1,4 +1,4 @@
-package com.vkochenkov.filmscatalog.view.fragments
+package com.vkochenkov.filmscatalog.presentation.fragments
 
 import android.content.Context
 import android.os.Bundle
@@ -18,10 +18,9 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.vkochenkov.filmscatalog.App
 import com.vkochenkov.filmscatalog.R
 import com.vkochenkov.filmscatalog.di.ViewModelFactory
-import com.vkochenkov.filmscatalog.model.Repository
 import com.vkochenkov.filmscatalog.model.db.Film
-import com.vkochenkov.filmscatalog.view.MainActivity.Companion.FILM
-import com.vkochenkov.filmscatalog.view.dialogs.WatchLaterDialogFragment
+import com.vkochenkov.filmscatalog.presentation.activity.MainActivity.Companion.FILM
+import com.vkochenkov.filmscatalog.presentation.dialogs.WatchLaterDialogFragment
 import com.vkochenkov.filmscatalog.viewmodel.NotificationViewModel
 import java.text.SimpleDateFormat
 import javax.inject.Inject

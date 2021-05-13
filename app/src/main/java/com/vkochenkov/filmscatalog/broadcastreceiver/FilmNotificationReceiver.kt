@@ -1,4 +1,4 @@
-package com.vkochenkov.filmscatalog.receivers
+package com.vkochenkov.filmscatalog.broadcastreceiver
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -14,9 +14,9 @@ import com.vkochenkov.filmscatalog.App
 import com.vkochenkov.filmscatalog.R
 import com.vkochenkov.filmscatalog.model.Repository
 import com.vkochenkov.filmscatalog.model.db.Film
-import com.vkochenkov.filmscatalog.view.MainActivity
-import com.vkochenkov.filmscatalog.view.MainActivity.Companion.BUNDLE
-import com.vkochenkov.filmscatalog.view.MainActivity.Companion.FILM
+import com.vkochenkov.filmscatalog.presentation.activity.MainActivity
+import com.vkochenkov.filmscatalog.presentation.activity.MainActivity.Companion.BUNDLE
+import com.vkochenkov.filmscatalog.presentation.activity.MainActivity.Companion.FILM
 import javax.inject.Inject
 
 class FilmNotificationReceiver : BroadcastReceiver() {
