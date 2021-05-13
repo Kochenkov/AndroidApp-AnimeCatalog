@@ -1,4 +1,4 @@
-package com.vkochenkov.filmscatalog.view.fragments
+package com.vkochenkov.filmscatalog.presentation.fragments
 
 import android.content.Intent
 import android.os.Bundle

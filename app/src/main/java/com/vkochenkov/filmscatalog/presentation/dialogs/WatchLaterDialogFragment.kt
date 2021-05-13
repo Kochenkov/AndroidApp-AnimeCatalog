@@ -1,4 +1,4 @@
-package com.vkochenkov.filmscatalog.view.dialogs
+package com.vkochenkov.filmscatalog.presentation.dialogs
 
 import android.app.AlarmManager
 import android.app.PendingIntent
@@ -16,10 +16,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import com.vkochenkov.filmscatalog.R
 import com.vkochenkov.filmscatalog.model.db.Film
-import com.vkochenkov.filmscatalog.receivers.FilmNotificationReceiver
-import com.vkochenkov.filmscatalog.receivers.FilmNotificationReceiver.Companion.NOTIFICATION_ID
-import com.vkochenkov.filmscatalog.view.MainActivity.Companion.BUNDLE
-import com.vkochenkov.filmscatalog.view.MainActivity.Companion.FILM
+import com.vkochenkov.filmscatalog.broadcastreceiver.FilmNotificationReceiver
+import com.vkochenkov.filmscatalog.broadcastreceiver.FilmNotificationReceiver.Companion.NOTIFICATION_ID
+import com.vkochenkov.filmscatalog.presentation.activity.MainActivity.Companion.BUNDLE
+import com.vkochenkov.filmscatalog.presentation.activity.MainActivity.Companion.FILM
 import com.vkochenkov.filmscatalog.viewmodel.NotificationViewModel
 import java.util.*
 

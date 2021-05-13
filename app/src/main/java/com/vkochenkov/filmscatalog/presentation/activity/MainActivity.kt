@@ -1,4 +1,4 @@
-package com.vkochenkov.filmscatalog.view
+package com.vkochenkov.filmscatalog.presentation.activity
 
 import android.content.Intent
 import android.os.Bundle
@@ -9,11 +9,11 @@ import com.vkochenkov.filmscatalog.App
 import com.vkochenkov.filmscatalog.R
 import com.vkochenkov.filmscatalog.model.Repository
 import com.vkochenkov.filmscatalog.model.db.Film
-import com.vkochenkov.filmscatalog.view.dialogs.ExitDialog
-import com.vkochenkov.filmscatalog.view.fragments.AppInfoFragment
-import com.vkochenkov.filmscatalog.view.fragments.FavouriteFilmsListFragment
-import com.vkochenkov.filmscatalog.view.fragments.FilmInfoFragment
-import com.vkochenkov.filmscatalog.view.fragments.FilmsListFragment
+import com.vkochenkov.filmscatalog.presentation.dialogs.ExitDialog
+import com.vkochenkov.filmscatalog.presentation.fragments.AppInfoFragment
+import com.vkochenkov.filmscatalog.presentation.fragments.FavouriteFilmsListFragment
+import com.vkochenkov.filmscatalog.presentation.fragments.FilmInfoFragment
+import com.vkochenkov.filmscatalog.presentation.fragments.FilmsListFragment
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
