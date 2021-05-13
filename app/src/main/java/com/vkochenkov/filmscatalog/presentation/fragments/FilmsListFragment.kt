@@ -24,7 +24,6 @@ import com.vkochenkov.filmscatalog.di.ViewModelFactory
 import com.vkochenkov.filmscatalog.model.LocalDataStore
 import com.vkochenkov.filmscatalog.model.db.Film
 import com.vkochenkov.filmscatalog.presentation.activity.MainActivity.Companion.FILM
-import com.vkochenkov.filmscatalog.presentation.clicklisteners.FilmItemClickListener
 import com.vkochenkov.filmscatalog.presentation.adapters.FilmsAdapter
 import com.vkochenkov.filmscatalog.viewmodel.FilmsViewModel
 import javax.inject.Inject
@@ -117,9 +116,8 @@ class FilmsListFragment : Fragment() {
 
         filmsRecycler.adapter =
             FilmsAdapter(object :
-                FilmItemClickListener {
+                FilmsAdapter.FilmItemClickListener {
                 override fun detailsClickListener(film: Film) {
-
                     LocalDataStore.currentSelectedFilm = film
                     filmsRecycler.adapter?.notifyDataSetChanged()
 

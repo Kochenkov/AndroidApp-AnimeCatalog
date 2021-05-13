@@ -22,7 +22,6 @@ import com.vkochenkov.filmscatalog.di.ViewModelFactory
 import com.vkochenkov.filmscatalog.model.LocalDataStore
 import com.vkochenkov.filmscatalog.model.db.Film
 import com.vkochenkov.filmscatalog.presentation.activity.MainActivity
-import com.vkochenkov.filmscatalog.presentation.clicklisteners.FavouriteFilmItemClickListener
 import com.vkochenkov.filmscatalog.presentation.adapters.FavouriteFilmsAdapter
 import com.vkochenkov.filmscatalog.viewmodel.FavouriteFilmsViewModel
 import javax.inject.Inject
@@ -94,9 +93,8 @@ class FavouriteFilmsListFragment : Fragment() {
         favouriteFilmsRecycler.adapter =
             FavouriteFilmsAdapter(
                 object :
-                    FavouriteFilmItemClickListener {
+                    FavouriteFilmsAdapter.FavouriteFilmItemClickListener {
                     override fun detailsClickListener(film: Film) {
-
                         LocalDataStore.currentSelectedFilm = film
                         favouriteFilmsRecycler.adapter?.notifyDataSetChanged()
                         openSelectedFilmFragment(film)
@@ -104,8 +102,6 @@ class FavouriteFilmsListFragment : Fragment() {
 
                     override fun deleteClickListener(film: Film, position: Int) {
                         deleteItemActions(film, position)
-                        favouritesFilmsViewModel.unlikeFilm(film.serverName)
-                        favouritesFilmsViewModel.getFavourites()
                         showSnackBar(film, position, view)
                     }
                 })
@@ -122,14 +118,13 @@ class FavouriteFilmsListFragment : Fragment() {
 
     private fun deleteItemActions(film: Film, position: Int) {
         favouritesFilmsViewModel.unlikeFilm(film.serverName)
-        favouriteFilmsRecycler.adapter?.notifyItemRemoved(position)
+        favouritesFilmsViewModel.getFavourites()
         favouriteFilmsRecycler.adapter?.notifyItemChanged(position)
     }
 
     private fun restoreItemActions(film: Film, position: Int) {
         favouritesFilmsViewModel.likeFilm(film.serverName)
         favouritesFilmsViewModel.getFavourites()
-        favouriteFilmsRecycler.adapter?.notifyItemRemoved(position)
         favouriteFilmsRecycler.adapter?.notifyItemChanged(position)
     }
 

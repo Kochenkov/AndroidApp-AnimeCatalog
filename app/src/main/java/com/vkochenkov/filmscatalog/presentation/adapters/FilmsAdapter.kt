@@ -5,7 +5,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.vkochenkov.filmscatalog.R
 import com.vkochenkov.filmscatalog.model.db.Film
-import com.vkochenkov.filmscatalog.presentation.clicklisteners.FilmItemClickListener
 import com.vkochenkov.filmscatalog.presentation.viewholders.FilmViewHolder
 
 class FilmsAdapter(private val clickListener: FilmItemClickListener) :

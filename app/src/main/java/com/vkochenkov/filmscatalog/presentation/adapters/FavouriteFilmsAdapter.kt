@@ -5,7 +5,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.vkochenkov.filmscatalog.R
 import com.vkochenkov.filmscatalog.model.db.Film
-import com.vkochenkov.filmscatalog.presentation.clicklisteners.FavouriteFilmItemClickListener
 import com.vkochenkov.filmscatalog.presentation.viewholders.FavouriteFilmViewHolder
 
 class FavouriteFilmsAdapter(private val clickListener: FavouriteFilmItemClickListener) :
@@ -50,5 +49,12 @@ class FavouriteFilmsAdapter(private val clickListener: FavouriteFilmItemClickLis
         holder.filmDeleteBtn.setOnClickListener {
             clickListener.deleteClickListener(filmItem, position)
         }
+    }
+
+    interface FavouriteFilmItemClickListener {
+
+        fun detailsClickListener(film: Film)
+
+        fun deleteClickListener(film: Film, position: Int)
     }
 }
