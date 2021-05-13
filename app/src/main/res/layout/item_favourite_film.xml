@@ -36,19 +36,6 @@
         app:layout_constraintVertical_bias="0.0"
         tools:text="string/default_film_title" />
 
-    <Button
-        android:id="@+id/item_favourite_film_details_btn"
-        android:layout_width="0dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="@dimen/half_main_margin"
-        android:text="@string/btn_detail_text"
-        android:textColor="@color/colorBlack"
-        android:textSize="@dimen/little_text_size"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/item_favourite_film_delete_btn"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/item_favourite_film_image" />
-
     <ImageView
         android:id="@+id/item_favourite_film_delete_btn"
         android:layout_width="40dp"
@@ -65,8 +52,8 @@
         android:padding="6dp"
         android:src="@drawable/ic_baseline_alarm"
         android:visibility="invisible"
-        app:layout_constraintBottom_toTopOf="@+id/item_favourite_film_delete_btn"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/item_favourite_film_delete_btn"
         tools:visibility="visible" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
