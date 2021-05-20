@@ -6,5 +6,9 @@ import androidx.room.RoomDatabase
 @Database(entities = [(Film::class)], version = 5)
 abstract class FilmsDatabase : RoomDatabase(){
 
+    companion object {
+        val dbName = "films_db"
+    }
+
     abstract fun filmsDao() : FilmsDao
 }
