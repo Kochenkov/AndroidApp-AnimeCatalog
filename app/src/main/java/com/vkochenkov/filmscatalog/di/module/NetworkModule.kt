@@ -1,5 +1,6 @@
 package com.vkochenkov.filmscatalog.di.module
 
+import com.vkochenkov.filmscatalog.BuildConfig
 import com.vkochenkov.filmscatalog.model.api.ApiService
 import dagger.Module
 import dagger.Provides
@@ -16,7 +17,11 @@ class NetworkModule {
     @Provides
     fun provideLoggingInterceptor(): HttpLoggingInterceptor {
         val logging = HttpLoggingInterceptor()
-        logging.level = HttpLoggingInterceptor.Level.HEADERS
+        if (BuildConfig.BUILD_TYPE == "dev") {
+            logging.level = HttpLoggingInterceptor.Level.BODY
+        } else {
+            logging.level = HttpLoggingInterceptor.Level.NONE
+        }
         return logging
     }
 
