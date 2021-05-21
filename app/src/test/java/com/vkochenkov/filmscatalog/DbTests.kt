@@ -2,7 +2,6 @@ package com.vkochenkov.filmscatalog
 
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
-import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.vkochenkov.filmscatalog.model.db.Film
 import com.vkochenkov.filmscatalog.model.db.FilmsDao
 import com.vkochenkov.filmscatalog.model.db.FilmsDatabase
@@ -12,9 +11,10 @@ import junit.framework.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 
-@RunWith(AndroidJUnit4::class)
+@RunWith(RobolectricTestRunner::class)
 @Config(sdk = [28])
 class DbTests {
 
@@ -22,7 +22,6 @@ class DbTests {
     lateinit var dao: FilmsDao
 
     val filmName = "testName"
-
     val film = Film(
         filmName,
         "test",
@@ -35,6 +34,7 @@ class DbTests {
         false,
         0L
     )
+    val filmsList: MutableList<Film> = ArrayList()
 
     @Before
     fun setup() {
@@ -43,15 +43,13 @@ class DbTests {
             FilmsDatabase::class.java
         ).allowMainThreadQueries().build()
         dao = database.filmsDao()
+
+        filmsList.add(film)
+        dao.insertAllFilms(filmsList)
     }
 
     @Test
-    fun dbShouldInsertAndGetFilm() {
-
-        val filmsList: MutableList<Film> = ArrayList()
-        filmsList.add(film)
-
-        dao.insertAllFilms(filmsList)
+    fun `проверка получения фильма по имени из базы`() {
         dao.getFilm(filmName).subscribe(object : MaybeObserver<Film> {
             override fun onSuccess(f: Film) {
                 assertEquals(filmName, f.serverName)
@@ -62,5 +60,51 @@ class DbTests {
         })
     }
 
-    //todo добавить еще тестов
+    @Test
+    fun `проверка избранного - добавление и удаление фильма`() {
+        dao.setLikeFilm(filmName)
+        dao.getFilm(filmName).subscribe(object : MaybeObserver<Film> {
+            override fun onSuccess(f: Film) {
+                assertEquals(true, f.liked)
+            }
+            override fun onComplete() {}
+            override fun onSubscribe(d: Disposable) {}
+            override fun onError(t: Throwable) {}
+        })
+
+        dao.setUnlikeFilm(filmName)
+        dao.getFilm(filmName).subscribe(object : MaybeObserver<Film> {
+            override fun onSuccess(f: Film) {
+                assertEquals(false, f.liked)
+            }
+            override fun onComplete() {}
+            override fun onSubscribe(d: Disposable) {}
+            override fun onError(t: Throwable) {}
+        })
+    }
+
+    @Test
+    fun `проверка нотификации - установка и очистка`() {
+        val date = System.currentTimeMillis()
+
+        dao.setNotificationFilm(filmName, date)
+        dao.getFilm(filmName).subscribe(object : MaybeObserver<Film> {
+            override fun onSuccess(f: Film) {
+                assertEquals(date, f.notificationDate)
+            }
+            override fun onComplete() {}
+            override fun onSubscribe(d: Disposable) {}
+            override fun onError(t: Throwable) {}
+        })
+
+        dao.clearNotificationFilm(filmName)
+        dao.getFilm(filmName).subscribe(object : MaybeObserver<Film> {
+            override fun onSuccess(f: Film) {
+                assertEquals(0L, f.notificationDate)
+            }
+            override fun onComplete() {}
+            override fun onSubscribe(d: Disposable) {}
+            override fun onError(t: Throwable) {}
+        })
+    }
 }
