@@ -23,9 +23,9 @@ class MainActivity : AppCompatActivity() {
 
     lateinit var bottomNavView: BottomNavigationView
 
-    val fragment1 = FilmsListFragment()
-    val fragment2 = FavouriteFilmsListFragment()
-    val fragment3 = AppInfoFragment()
+    private val filmsFragment = FilmsListFragment()
+    private val favouritesFragment = FavouriteFilmsListFragment()
+    private val appInfoFragment = AppInfoFragment()
 
     init {
         App.appComponent.inject(this)
@@ -51,7 +51,7 @@ class MainActivity : AppCompatActivity() {
         setBottomNavigationClickListener()
 
         if (supportFragmentManager.backStackEntryCount == 0) {
-            replaceFragment(fragment1)
+            replaceFragment(filmsFragment)
         }
 
         //проверяем, что бы не открывать снова фильм из интента при пересоздании активити
@@ -111,13 +111,13 @@ class MainActivity : AppCompatActivity() {
         bottomNavView.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.menu_home_item -> {
-                    replaceFragment(fragment1)
+                    replaceFragment(filmsFragment)
                 }
                 R.id.menu_favourites_item -> {
-                    replaceFragment(fragment2)
+                    replaceFragment(favouritesFragment)
                 }
                 R.id.menu_info_item -> {
-                    replaceFragment(fragment3)
+                    replaceFragment(appInfoFragment)
                 }
             }
             true
