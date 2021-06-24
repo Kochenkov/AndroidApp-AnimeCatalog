@@ -1,3 +1,33 @@
 <resources>
-    <string name="app_name">Films Catalog</string>
+    <string name="app_name">Anime catalog</string>
+
+    <string name="default_film_title">Default film\'s name</string>
+    <string name="btn_detail_text">Details</string>
+    <string name="share_text">I invite you to the \"Anime catalog\" application https://play.google.com/store/apps/details?id=com.vkochenkov.animecatalog</string>
+    <string name="empty_favourites_list_text">Favourites list is empty</string>
+    <string name="favourites_title_text">Favourites</string>
+    <string name="dialog_yes_exit_text">Yes, exit</string>
+    <string name="dialog_no_exit_text">No</string>
+    <string name="dialog_title_text">Are you sure you want to get out?</string>
+    <string name="info_title_text">App Info</string>
+    <string name="some_info_text">Hello and welcome to the Anime Catalog app! This app uses the Kitsu API to get information about thousands of different anime series and movies. You can choose your favorite anime and add them to your favorites so that you don\'t forget to watch them later.</string>
+    <string name="btn_share_text">Share App</string>
+    <string name="bottom_menu_home_text">Home</string>
+    <string name="bottom_menu_favourites_text">Favourites</string>
+    <string name="bottom_menu_info_text">Info</string>
+    <string name="was_deleted_str">was deleted</string>
+    <string name="cancel_str">Cancel</string>
+    <string name="retry_request_str">retry</string>
+    <string name="api_error_connection_str">Failed to connect to server. The application works offline.</string>
+    <string name="api_error_server_str">Failed to get data from server. Error code:</string>
+    <string name="release_start_date_str">Release start date:</string>
+    <string name="average_rating_str">Average rating:</string>
+    <string name="age_rating_str">Age rating:</string>
+    <string name="episode_count_str">Episode count:</string>
+    <string name="tv_powered_str">Powered by Kitsu</string>
+    <string name="vt_created_str">\u00A9 Created by Kochenkov</string>
+    <string name="notification_title_str">Watch reminder</string>
+    <string name="notification_created_str">Notification created</string>
+    <string name="create_notification_btn_str">Create notification</string>
+    <string name="notification_date_tv_str">"Notification will appear: "</string>
 </resources>

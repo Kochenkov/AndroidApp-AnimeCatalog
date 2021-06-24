@@ -1,0 +1,34 @@
+<resources>
+    <string name="app_name">Каталог аниме</string>
+
+    <string name="default_film_title">Default film\'s name</string>
+    <string name="btn_detail_text">Детали</string>
+    <string name="share_text">Приглашаю тебя в приложение \"Каталог аниме\" https://play.google.com/store/apps/details?id=com.vkochenkov.animecatalog</string>
+    <string name="empty_favourites_list_text">Список избранного пуст</string>
+    <string name="favourites_title_text">Избранное</string>
+    <string name="dialog_yes_exit_text">Да, выйти</string>
+    <string name="dialog_no_exit_text">Нет</string>
+    <string name="dialog_title_text">Вы уверены, что хотите выйти?</string>
+    <string name="info_title_text">О приложении</string>
+    <string name="some_info_text">Привет и добро пожаловать в приложение "Аниме каталог"! Приложение использует Kitsu API для получения информации о тысячах различных аниме сериалов и фильмов. Вы можете выбрать понравившиеся аниме и добавить их в избранное, чтобы не забыть посмотреть в дальнейшем. </string>
+    <string name="btn_share_text">" Поделиться приложением"</string>
+    <string name="bottom_menu_home_text">Домой</string>
+    <string name="bottom_menu_favourites_text">Избранное</string>
+    <string name="bottom_menu_info_text">Инфо</string>
+    <string name="was_deleted_str">был удален</string>
+    <string name="cancel_str">Отмена</string>
+    <string name="retry_request_str">повторить</string>
+    <string name="api_error_connection_str">Не удалось подключиться к серверу. Приложение работает в оффлайн-режиме.</string>
+    <string name="api_error_server_str">"Не удалось получить данные с сервера. Код ошибки:"</string>
+    <string name="release_start_date_str">Дата старта выпуска:</string>
+    <string name="average_rating_str">Средний рейтинг:</string>
+    <string name="age_rating_str">Возрастной рейтинг:</string>
+    <string name="episode_count_str">Число эпизодов:</string>
+    <string name="vt_created_str">\u00A9 Created by Kochenkov</string>
+    <string name="tv_powered_str">Powered by Kitsu</string>
+    <string name="notification_title_str">Напоминание о просмотре</string>
+    <string name="notification_created_str">Уведомление создано</string>
+    <string name="create_notification_btn_str">Создать уведомление</string>
+    <string name="notification_date_tv_str">"Уведомление появится: "</string>
+
+</resources>
